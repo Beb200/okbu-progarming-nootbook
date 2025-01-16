@@ -10,8 +10,8 @@ The print and println statements output various values.
 # Describe the Java compilation process
 
 # Demonstrate Java code for getting information from the user
-need to have ```import java.util.Scanner;``` at the top of program
-Getting input is achieved by first creating a Scanner object via the statement: ```Scanner scnr = new Scanner(System.in);```. System.in corresponds to keyboard input. Then, given Scanner object scnr, the following statement gets an input value and assigns x with that value: ```x = scnr.nextInt() ;```
+Need to have `import java.util.Scanner;` at the top of program. <br>
+Getting input is achieved by first creating a Scanner object via the statement: `Scanner scnr = new Scanner(System.in);`. System.in corresponds to keyboard input. Then, given Scanner object scnr, the following statement gets an input value and assigns x with that value: `x = scnr.nextInt() ;`
 # Provide code example 
 ```
 import java.util.Scanner;
@@ -29,8 +29,8 @@ public class Salary {
 }
 ```
 # Demonstrate Java code for printing information to the console
-"name of class".out.print() - to print
-"name of class".out.println() - to print on new line
+*name of class*.out.print() - to print <br>
+*name of class*.out.println() - to print on new line
 # Provide code example
 ```
 public class Salary {                       
