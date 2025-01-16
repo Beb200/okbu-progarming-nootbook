@@ -4,7 +4,7 @@
 Input, Output, And Process
 
 ### Describe computational thinking
-
+Computational thinking is creating a sequence of instructions to solve a problem. Many peaple belive that it will become increasingly important for work and everyday life. A sequence of instructions that solves a problem is called an algorithm.
 ### Enumerate the minimal requirements of any Java program
 A program starts in main(), executing the statements within main's braces { }, one at a time.
 Each statement typically appears alone on a line and ends with a semicolon, as English sentences end with a period.
