@@ -1,0 +1,16 @@
+#How to Test with mvn
+- go to Apptest.java 
+- in ``` public class AppTest ```
+- create the test 
+Exp:
+```
+ @Test
+    public void test001()
+    {
+        C1 c1 = new C1(1,2,3);
+        assertEquals(3, c1.add2());
+    }
+
+```
+- then go to command promt and type "mvn clean compile"
+- then "mvn test"
