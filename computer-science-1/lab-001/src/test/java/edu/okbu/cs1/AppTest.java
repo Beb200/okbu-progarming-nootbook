@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import edu.okbu.HealthData;
 import edu.okbu.Lab2_25;
+import edu.okbu.Lab2_27;
 
 /**
  * Unit test for simple App.
@@ -49,5 +50,14 @@ public class AppTest
         assertEquals(l1.do1x(),50);
         assertEquals(l1.do2x(),25);
         assertEquals(l1.do3x(), 12);
+    }
+
+    @Test
+    public void test_lab2_27(){
+        Lab2_27 l27 = new Lab2_27(1.0, 2.0, 3.0);
+        assertEquals(l27.x_power_of_z(),(double)1.0, (double) 0.0001);
+        assertEquals(l27.x_power_of_y_power_to_z(),(double) 1.0, (double) 0.0001);
+        assertEquals(l27.Absolute_of_y(),(double) 2.0, (double) 0.0001);
+        assertEquals(l27.Square_of_xy_to_power_z(), (double)2.8, (double) 0.1);
     }
 }
