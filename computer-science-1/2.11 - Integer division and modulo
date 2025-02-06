@@ -1,5 +1,43 @@
 #Describe integer division
+When the operands of / are integers, the operator performs integer division, which does not generate any fraction.
 
 #Describe integer modulo
+The modulo operator (%) evaluates the remainder of the division of two integer operands.
+Examples:
+- 9 % 5 is 4. Reason: Since 9 = 5 * 1 + 4, the integer division 9 / 5 results in 1, and the remainder is 4.
+- 70 % 7 is 0. Reason: 70 / 7 is 10 with remainder 0.
+- 1 % 2 is 1. Reason: 1 / 2 is 0 with remainder 1.
 
 #Demonstrate the use of Java integer division and modulo (no answer needed in the homework)
+###Division and modulo example: Minutes to hours/minutes.
+```
+
+import java.util.Scanner;
+
+public class TimeConverter {
+   public static void main(String[] args) {
+      Scanner scnr = new Scanner(System.in);
+      int userMinutes; // User input: Minutes
+      int outHours;    // Output hours
+      int outMinutes;  // Output minutes (remaining)
+
+      System.out.print("Enter minutes: ");
+      userMinutes = scnr.nextInt();
+
+      outHours   = userMinutes / 60;
+      outMinutes = userMinutes % 60;
+
+      System.out.print(userMinutes  + " minutes is ");
+      System.out.print(outHours     + " hours and ");
+      System.out.println(outMinutes + " minutes.");
+   }
+}
+```
+###output:
+Enter minutes:  137
+137 minutes is 2 hours and 17 minutes.
+
+...
+
+Enter minutes:  180
+180 minutes is 3 hours and 0 minutes.
