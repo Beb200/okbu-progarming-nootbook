@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import edu.okbu.Carpet;
 import edu.okbu.HealthData;
 import edu.okbu.Lab2_25;
 import edu.okbu.Lab2_27;
@@ -59,5 +60,15 @@ public class AppTest
         assertEquals(l27.x_power_of_y_power_to_z(),(double) 1.0, (double) 0.0001);
         assertEquals(l27.Absolute_of_y(),(double) 2.0, (double) 0.0001);
         assertEquals(l27.Square_of_xy_to_power_z(), (double)2.8, (double) 0.1);
+    }
+
+    @Test
+    public void test_Carpet(){
+        Carpet t1 = new Carpet(2.00, 60, 120);
+        assertEquals(t1.SquareFootage(),7200);
+        assertEquals(t1.CarpetCost(), 17280, 0.01);
+        assertEquals(t1.LaborCost(),5400.00,0.01);
+        assertEquals(t1.Tax(), 1587.6,0.01);
+        assertEquals(t1.TotalCost(),24267.6,0.01);
     }
 }
