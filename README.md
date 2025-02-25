@@ -26,4 +26,9 @@ mvn archetype:generate "-DgroupId=com.mycompany.app" "-DartifactId=my-app -Darch
 
 OBU Progarming Notebook : C:\Users\cpayn
 
+git status
+git add
+git commit -m ""
+git push
+
 [GitHub / git](computer-science-1/README.md)
