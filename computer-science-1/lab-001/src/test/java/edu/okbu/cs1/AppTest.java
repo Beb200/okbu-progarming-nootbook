@@ -2,12 +2,17 @@ package edu.okbu.cs1;
 
 import static org.junit.Assert.*;
 
+import java.util.Random;
+
 import org.junit.Test;
 
+import edu.okbu.CaffeineLevels;
 import edu.okbu.Carpet;
+import edu.okbu.DieRoll;
 import edu.okbu.HealthData;
 import edu.okbu.Lab2_25;
 import edu.okbu.Lab2_27;
+import edu.okbu.Triange;
 
 /**
  * Unit test for simple App.
@@ -70,5 +75,26 @@ public class AppTest
         assertEquals(t1.LaborCost(),5400.00,0.01);
         assertEquals(t1.Tax(), 1587.6,0.01);
         assertEquals(t1.TotalCost(),24267.6,0.01);
+    }
+
+    @Test
+    public void test_CaffeineLevels(){
+        CaffeineLevels t2 = new CaffeineLevels(1000);
+        assertEquals(t2.afterSix(),500,0.01);
+        assertEquals(t2.afterTwelve(),250,0.01);
+        assertEquals(t2.afterTwentyFour(),125,0.01);
+    }
+
+    @Test
+    public void test_Triangle(){
+        Triange t3 = new Triange(10, 15, 20);
+        assertEquals(t3.Perimeter(),45,0.01);
+        assertEquals(t3.Area(),54.77,0.01);
+    }
+
+    @Test
+    public void test_DieR0ll(){
+        DieRoll t4 = new DieRoll(1, 6);
+        assertEquals(t4.Roll(),1);     
     }
 }
