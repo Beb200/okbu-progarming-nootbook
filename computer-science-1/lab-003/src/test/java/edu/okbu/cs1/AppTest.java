@@ -17,4 +17,10 @@ public class AppTest
     {
         assertTrue( true );
     }
+
+    @Test
+    public void test_HS_001(){
+        HailstoneSequence h = new HailstoneSequence(25);
+        assertEquals(h.computeHailstoneSequence(),1);
+    }
 }
