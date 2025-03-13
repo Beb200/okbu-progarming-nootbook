@@ -5,11 +5,11 @@ public class PayoffCalculator {
     double payment;
     double rate;
 
-    public int computeNumPayments(){
+    //public int computeNumPayments(){
 
-    }
+   // }
 
-    public void readData(String PCFile.txt){
+   // public void readData(String PCFile.txt){
         
-    }
+   // }
 }
