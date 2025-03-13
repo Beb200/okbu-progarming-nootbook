@@ -3,7 +3,7 @@ package edu.okbu;
 import java.util.Scanner;
 
 public class Player {
-    String playerName;
+    String name;
     Choices choice;
     int wins;
     public Player(String name) {
@@ -16,9 +16,7 @@ public class Player {
         input = scnr.next();
         // Prompt the user for their play and return a value from the
         // Choices class.
-        System.out.println("Enter p for Paper");
-        System.out.println("Enter r for Rock");
-        System.out.println("Enter s for Scissors");
+        System.out.printf("%s turn:", name);
         if(input.equals("p")){
             return Choices.PAPER;
         }

@@ -12,6 +12,8 @@ public class RPS {
     Player player2;
     int numGames;
     int i;
+    String player1name;
+    String player2name;
     public RPS() {
 
     }
@@ -22,9 +24,9 @@ public class RPS {
         inFile = new Scanner(fileIn);
 
         // The first line in the file is the name of the first player
-        String player1name = inFile.nextLine();
+        player1name = inFile.nextLine();
         // The second line in the file is the name of the second player
-        String player2name = inFile.nextLine();
+        player2name = inFile.nextLine();
         // The third line in the file is the number of games to play
         numGames = inFile.nextInt();
         // Read in these values
@@ -56,7 +58,18 @@ public class RPS {
     // }
 
     public void play() {
-        for(i = 0; i > numGames; ++i){
+        System.out.println("This is Rock, Paper, Scissors");
+        System.out.printf("The game is between %s and %s\n", player1name, player2name);
+        System.out.printf("It will go for %d rounds\n",numGames);
+        System.out.println();
+        System.out.println("When promtid:");
+        System.out.println("Enter p for Paper");
+        System.out.println("Enter r for Rock");
+        System.out.println("Enter s for Scissors");
+        System.out.println();
+        System.out.print("Type start to begian:");
+        for(i = 0; i < numGames; ++i){
+            System.out.println();
             Choices player1Acion = player1.getChoice();
             Choices player2Acion = player2.getChoice();
             if ((player1Acion == Choices.ROCK) && (player2Acion == Choices.ROCK) ){
@@ -67,6 +80,33 @@ public class RPS {
             }
             if ((player1Acion == Choices.SCISSORS) && (player2Acion == Choices.SCISSORS) ){
                 //ties
+            }
+
+
+
+            if ((player1Acion == Choices.ROCK) && (player2Acion == Choices.SCISSORS) ){
+                //Player1 wins
+            }
+            if ((player1Acion == Choices.SCISSORS) && (player2Acion == Choices.PAPER) ){
+                //Player1 wins
+            }
+            if ((player1Acion == Choices.PAPER) && (player2Acion == Choices.ROCK) ){
+                //Player1 wins
+            }
+
+
+
+            if ((player1Acion == Choices.ROCK) && (player2Acion == Choices.SCISSORS) ){
+                //Player2 wins
+            }
+            if ((player2Acion == Choices.ROCK) && (player1Acion == Choices.SCISSORS) ){
+                //Player2 wins
+            }
+            if ((player2Acion == Choices.ROCK) && (player1Acion == Choices.SCISSORS) ){
+                //Player2 wins
+            }
+            if ((player2Acion == Choices.ROCK) && (player1Acion == Choices.SCISSORS) ){
+                //Player2 wins
             }
         }
     }
