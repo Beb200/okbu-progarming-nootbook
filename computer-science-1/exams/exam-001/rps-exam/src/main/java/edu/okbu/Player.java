@@ -28,6 +28,24 @@ public class Player {
         }
         else{
             return Choices.PAPER;
-        }
+        }   
+    }
+    public String getName(){
+        return name;
+    }
+    public void setName(String name){
+
+    }
+    public int getWins(){
+        return 0;
+    }
+    public void addWins(){
+
+    }
+    public void resetWins(){
+
+    }
+    public String toString(){
+        return "Player name:";
     }
 }

@@ -1,0 +1,4 @@
+The winner is Barney
+Fred Wins: 4
+Barney Wins: 5
+The Ties: 1

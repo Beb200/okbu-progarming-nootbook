@@ -1,6 +1,6 @@
 package edu.okbu;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * Hello world!
@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
  */
 public class App 
 {
-    public static void main( String[] args ) throws FileNotFoundException
+    public static void main( String[] args ) throws IOException
     {
         RPS myGame = new RPS();
         myGame.initialize("rps.in");

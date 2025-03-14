@@ -3,7 +3,9 @@ import java.util.Scanner;
 import java.util.regex.PatternSyntaxException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class RPS {
     FileInputStream fileIn = null;
@@ -17,6 +19,9 @@ public class RPS {
     int player1Wins = 0;
     int player2Wins = 0;
     int ties = 0;
+
+   
+
     public RPS() {
 
     }
@@ -60,7 +65,11 @@ public class RPS {
          this.player2 = player2name;
      }
 
-    public void play() {
+    public void play()throws IOException {
+
+        FileOutputStream fileStream = new FileOutputStream("log.txt");
+        PrintWriter outFS = new PrintWriter(fileStream);
+
         System.out.println("This is Rock, Paper, Scissors");
         System.out.printf("The game is between %s and %s\n", player1name, player2name);
         System.out.printf("It will go for %d rounds\n",numGames);
@@ -69,13 +78,23 @@ public class RPS {
         System.out.println("Enter p for Paper");
         System.out.println("Enter r for Rock");
         System.out.println("Enter s for Scissors");
+        outFS.println("");
         System.out.println();
+        outFS.println("This is Rock, Paper, Scissors");
+        outFS.printf("The game is between %s and %s\n", player1name, player2name);
+        outFS.printf("It will go for %d rounds\n",numGames);
+        outFS.println("When promtid:");
+        outFS.println("Enter p for Paper");
+        outFS.println("Enter r for Rock");
+        outFS.println("Enter s for Scissors");
         //System.out.print("Type start to begian:");
         for(i = 0; i < numGames; ++i){
             System.out.println();
             System.out.printf("%s turn:", player1name);
+            outFS.printf("%s turn:\n",player1name);
             Choices player1Acion = player1.getChoice();
-            System.out.printf("%s turn:", player2name);
+            System.out.printf("%s turn:\n", player2name);
+            outFS.printf("%s turn:\n",player2name);
             Choices player2Acion = player2.getChoice();
             if ((player1Acion == Choices.ROCK) && (player2Acion == Choices.ROCK) ){
                 ties += 1;
@@ -110,22 +129,33 @@ public class RPS {
             if ((player2Acion == Choices.SCISSORS) && (player1Acion == Choices.PAPER) ){
                 player2Wins += 1;
             }
+            outFS.close();
         }
     }
-    public void Winner(){
+    public void Winner()throws IOException{
+
+        FileOutputStream fileStream = new FileOutputStream("Result.txt");
+        PrintWriter outFS = new PrintWriter(fileStream);
+
         System.out.println();
         if (player1Wins > player2Wins){
             System.out.printf("The winner is %s\n.",player1name);
+            outFS.printf("The winner is %s\n.",player1name);
         }
         else if(player1Wins < player2Wins){
             System.out.printf("The winner is %s\n", player2name);
+            outFS.printf("The winner is %s\n", player2name);
         }
         else{
             System.out.println("It's a tie.");
+            outFS.println("It's a tie.");
         }
         System.out.printf("%s Wins: %d\n",player1name,player1Wins);
         System.out.printf("%s Wins: %d\n",player2name,player2Wins);
         System.out.printf("The Ties: %d\n", ties);
-        
+        outFS.printf("%s Wins: %d\n",player1name,player1Wins);
+        outFS.printf("%s Wins: %d\n",player2name,player2Wins);
+        outFS.printf("The Ties: %d\n", ties);
+        outFS.close();
     }
 }
