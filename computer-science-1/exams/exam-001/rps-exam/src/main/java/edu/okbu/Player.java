@@ -16,7 +16,7 @@ public class Player {
         input = scnr.next();
         // Prompt the user for their play and return a value from the
         // Choices class.
-        System.out.printf("%s turn:", name);
+        
         if(input.equals("p")){
             return Choices.PAPER;
         }

@@ -13,5 +13,6 @@ public class App
         RPS myGame = new RPS();
         myGame.initialize("rps.in");
         myGame.play();
+        myGame.Winner();
     }
 }

@@ -14,6 +14,9 @@ public class RPS {
     int i;
     String player1name;
     String player2name;
+    int player1Wins = 0;
+    int player2Wins = 0;
+    int ties = 0;
     public RPS() {
 
     }
@@ -50,12 +53,12 @@ public class RPS {
         // Open a file / PrintWriter and assign to the outWriter instance variable.
         // This will be used to storing game play information.
     }
-    //public void setPlayer1(String player1) {
-    //    this.player1 = player1;
-    // }
-    //public void setPlayer2(String player2) {
-    //     this.player2 = player2;
-    // }
+    public void setPlayer1(Player player1name) {
+        this.player1 = player1name;
+     }
+    public void setPlayer2(Player player2name) {
+         this.player2 = player2name;
+     }
 
     public void play() {
         System.out.println("This is Rock, Paper, Scissors");
@@ -67,47 +70,62 @@ public class RPS {
         System.out.println("Enter r for Rock");
         System.out.println("Enter s for Scissors");
         System.out.println();
-        System.out.print("Type start to begian:");
+        //System.out.print("Type start to begian:");
         for(i = 0; i < numGames; ++i){
             System.out.println();
+            System.out.printf("%s turn:", player1name);
             Choices player1Acion = player1.getChoice();
+            System.out.printf("%s turn:", player2name);
             Choices player2Acion = player2.getChoice();
             if ((player1Acion == Choices.ROCK) && (player2Acion == Choices.ROCK) ){
-                //ties
+                ties += 1;
             }
             if ((player1Acion == Choices.PAPER) && (player2Acion == Choices.PAPER) ){
-                //ties
+                ties += 1;
             }
             if ((player1Acion == Choices.SCISSORS) && (player2Acion == Choices.SCISSORS) ){
-                //ties
+                ties += 1;
             }
 
 
 
             if ((player1Acion == Choices.ROCK) && (player2Acion == Choices.SCISSORS) ){
-                //Player1 wins
+                player1Wins += 1;
             }
             if ((player1Acion == Choices.SCISSORS) && (player2Acion == Choices.PAPER) ){
-                //Player1 wins
+                player1Wins += 1;
             }
             if ((player1Acion == Choices.PAPER) && (player2Acion == Choices.ROCK) ){
-                //Player1 wins
+                player1Wins += 1;
             }
 
 
 
-            if ((player1Acion == Choices.ROCK) && (player2Acion == Choices.SCISSORS) ){
-                //Player2 wins
-            }
             if ((player2Acion == Choices.ROCK) && (player1Acion == Choices.SCISSORS) ){
-                //Player2 wins
+                player2Wins += 1;
             }
-            if ((player2Acion == Choices.ROCK) && (player1Acion == Choices.SCISSORS) ){
-                //Player2 wins
+            if ((player2Acion == Choices.PAPER) && (player1Acion == Choices.ROCK) ){
+                player2Wins += 1;
             }
-            if ((player2Acion == Choices.ROCK) && (player1Acion == Choices.SCISSORS) ){
-                //Player2 wins
+            if ((player2Acion == Choices.SCISSORS) && (player1Acion == Choices.PAPER) ){
+                player2Wins += 1;
             }
         }
+    }
+    public void Winner(){
+        System.out.println();
+        if (player1Wins > player2Wins){
+            System.out.printf("The winner is %s\n.",player1name);
+        }
+        else if(player1Wins < player2Wins){
+            System.out.printf("The winner is %s\n", player2name);
+        }
+        else{
+            System.out.println("It's a tie.");
+        }
+        System.out.printf("%s Wins: %d\n",player1name,player1Wins);
+        System.out.printf("%s Wins: %d\n",player2name,player2Wins);
+        System.out.printf("The Ties: %d\n", ties);
+        
     }
 }
