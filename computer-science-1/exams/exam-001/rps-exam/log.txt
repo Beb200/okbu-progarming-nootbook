@@ -1,0 +1,10 @@
+
+This is Rock, Paper, Scissors
+The game is between Fred and Barney
+It will go for 10 rounds
+When promtid:
+Enter p for Paper
+Enter r for Rock
+Enter s for Scissors
+Fred turn:
+Barney turn:
