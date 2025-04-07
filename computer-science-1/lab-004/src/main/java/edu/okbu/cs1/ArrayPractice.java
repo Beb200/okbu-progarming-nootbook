@@ -80,6 +80,7 @@ public class ArrayPractice {
         for (i = 0; i < theNumbers.length; i++){
         average = theNumbers[i] + average;
         }
+        average = average / 20;
         return average;
     }
 
@@ -88,8 +89,8 @@ public class ArrayPractice {
         Scanner scnr = new Scanner(System.in);
         int argument = scnr.nextInt();
         for(i = 0; i < theNumbers.length; i++){
-            if (theNumbers[i] < argument){
-                count =+ 1;
+            if(theNumbers[i] < argument){
+                count = count + 1;
             }
         }
         

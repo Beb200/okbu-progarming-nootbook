@@ -91,6 +91,9 @@ public class App
         Prac.reverse();
         System.out.print("Average:");
         System.out.println(Prac.findAverage());
+        System.out.print("Numbers less than:");
+        Prac.countLessThan();
+        System.out.println(Prac.count);
 
     }
 
