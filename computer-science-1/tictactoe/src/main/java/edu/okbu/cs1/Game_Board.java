@@ -3,19 +3,21 @@ package edu.okbu.cs1;
 public class Game_Board {
     int i;
     int j;
-    String [][] game;
+    String [][] game = new String[3][3];
     
-    public String Display(){
-        return ("#|#|#\n" + "-----\n" + "#|#|#\n" +"-----\n" +"#|#|#\n");
-    }
-
-    public String board(){
+    public void board(){
         for (i = 0; i < game.length; i++){
             for (j = 0; j < game[i].length; j++){
                game[i][j] = "#";
                
             }
         }
-        return game[i][j];
+        //return game[i][j];
     }
+
+    public String Display(){
+        return (game[0][0] + "|" + game[0][1] + "|" + game[0][2] + "\n" + "-----\n" + "#|#|#\n" +"-----\n" +"#|#|#\n");
+    }
+
+    
 }
