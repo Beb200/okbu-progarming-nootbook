@@ -5,20 +5,23 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class ArrayPractice {
-    int[] theNumbers;
+    int[] theNumbers = new int[20];
     int i;
     Scanner scanFile;
+    int count;
 
-    public void initalize(FileInputStream inFile, String outFile) throws FileNotFoundException{
-        inFile = new FileInputStream("inFile");
-        scanFile = new Scanner(inFile);
+    public void initalize(String inFile, String outFile) throws FileNotFoundException{
+        FileInputStream inFile1 = new FileInputStream(inFile);
+        scanFile = new Scanner(inFile1);
+
+        theNumbers[0] = 1;
 
         for (i = 0; i < 20; i++){
             theNumbers[i] = scanFile.nextInt();
         }
-        for (i = 0; i < 20; i++){
+        /*for (i = 0; i < 20; i++){
             System.out.println(theNumbers[i]);
-        }
+        }*/
     }
 
     public void cleanup(){
@@ -26,8 +29,29 @@ public class ArrayPractice {
     }
 
     public void reverse(){
+        System.out.println(theNumbers[19]);
+        System.out.println(theNumbers[18]);
+        System.out.println(theNumbers[17]);
+        System.out.println(theNumbers[16]);
+        System.out.println(theNumbers[15]);
+        System.out.println(theNumbers[14]);
+        System.out.println(theNumbers[13]);
+        System.out.println(theNumbers[12]);
+        System.out.println(theNumbers[11]);
+        System.out.println(theNumbers[10]);
+        System.out.println(theNumbers[9]);
+        System.out.println(theNumbers[8]);
+        System.out.println(theNumbers[7]);
+        System.out.println(theNumbers[6]);
+        System.out.println(theNumbers[5]);
+        System.out.println(theNumbers[4]);
+        System.out.println(theNumbers[3]);
+        System.out.println(theNumbers[2]);
+        System.out.println(theNumbers[1]);
+        System.out.println(theNumbers[0]);
 
     }
+
 
     public int findMin(){
         int min;
@@ -52,10 +76,23 @@ public class ArrayPractice {
     }
 
     public float findAverage(){
-        return 1.1f;
+        float average = 0;
+        for (i = 0; i < theNumbers.length; i++){
+        average = theNumbers[i] + average;
+        }
+        return average;
     }
 
     public int countLessThan(){
-        return 1;
+        
+        Scanner scnr = new Scanner(System.in);
+        int argument = scnr.nextInt();
+        for(i = 0; i < theNumbers.length; i++){
+            if (theNumbers[i] < argument){
+                count =+ 1;
+            }
+        }
+        
+        return count;
     }
 }

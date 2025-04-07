@@ -83,6 +83,14 @@ public class App
 
         ArrayPractice Prac = new ArrayPractice();
         Prac.initalize("inFile.txt","outFile.txt");
+        System.out.print("Min:");
+        System.out.println(Prac.findMin());
+        System.out.print("Max:");
+        System.out.println(Prac.findMax());
+        System.out.println("Reversed:");
+        Prac.reverse();
+        System.out.print("Average:");
+        System.out.println(Prac.findAverage());
 
     }
 
