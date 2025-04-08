@@ -12,11 +12,14 @@ public class App
     {
         
         Game_Board gb = new Game_Board();
+        gb.board();
         System.out.println(gb.Display());
         //gb.Display();
         //System.out.println(gb.board());
 
         The_Game tg = new The_Game();
         tg.initialize("inFile.txt");
+        tg.play(gb.game);
+        System.out.println(tg.winner);
     }
 }

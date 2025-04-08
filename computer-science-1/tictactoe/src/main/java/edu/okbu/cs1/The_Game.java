@@ -9,8 +9,10 @@ public class The_Game {
     FileInputStream fileIn = null;
     Scanner inFile = null;
     int numGames;
-    String [][] game;
-    String winner;  
+    //String [][] game;
+    String winner; 
+    Player player1 = new Player();
+    Player player2 = new Player(); 
     
     public void initialize(String fileName) throws FileNotFoundException {
         fileIn = new FileInputStream(fileName);
@@ -18,14 +20,18 @@ public class The_Game {
 
         numGames = inFile.nextInt();
 
-        //String name1 = inFile.nextLine();
-        //String name2 = inFile.nextLine();
+        player1.name = inFile.nextLine();
+        player2.name = inFile.nextLine();
 
 
         //System.out.println(numGames);
     }
 
-    public void play(){
+    public void play(String[][] game){
+
+        System.out.println("This is tic tac toe.");
+        System.out.println("");
+
             //checks 'x' rows
             if ((game[0][0].equals("x")) && (game[0][1].equals("x") && (game[0][2].equals("x")))){
                 winner = "x";
@@ -80,6 +86,9 @@ public class The_Game {
             }
             else if ((game[0][2].equals("o")) && (game[1][1].equals("o") && (game[2][0].equals("o")))){
                 winner = "o";
+            }
+            else{
+                winner = "no winner";
             }
         }
     }
