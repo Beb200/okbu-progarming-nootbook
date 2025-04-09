@@ -20,8 +20,8 @@ public class The_Game {
 
         numGames = inFile.nextInt();
 
-        player1.name = inFile.nextLine();
-        player2.name = inFile.nextLine();
+        player1.name = inFile.next();
+        player2.name = inFile.next();
 
 
         //System.out.println(numGames);
@@ -29,8 +29,16 @@ public class The_Game {
 
     public void play(String[][] game){
 
+        Scanner scnr = new Scanner(System.in);
+
         System.out.println("This is tic tac toe.");
-        System.out.println("");
+        System.out.println("Rules are that each player take turns playing a X or an O on a 3x3 bourd.");
+        System.out.printf("%s is X.\n", player1.name);
+        System.out.printf("%s is O\n", player2.name);
+
+        while (winner !=/*=*/ "no winner") {
+            
+        
 
             //checks 'x' rows
             if ((game[0][0].equals("x")) && (game[0][1].equals("x") && (game[0][2].equals("x")))){
@@ -90,5 +98,6 @@ public class The_Game {
             else{
                 winner = "no winner";
             }
+        }
         }
     }
