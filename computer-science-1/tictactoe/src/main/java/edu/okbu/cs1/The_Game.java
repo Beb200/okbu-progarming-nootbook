@@ -13,6 +13,9 @@ public class The_Game {
     String winner; 
     Player player1 = new Player();
     Player player2 = new Player(); 
+
+    Game_Board gb = new Game_Board();
+
     
     public void initialize(String fileName) throws FileNotFoundException {
         fileIn = new FileInputStream(fileName);
@@ -36,10 +39,33 @@ public class The_Game {
         System.out.printf("%s is X.\n", player1.name);
         System.out.printf("%s is O\n", player2.name);
 
-        while (winner !=/*=*/ "no winner") {
-            
-        
+       
+            System.out.printf("%s turn: \n", player1.name);
+            System.out.println("Enter the row:");
+            int player1Row = player1.choiceRow();
+            System.out.println("Enter the colom:");
+            int player1Col = player1.choiceCol();
 
+            game[player1Row][player1Col] = "X";
+            System.out.println(gb.Display());
+
+            System.out.printf("%s trun: \n", player2.name);
+            System.out.println("Enter the row:");
+            int player2Row = player2.choiceRow();
+            System.out.println("Enter the colom:");
+            int player2Col = player2.choiceCol();
+
+            //move to player:
+            //int player1Row = scnr.nextInt();
+            //int player1Col = scnr.nextInt();
+
+            //int player2Row = scnr.nextInt();
+            //int player2Col = scnr.nextInt();
+
+
+        }
+       
+    public void winner(String[][] game){
             //checks 'x' rows
             if ((game[0][0].equals("x")) && (game[0][1].equals("x") && (game[0][2].equals("x")))){
                 winner = "x";
@@ -98,6 +124,5 @@ public class The_Game {
             else{
                 winner = "no winner";
             }
-        }
         }
     }
