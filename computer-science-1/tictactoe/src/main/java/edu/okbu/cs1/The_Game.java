@@ -38,22 +38,30 @@ public class The_Game {
         System.out.println("Rules are that each player take turns playing a X or an O on a 3x3 bourd.");
         System.out.printf("%s is X.\n", player1.name);
         System.out.printf("%s is O\n", player2.name);
+    }
+     
+    public void player1Turn(String[][] game){
+        System.out.printf("%s turn: \n", player1.name);
+        System.out.println("Enter the row:");
+        int player1Row = player1.choiceRow();
+        System.out.println("Enter the colom:");
+        int player1Col = player1.choiceCol();
 
-       
-            System.out.printf("%s turn: \n", player1.name);
-            System.out.println("Enter the row:");
-            int player1Row = player1.choiceRow();
-            System.out.println("Enter the colom:");
-            int player1Col = player1.choiceCol();
+        game[player1Row][player1Col] = "X";
+    }
 
-            game[player1Row][player1Col] = "X";
-            System.out.println(gb.Display());
+        
+        //System.out.println(gb.Display());
 
-            System.out.printf("%s trun: \n", player2.name);
-            System.out.println("Enter the row:");
-            int player2Row = player2.choiceRow();
-            System.out.println("Enter the colom:");
-            int player2Col = player2.choiceCol();
+    public void player2Turn(String[][] game){
+        System.out.printf("%s trun: \n", player2.name);
+        System.out.println("Enter the row:");
+        int player2Row = player2.choiceRow();
+        System.out.println("Enter the colom:");
+        int player2Col = player2.choiceCol();
+
+        game[player2Row][player2Col] = "O";
+    }
 
             //move to player:
             //int player1Row = scnr.nextInt();
@@ -63,63 +71,63 @@ public class The_Game {
             //int player2Col = scnr.nextInt();
 
 
-        }
+        
        
     public void winner(String[][] game){
             //checks 'x' rows
-            if ((game[0][0].equals("x")) && (game[0][1].equals("x") && (game[0][2].equals("x")))){
-                winner = "x";
+            if ((game[0][0].equals("X")) && (game[0][1].equals("X") && (game[0][2].equals("X")))){
+                winner = "X";
             }
-            else if ((game[1][0].equals("x")) && (game[1][1].equals("x") && (game[1][2].equals("x")))){
-                winner = "x";
+            else if ((game[1][0].equals("X")) && (game[1][1].equals("X") && (game[1][2].equals("X")))){
+                winner = "X";
             }
-            else if ((game[2][0].equals("x")) && (game[2][1].equals("x") && (game[2][2].equals("x")))){
-                winner = "x";
+            else if ((game[2][0].equals("X")) && (game[2][1].equals("X") && (game[2][2].equals("X")))){
+                winner = "X";
             }
             //checks 'x' col
-            else if ((game[0][0].equals("x")) && (game[1][0].equals("x") && (game[2][0].equals("x")))){
-                winner = "x";
+            else if ((game[0][0].equals("X")) && (game[1][0].equals("X") && (game[2][0].equals("X")))){
+                winner = "X";
             }
-            else if ((game[0][1].equals("x")) && (game[1][1].equals("x") && (game[2][1].equals("x")))){
-                winner = "x";
+            else if ((game[0][1].equals("X")) && (game[1][1].equals("X") && (game[2][1].equals("X")))){
+                winner = "X";
             }
-            else if ((game[0][2].equals("x")) && (game[1][2].equals("x") && (game[2][2].equals("x")))){
-                winner = "x";
+            else if ((game[0][2].equals("X")) && (game[1][2].equals("X") && (game[2][2].equals("X")))){
+                winner = "X";
             }
             //checks 'x' dign
-            else if ((game[0][0].equals("x")) && (game[1][1].equals("x") && (game[2][2].equals("x")))){
-                winner = "x";
+            else if ((game[0][0].equals("X")) && (game[1][1].equals("X") && (game[2][2].equals("X")))){
+                winner = "X";
             }
-            else if ((game[0][2].equals("x")) && (game[1][1].equals("x") && (game[2][0].equals("x")))){
-                winner = "x";
+            else if ((game[0][2].equals("X")) && (game[1][1].equals("X") && (game[2][0].equals("X")))){
+                winner = "X";
             }
 
             //checks 'o' rows
-            else if ((game[0][0].equals("o")) && (game[0][1].equals("o") && (game[0][2].equals("o")))){
-                winner = "o";
+            else if ((game[0][0].equals("O")) && (game[0][1].equals("O") && (game[0][2].equals("O")))){
+                winner = "O";
             }
-            else if ((game[1][0].equals("o")) && (game[1][1].equals("o") && (game[1][2].equals("o")))){
-                winner = "o";
+            else if ((game[1][0].equals("O")) && (game[1][1].equals("O") && (game[1][2].equals("O")))){
+                winner = "O";
             }
-            else if ((game[2][0].equals("o")) && (game[2][1].equals("o") && (game[2][2].equals("o")))){
-                winner = "o";
+            else if ((game[2][0].equals("O")) && (game[2][1].equals("O") && (game[2][2].equals("O")))){
+                winner = "O";
             }
             //checks 'o' col
-            else if ((game[0][0].equals("o")) && (game[1][0].equals("o") && (game[2][0].equals("o")))){
-                winner = "o";
+            else if ((game[0][0].equals("O")) && (game[1][0].equals("O") && (game[2][0].equals("O")))){
+                winner = "O";
             }
-            else if ((game[0][1].equals("o")) && (game[1][1].equals("o") && (game[2][1].equals("o")))){
-                winner = "o";
+            else if ((game[0][1].equals("O")) && (game[1][1].equals("O") && (game[2][1].equals("O")))){
+                winner = "O";
             }
-            else if ((game[0][2].equals("o")) && (game[1][2].equals("o") && (game[2][2].equals("o")))){
-                winner = "o";
+            else if ((game[0][2].equals("O")) && (game[1][2].equals("O") && (game[2][2].equals("O")))){
+                winner = "O";
             }
             //checks 'x' dign
-            else if ((game[0][0].equals("o")) && (game[1][1].equals("o") && (game[2][2].equals("o")))){
-                winner = "o";
+            else if ((game[0][0].equals("O")) && (game[1][1].equals("O") && (game[2][2].equals("O")))){
+                winner = "O";
             }
-            else if ((game[0][2].equals("o")) && (game[1][1].equals("o") && (game[2][0].equals("o")))){
-                winner = "o";
+            else if ((game[0][2].equals("O")) && (game[1][1].equals("O") && (game[2][0].equals("O")))){
+                winner = "O";
             }
             else{
                 winner = "no winner";

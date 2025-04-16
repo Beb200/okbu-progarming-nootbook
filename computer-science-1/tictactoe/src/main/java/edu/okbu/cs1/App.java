@@ -19,8 +19,14 @@ public class App
 
         The_Game tg = new The_Game();
         tg.initialize("inFile.txt");
-        while (tg.winner !=/*=*/ "no winner") {
-            tg.play(gb.game);
+        tg.winner(gb.game);
+        tg.play(gb.game);
+        while (tg.winner.equals("no winner")) {
+            tg.player1Turn(gb.game);
+            System.out.println(gb.Display());
+            tg.player2Turn(gb.game);
+            System.out.println(gb.Display());
+            tg.winner(gb.game);
             System.out.println(tg.winner);
         }
     }
