@@ -21,7 +21,7 @@ cd computer-science-1
 ```
 6 - if no project if created, run the following:
 ```
-mvn archetype:generate "-DgroupId=com.mycompany.app" "-DartifactId=my-app -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false
+mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-app -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false
 ```
 
 OBU Progarming Notebook : C:\Users\cpayn
