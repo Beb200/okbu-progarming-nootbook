@@ -6,6 +6,7 @@ public class Player {
     String name;
     int playerRow;
     int playerCol;
+    int wins;
 
     Scanner scnr = new Scanner(System.in);
 
@@ -25,6 +26,11 @@ public class Player {
     public int choiceCol(){
         playerCol = scnr.nextInt();
         return playerCol;
+    }
+
+    public int win(){
+        wins = wins + 1;
+        return wins;
     }
     
 }

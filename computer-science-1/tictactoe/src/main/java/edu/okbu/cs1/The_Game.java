@@ -14,6 +14,8 @@ public class The_Game {
     Player player1 = new Player();
     Player player2 = new Player(); 
 
+    int loop = 1;
+
     Game_Board gb = new Game_Board();
 
     
@@ -42,25 +44,48 @@ public class The_Game {
      
     public void player1Turn(String[][] game){
         System.out.printf("%s turn: \n", player1.name);
-        System.out.println("Enter the row:");
+        System.out.print("Enter the row:");
         int player1Row = player1.choiceRow();
-        System.out.println("Enter the colom:");
+        System.out.print("Enter the colom:");
         int player1Col = player1.choiceCol();
-
-        game[player1Row][player1Col] = "X";
+        while (loop == 1) {
+            if (game[player1Row][player1Col].equals("#")){
+                game[player1Row][player1Col] = "X";
+                break;
+            }
+            else{
+                System.out.println("Not vible move.");
+                System.out.print("Enter the row:");
+                player1Row = player1.choiceRow();
+                System.out.print("Enter the colom:");
+                player1Col = player1.choiceCol();
+            }
+        }
     }
 
         
         //System.out.println(gb.Display());
 
     public void player2Turn(String[][] game){
-        System.out.printf("%s trun: \n", player2.name);
-        System.out.println("Enter the row:");
+        System.out.printf("%s turn: \n", player2.name);
+        System.out.print("Enter the row:");
         int player2Row = player2.choiceRow();
-        System.out.println("Enter the colom:");
+        System.out.print("Enter the colom:");
         int player2Col = player2.choiceCol();
 
-        game[player2Row][player2Col] = "O";
+        while (loop == 1) {
+            if (game[player2Row][player2Col].equals("#")){
+                game[player2Row][player2Col] = "O";
+                break;
+            }
+            else{
+                System.out.println("Not vible move.");
+                System.out.print("Enter the row:");
+                player2Row = player2.choiceRow();
+                System.out.print("Enter the colom:");
+                player2Col = player2.choiceCol();
+            }
+        }
     }
 
             //move to player:
@@ -77,57 +102,73 @@ public class The_Game {
             //checks 'x' rows
             if ((game[0][0].equals("X")) && (game[0][1].equals("X") && (game[0][2].equals("X")))){
                 winner = "X";
+                player1.win();
             }
             else if ((game[1][0].equals("X")) && (game[1][1].equals("X") && (game[1][2].equals("X")))){
                 winner = "X";
+                player1.win();
             }
             else if ((game[2][0].equals("X")) && (game[2][1].equals("X") && (game[2][2].equals("X")))){
                 winner = "X";
+                player1.win();
             }
             //checks 'x' col
             else if ((game[0][0].equals("X")) && (game[1][0].equals("X") && (game[2][0].equals("X")))){
                 winner = "X";
+                player1.win();
             }
             else if ((game[0][1].equals("X")) && (game[1][1].equals("X") && (game[2][1].equals("X")))){
                 winner = "X";
+                player1.win();
             }
             else if ((game[0][2].equals("X")) && (game[1][2].equals("X") && (game[2][2].equals("X")))){
                 winner = "X";
+                player1.win();
             }
             //checks 'x' dign
             else if ((game[0][0].equals("X")) && (game[1][1].equals("X") && (game[2][2].equals("X")))){
                 winner = "X";
+                player1.win();
             }
             else if ((game[0][2].equals("X")) && (game[1][1].equals("X") && (game[2][0].equals("X")))){
                 winner = "X";
+                player1.win();
             }
 
             //checks 'o' rows
             else if ((game[0][0].equals("O")) && (game[0][1].equals("O") && (game[0][2].equals("O")))){
                 winner = "O";
+                player2.win();
             }
             else if ((game[1][0].equals("O")) && (game[1][1].equals("O") && (game[1][2].equals("O")))){
                 winner = "O";
+                player2.win();
             }
             else if ((game[2][0].equals("O")) && (game[2][1].equals("O") && (game[2][2].equals("O")))){
                 winner = "O";
+                player2.win();
             }
             //checks 'o' col
             else if ((game[0][0].equals("O")) && (game[1][0].equals("O") && (game[2][0].equals("O")))){
                 winner = "O";
+                player2.win();
             }
             else if ((game[0][1].equals("O")) && (game[1][1].equals("O") && (game[2][1].equals("O")))){
                 winner = "O";
+                player2.win();
             }
             else if ((game[0][2].equals("O")) && (game[1][2].equals("O") && (game[2][2].equals("O")))){
                 winner = "O";
+                player2.win();
             }
-            //checks 'x' dign
+            //checks 'O' dign
             else if ((game[0][0].equals("O")) && (game[1][1].equals("O") && (game[2][2].equals("O")))){
                 winner = "O";
+                player2.win();
             }
             else if ((game[0][2].equals("O")) && (game[1][1].equals("O") && (game[2][0].equals("O")))){
                 winner = "O";
+                player2.win();
             }
             else{
                 winner = "no winner";
