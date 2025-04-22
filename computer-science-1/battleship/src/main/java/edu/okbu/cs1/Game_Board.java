@@ -9,8 +9,11 @@ public class Game_Board  {
     int y;
     int i;
     int j;
+    int numGames;
+    int numTurns;
     String test;
-    String hidden[][] = new String[x][y];
+    String hidden[][];
+    String player[][];
 
     FileInputStream fileIn = null;
     Scanner inFile = null;
@@ -20,7 +23,35 @@ public class Game_Board  {
         inFile = new Scanner(fileIn);
 
         x = inFile.nextInt();
-        y = inFile.nextInt();   
+        y = inFile.nextInt();
+        numGames = inFile.nextInt();
+        numTurns = inFile.nextInt();
+        
+        hidden = new String[x][y];
+        player = new String[x /*+ 1*/][y /*+ 1*/];
+    }
+
+    public void player(){
+        for (i = 0; i < player.length; i++){
+            for(j = 0; j < player[i].length; j++){
+                player[i][j] = "#";
+            }
+        }
+    }
+
+    public void print_player(){
+        for (i = 0; i < player.length; i++){
+            System.out.print((i + 1) +" ");
+            for(j = 0; j < player[i].length; j++){
+                System.out.print(player[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.print("  ");
+        for (i = 0; i < player.length; i++){
+            System.out.print((i + 1) + " ");
+        }
+        System.out.println();
     }
 
     public void hidden(){
