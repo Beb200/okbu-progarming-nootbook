@@ -27,6 +27,7 @@ public class App
         }*/
             for(i = 0; i < gb.numTurns; i++){
                 gb.print_player();
+                System.out.printf("Turn %d: \n", i + 1);
                 g.play(gb.hidden,gb.player);
                 g.ship_1_sunk(gb.hidden);
                 g.ship_2_sunk(gb.hidden);
