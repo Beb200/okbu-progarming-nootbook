@@ -16,6 +16,8 @@ public class The_Game {
 
     int loop = 1;
 
+    int cat = 0;
+
     Game_Board gb = new Game_Board();
 
     
@@ -169,6 +171,10 @@ public class The_Game {
             else if ((game[0][2].equals("O")) && (game[1][1].equals("O") && (game[2][0].equals("O")))){
                 winner = "O";
                 player2.win();
+            }
+            else if (!game[0][0].equals("#") && !game[0][1].equals("#") && !game[0][2].equals("#") && !game[1][0].equals("#") && !game[1][1].equals("#") && !game[1][2].equals("#") && !game[2][0].equals("#") && !game[2][1].equals("#") && !game[2][2].equals("#")){
+                cat = cat + 1;
+                winner = "Cat";
             }
             else{
                 winner = "no winner";
