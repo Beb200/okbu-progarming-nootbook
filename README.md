@@ -31,4 +31,20 @@ git add
 git commit -m ""
 git push
 
+
+Server template
+```
+const express = require("express"); // ALWAYS
+const bodyParser = require("body-parser");
+const app = express(); //ALWAYS
+
+app.use(express.json());
+app.use(bodyParser.json());
+
+
+//Start a server
+app.listen(3000, function(){
+    console.log("listening on port 3000");
+})
+```
 [GitHub / git](computer-science-1/README.md)
