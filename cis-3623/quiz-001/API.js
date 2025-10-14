@@ -86,13 +86,11 @@ let data = {
 
 export function addgame(round, series, date, score, winning_pitcher,losing_pitcher){
     console.log("start addgame");
-    if(round == "nl-wildcard"){
-        let x = 0;
-    }
-    else(round == "al-wildcard"){
-        let x = 1;
-    }
-    let game = data.round[x][y];
+    //console.log(data["nl-wildcard"]["padres-cubs"]);
+    let the_round = round;
+    let the_series = series;
+    //console.log(data[the_round][the_series]);
+    let game = data[the_round][the_series];
     console.log("get game");
     let new_game = {
         "date" : date,
@@ -101,11 +99,11 @@ export function addgame(round, series, date, score, winning_pitcher,losing_pitch
         "losing_pitcher" : losing_pitcher,
     };
     console.log("get new game")
-    console.log(game);
-    console.log(new_game);
+    //console.log(game);
+    //console.log(new_game);
     game.push(new_game);
     console.log("push game");
 
 }
-addgame("al-wildcard","reds-dodgers", "2025-10-13", "4-8", "Yamamoto","Littell");
-console.log(data["al-championship"]);
+//addgame("nl-wildcard","reds-dodgers", "2025-10-13", "4-8", "Yamamoto","Littell");
+//console.log(data["nl-wildcard"]);
