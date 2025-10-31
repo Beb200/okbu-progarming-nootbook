@@ -125,7 +125,7 @@ export function deleatgame(round, series, date){
     if (date in game){
         console.log("found date");
     }
-    //game.pop();
-    //console.log(data);
+    game.pop();
+    console.log(data);
 }
 deleatgame("nl-wildcard","reds-dodgers", "2025-09-30")
