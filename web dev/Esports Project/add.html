@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add</title>
+</head>
+
+<body>
+    <h1>Add</h1>
+    <p>Name&nbsp;<input type="text" id="game-name-input-id" value=""></text></p>
+    <p>Is it a esports game (y/n) <input type="text" id="esports-input-id"></p>
+    <p>Console <input type="text" id="console-input-id"></p>
+    <p>Genre <input type="text" id="genre-input-id"></p>
+    <input type="button" id="button-add-id" value="Add Game">
+    <a href="home_page.html"><button type="button">Home</button></a>
+
+</body>
+
+<script>
+    let add_button = document.getElementById("button-add-id");
+    add_button.addEventListener("click", async function(event){
+        console.log("add button clicked");
+        let add_game = document.getElementById("game-name-input-id");
+        let add_esports = document.getElementById("esports-input-id");
+        let add_console = document.getElementById("console-input-id");
+        let add_genre = document.getElementById("genre-input-id");
+
+        let add_game_val = add_game.value;
+        let add_esports_val = add_esports.value;
+        let add_console_val = add_console.value;
+        let add_genre_val = add_genre.value;
+
+        console.log(add_game_val);
+        console.log(add_esports_val);
+        console.log(add_console_val);
+        console.log(add_genre_val);
+    })
+        
+        
+
+</script>
+
+</html>

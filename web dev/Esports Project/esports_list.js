@@ -1,0 +1,54 @@
+const express = require("express"); // ALWAYS
+const bodyParser = require("body-parser");
+const app = express(); //ALWAYS
+
+app.use(express.json());
+app.use(bodyParser.json());
+
+let list = {
+    games : {
+        "overwatch" : {esport : "yes", console : "pc, xbox, playstation, switch", genre : "hero shoter"},
+        "fortnight" : {esport : "yes", console : "pc, xbox, playstation", genre : "battle rolayl"}
+    }
+}
+
+
+app.get("/get-list", function(req,res){ //showing the list
+    let the_return_data = {
+        status :"ok",
+        the_games : list
+    }
+    res.json(the_return_data);
+})
+
+app.post("/add-game", function(req,res){ //add a game to the list
+    console.log(req.body.name); // test the name
+    console.log(req.body.esport); //test esport
+    console.log(req.body.console); //test console
+    console.log(req.body.genre); // test genre
+
+    let name = req.body.name;
+    let esport_val = req.body.esport;
+    let console_val = req.body.console;
+    let genre_val = req.body.genre;
+
+    let new_game = {//formates the vals into a map
+        games : {
+            name : { esport : esport_val, console : console_val, genre : genre_val}
+            }
+    }
+    console.log(new_game);//test new_game
+
+    //list.games.set(new_game);
+
+    let r_d = {
+        status : "ok",
+
+    }
+    res.json(r_d);
+})
+
+//Start a server
+app.listen(3000, function(){
+    console.log("listening on port 3000");
+})
