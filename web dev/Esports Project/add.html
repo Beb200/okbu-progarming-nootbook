@@ -36,6 +36,22 @@
         console.log(add_esports_val);
         console.log(add_console_val);
         console.log(add_genre_val);
+
+        let response = await fetch("http://localhost:3000/add-game",{
+            method : "POST",
+            headers: {
+                'Accept' : "application/json",
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify({
+                name : add_name_val,
+                esport : add_esport_val,
+                console : add_console_val,
+                genre : add_genre_val
+            })
+    });
+    let the_data = await response.json();
+    console.log(the_data);
     })
         
         
