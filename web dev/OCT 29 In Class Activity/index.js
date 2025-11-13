@@ -58,7 +58,7 @@ sub_button.addEventListener("click", async function (event) {
         let y_val = parseInt(y_input_text.value);
         console.log("Going to subtract " + x_val + " and " + y_val);
 
-        let response = await fetch("http://localhost:3000/add-numbers", {
+        let response = await fetch("http://localhost:3000/sub-numbers", {
             method: "POST",
             headers: {
                 'Accept' : 'application/json',

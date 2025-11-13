@@ -2,6 +2,9 @@ const express = require("express"); // ALWAYS
 const bodyParser = require("body-parser");
 const app = express(); //ALWAYS
 
+const cors = require('cors');
+app.use(cors)
+
 app.use(express.json());
 app.use(bodyParser.json());
 
@@ -38,12 +41,13 @@ app.post("/add-game", function(req,res){ //add a game to the list
             }
     }
     console.log(new_game);//test new_game
+    console.log("received a request to add game");
 
     //list.games.set(new_game);
 
     let r_d = {
         status : "ok",
-
+        game : new_game
     }
     res.json(r_d);
 })
