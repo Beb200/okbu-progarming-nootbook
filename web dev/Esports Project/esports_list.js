@@ -1,21 +1,27 @@
 const express = require("express"); // ALWAYS
 const bodyParser = require("body-parser");
-const app = express(); //ALWAYS
+const app = express(); // ALWAYS
 
-const cors = require('cors');
-app.use(cors)
+const cors = require('cors'); // MIDDLEWARE TO HANDLE CROSS DOMAIN ERRORS
+app.use(cors());
 
 app.use(express.json());
 app.use(bodyParser.json());
 
+/**
 let list = {
     games : {
         "overwatch" : {esport : "yes", console : "pc, xbox, playstation, switch", genre : "hero shoter"},
         "fortnight" : {esport : "yes", console : "pc, xbox, playstation", genre : "battle rolayl"}
     }
 }
+ */
 
+app.get('/', (req, res) => {
+  res.send('Hello from the default endpoint!');
+});
 
+/**
 app.get("/get-list", function(req,res){ //showing the list
     let the_return_data = {
         status :"ok",
@@ -23,8 +29,10 @@ app.get("/get-list", function(req,res){ //showing the list
     }
     res.json(the_return_data);
 })
+*/
 
 app.post("/add-game", function(req,res){ //add a game to the list
+    console.log("Adding a game")
     console.log(req.body.name); // test the name
     console.log(req.body.esport); //test esport
     console.log(req.body.console); //test console
@@ -52,7 +60,6 @@ app.post("/add-game", function(req,res){ //add a game to the list
     res.json(r_d);
 })
 
-//Start a server
-app.listen(3000, function(){
-    console.log("listening on port 3000");
-})
+app.listen(3000, function() {
+    console.log("Listening on port 3000");
+});
