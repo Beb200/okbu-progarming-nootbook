@@ -9,12 +9,13 @@
 
 <body>
     <h1>Add</h1>
-    <p>Name&nbsp;<input type="text" id="game-name-input-id" value=""></text></p>
-    <p>Is it a esports game (y/n) <input type="text" id="esports-input-id"></p>
-    <p>Console <input type="text" id="console-input-id"></p>
-    <p>Genre <input type="text" id="genre-input-id"></p>
+    <p>Name&nbsp;<input type="text" id="game-name-input-id" value="ow"></text></p>
+    <p>Is it a esports game (y/n) <input type="text" id="esports-input-id" value="y"></p>
+    <p>Console <input type="text" id="console-input-id" value="pc"></p>
+    <p>Genre <input type="text" id="genre-input-id" value="fps"></p>
     <input type="button" id="button-add-id" value="Add Game"><br><br>
     <div id="added-game-id"></div>
+    <div id="added-game-name-id"></div>
     <a href="home_page.html"><button type="button">Home</button></a>
 
 </body>
@@ -55,10 +56,17 @@
     console.log(the_data);
     let game = the_data.game;
     console.log("the added game is:" + game);
+    //let name = game["name"];
+    //console.log(name);
     let added_game = document.getElementById("added-game-id");
     let show_game = document.createElement("p");
-    show_game.innerHTML = "The added game is: " + game ;
+    show_game.innerHTML = "The added game is: " + game;
     added_game.appendChild(show_game);
+
+    let added_game_name =document.getElementById("added-game-name-id");
+    show_name = document.createElement("p");
+    show_name.textContent = game.name;
+added_game_name.appendChild(show_name);
     })
         
         

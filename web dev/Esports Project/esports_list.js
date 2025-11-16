@@ -8,28 +8,30 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 
-/**
+
 let list = {
     games : {
         "overwatch" : {esport : "yes", console : "pc, xbox, playstation, switch", genre : "hero shoter"},
         "fortnight" : {esport : "yes", console : "pc, xbox, playstation", genre : "battle rolayl"}
     }
 }
- */
+ 
 
 app.get('/', (req, res) => {
   res.send('Hello from the default endpoint!');
 });
 
-/**
+
 app.get("/get-list", function(req,res){ //showing the list
+    console.log("getting list");
+    console.log(list);
     let the_return_data = {
         status :"ok",
         the_games : list
     }
     res.json(the_return_data);
 })
-*/
+
 
 app.post("/add-game", function(req,res){ //add a game to the list
     console.log("Adding a game")
@@ -51,7 +53,7 @@ app.post("/add-game", function(req,res){ //add a game to the list
     console.log(new_game);//test new_game
     console.log("received a request to add game");
 
-    //list.games.set(new_game);
+    list.games.set(new_game);
 
     let r_d = {
         status : "ok",
