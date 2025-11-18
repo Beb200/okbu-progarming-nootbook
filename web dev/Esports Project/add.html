@@ -46,10 +46,10 @@
                 'Content-Type' : 'application/json'
             },
             body: JSON.stringify({
-                name : add_name_val,
-                esport : add_esports_val,
-                console : add_console_val,
-                genre : add_genre_val
+                name : add_name.value,
+                esport : add_esports.value,
+                console : add_console.value,
+                genre : add_genre.value
             })
     });
     let the_data = await response.json();
@@ -66,7 +66,7 @@
     let added_game_name =document.getElementById("added-game-name-id");
     show_name = document.createElement("p");
     show_name.textContent = game.name;
-added_game_name.appendChild(show_name);
+    added_game_name.appendChild(show_name);
     })
         
         
