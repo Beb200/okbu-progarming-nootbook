@@ -16,6 +16,7 @@ table, th, td {
 <body>
     <h1>list</h1>
     <input id="get-list-button" type="button" value="Show List">
+    <div id="table-div"></div>
     <table id="table-id">
         <caption>Esports List</caption>
 
@@ -65,20 +66,27 @@ table, th, td {
         });
         let the_data = await response.json();
         let status = the_data.status;
-        let the_points = the_data.the_games.games;
+        let the_games = the_data.the_games.games;
     
         console.log(the_data); //prints the raw data
         console.log("the status: "+ status); //shows the status 
-        console.log(the_points); //prints list to console
+        console.log(the_games); //prints list to console
+
+        let first_name = the_data.the_games.games[0];
+        console.log(first_name);
+
+        for (let i= 0; i< the_games.length; i++){
+            console.log(the_games[i]);
+        }
 
         //let the_list = document.getElementById("list-div");
         //let get_list = document.createElement("table");
         //get_list.innerText = ("the list: " + the_points);
         //the_list.appendChild(get_list);
 
-        for(let i = 0; i <= 3; i++){
-            console.log("the points:" + the_points[i].games);
-        }
+        //for(let i = 0; i <= 3; i++){
+        //    console.log("the points:" + the_points[i].games);
+        //}
     
 
         let the_list = document.getElementById("table-id");

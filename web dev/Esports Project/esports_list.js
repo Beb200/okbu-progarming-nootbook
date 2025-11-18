@@ -10,10 +10,10 @@ app.use(bodyParser.json());
 
 
 let list = {
-    games : {
-        "overwatch" : {esport : "yes", console : "pc, xbox, playstation, switch", genre : "hero shoter"},
-        "fortnight" : {esport : "yes", console : "pc, xbox, playstation", genre : "battle rolayl"}
-    }
+    games : [
+        {"overwatch" : {esport : "yes", console : "pc, xbox, playstation, switch", genre : "hero shoter"}},
+        {"fortnight" : {esport : "yes", console : "pc, xbox, playstation", genre : "battle rolayl"}}
+    ]
 }
  
 
