@@ -1,0 +1,10 @@
+        {
+          "name": "practice-app",
+          "version": "1.0.0",
+          "type": "module", 
+          "main": "./api.js",
+          "scripts": {
+            "start": "node app.js"
+          },
+          "dependencies": {}
+        }
