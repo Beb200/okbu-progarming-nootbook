@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 003</title>
+</head>
+<body>
+    <!--
+    This client is to interact with the server defined in app.js via the endpoint function-001
+    Write HTML below to collect the information required by the server and display the results returned from the server
+    How you collect the data is up to you
+    How you display the information returned from the server is up to you
+    You do not need to do any styling
+    You should not need to modify the server
+    -->
+    <label>Name: </label><input id="name" value="caleb"><br>
+    <label>Hometown: </label><input id="hometown" value="shawnee"><br>
+    <label>Age: </label><input id="age" value="20"><br>
+
+    <input type="button" id="sumit" value="sumit">
+    <div id="show_description"></div>
+</body>
+
+<script>
+    let name = document.getElementById("name");
+    let hometown = document.getElementById("hometown");
+    let age = document.getElementById("age");
+    let sumit = document.getElementById("sumit");
+
+    sumit.addEventListener("click", async function (event){
+        console.log("clicked");
+        console.log(name.value);
+        console.log(hometown.value);
+        console.log(age.value);
+
+        let response = await fetch("http://localhost:3000/function-001",{
+            method: "POST",
+            headers: {
+                'Accept' : 'application/json',
+                'Content-Type' : 'application/json'
+            },
+
+            body: JSON.stringify({
+                name : name.value,
+                hometown: hometown.value,
+                age : age.value
+            })
+        })
+
+        let the_data = await response.json();
+        console.log(the_data);
+        let the_description = the_data.the_description;
+        console.log(the_description);
+
+        let show_description = document.getElementById("show_description");
+        let description = document.createElement("p");
+        description.innerHTML = the_description;
+        show_description.appendChild(description);
+
+    
+    });
+
+     
+
+</script>
+</html>
