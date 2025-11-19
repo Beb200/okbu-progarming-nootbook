@@ -107,3 +107,25 @@ export function addgame(round, series, date, score, winning_pitcher,losing_pitch
 }
 //addgame("nl-wildcard","reds-dodgers", "2025-10-13", "4-8", "Yamamoto","Littell");
 //console.log(data["nl-wildcard"]);
+
+export function deleatgame(round, series, date){
+    console.log("sart deleatgame");
+    let the_round = round;
+    let the_series = series;
+    let the_date = date;
+    let game = data[the_round][the_series];
+    console.log("get game");
+    console.log(game);
+    //let game_date = game[the_date];
+    //console.log(game_date);
+    //let index_data = game.indexOf("date");
+    //console.log(index_data);
+    let data_test = Object.keys(game);
+    console.log(data_test);
+    if (date in game){
+        console.log("found date");
+    }
+    game.pop();
+    console.log(data);
+}
+deleatgame("nl-wildcard","reds-dodgers", "2025-09-30")

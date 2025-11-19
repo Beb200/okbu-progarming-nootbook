@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>list</title>
+</head>
+
+<style> 
+table, th, td { 
+   border: 2px solid gray; 
+} 
+</style>
+
+<body>
+    <h1>list</h1>
+    <input id="get-list-button" type="button" value="Show List">
+    <div id="table-div"></div>
+    <table id="table-id">
+        <caption>Esports List</caption>
+
+        <tr>
+            <th>Name</th>
+            <th>Compeded</th>
+            <th>Console</th>
+            <th>Genre</th>
+        </tr>
+
+        <tr>
+            <td id="td-1.1"></td>
+            <td id="td-1.2"></td>
+            <td id="td-1.3"></td>
+            <td id="td-1.4"></td>
+        </tr>
+
+        <tr>
+            <td id="td-2.1"></td>
+            <td id="td-2.2"></td>
+            <td id="td-2.3"></td>
+            <td id="td-2.4"></td>
+        </tr>
+
+        <tr>
+            <td id="td-3.1"></td>
+            <td id="td-3.2"></td>
+            <td id="td-3.3"></td>
+            <td id="td-3.4"></td>
+        </tr>
+    </table>
+    <div id="list-div"></div>
+    <a href="home_page.html"><button type="button">Home</button></a>
+</body>
+
+<script>
+    let list_button = document.getElementById("get-list-button");
+    list_button.addEventListener("click", async function (event){
+        console.log("list button clicked");
+
+        let response = await fetch("http://localhost:3000/get-list",{
+            method : "GET",
+            headers: {
+                'Accept' : 'application/json',
+                'Content-Type' : 'application/json'
+            },
+        });
+        let the_data = await response.json();
+        let status = the_data.status;
+        let the_games = the_data.the_games.games;
+    
+        console.log(the_data); //prints the raw data
+        console.log("the status: "+ status); //shows the status 
+        console.log(the_games); //prints list to console
+
+        let first_name = the_data.the_games.games[0];
+        console.log(first_name);
+
+        for (let i= 0; i< the_games.length; i++){
+            console.log(the_games[i]);
+        }
+
+        //let the_list = document.getElementById("list-div");
+        //let get_list = document.createElement("table");
+        //get_list.innerText = ("the list: " + the_points);
+        //the_list.appendChild(get_list);
+
+        //for(let i = 0; i <= 3; i++){
+        //    console.log("the points:" + the_points[i].games);
+        //}
+    
+
+        let the_list = document.getElementById("table-id");
+        let td_1_1 = document.getElementById("td-1.1");
+        let td_1_2 = document.getElementById("td-1.2");
+        let td_1_3 = document.getElementById("td-1.3");
+        let td_1_4 = document.getElementById("td-1.4");
+
+        let td_2_1 = document.getElementById("td-2.1");
+        let td_2_2 = document.getElementById("td-2.2");
+        let td_2_3 = document.getElementById("td-2.3");
+        let td_2_4 = document.getElementById("td-2.4");
+
+        let td_3_1 = document.getElementById("td-3.1");
+        let td_3_2 = document.getElementById("td-3.2");
+        let td_3_3 = document.getElementById("td-3.3");
+        let td_3_4 = document.getElementById("td-3.4");
+
+
+    });
+
+</script>
+
+</html>

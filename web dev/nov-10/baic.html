@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+</head>
+
+<body>
+    <h1>Quiz</h1>
+    <p>Question 1:</p>
+    <label>Question?</label> <input type="text" id="Q-1"><br>
+    <p>Question</p>
+    <label>Question?</label> <input type="text" id="Q-2"><br>
+    <input type="button" id="button" value="sumit">
+</body>
+
+<script>
+    let simit_button = document.getElementById("button");
+    simit_button.addEventListener("click", async function(event){
+        console.log("clicked");
+        let Q1 = document.getElementById("Q-1");
+        let Q2 = document.getElementById("Q-2");
+
+        let response = await fetch("http://localhost:3000/get-anwsers", {
+            method: "POST",
+            headers: {
+                'Accept' : 'application/json',
+                'Content-Type' : 'application/json'
+            },
+
+            body: JSON.stringify({
+                Q1 : Q1_val,
+                Q2: Q1_val
+            })
+        });
+    })
+
+</script>
+
+</html>

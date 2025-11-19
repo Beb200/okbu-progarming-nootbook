@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+</head>
+
+<body>
+    <label>Enter x: </label><input type="number" id="x-input-id"><br>
+    <label>enter y: </label><input type="number" id="y-input"><br>
+    <input type="button" id="add" value="add"><br>
+    
+</body>
+
+<script>
+    let add = document.getElementById("add")
+    add.addEventListener("click", function(event){
+        console.log("cliked");
+        let x = document.getElementById("x-input-id");
+        let x_val = x.value;
+        console.log(x_val);
+    })
+
+
+</script>
+
+</html>
