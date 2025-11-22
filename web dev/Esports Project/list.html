@@ -72,11 +72,16 @@ table, th, td {
         console.log("the status: "+ status); //shows the status 
         console.log(the_games); //prints list to console
 
-        let first_name = the_data.the_games.games[0];
-        console.log(first_name);
+        let table_div = document.getElementById("table-div");
+        let table = document.createElement("table");
 
         for (let i= 0; i< the_games.length; i++){
             console.log(the_games[i]);
+            console.log(the_games[i].name);
+            console.log(the_games[i].esport);
+            console.log(the_games[i].console);
+            console.log(the_games[i].genre);
+
         }
 
         //let the_list = document.getElementById("list-div");
