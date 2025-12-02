@@ -13,6 +13,7 @@ public class App
         int i;
         Game_Board gb = new Game_Board();              
         The_Game tg = new The_Game();
+        Compter_Player cp = new Compter_Player();
 
         gb.board();
         tg.initialize("inFile.txt");
@@ -33,15 +34,20 @@ public class App
                 if (tg.winner.equals("X")){
                     break;
                 }
-
-                tg.player2Turn(gb.game);
+                
+                //tg.player2Turn(gb.game);
+                cp.com_player(gb.game);
                 System.out.println(gb.Display());
                 System.out.println();
                 tg.winner(gb.game);
+                
+
+                
             }
             System.out.printf("The winner is %s\n",tg.winner);
         }
         System.out.printf("%s wins: %d\n",tg.player1.name, tg.player1.wins);
         System.out.printf("%s wins; %d\n",tg.player2.name,tg.player2.wins);
+        System.out.printf("Cat: %d", tg.cat);
     }
 }
