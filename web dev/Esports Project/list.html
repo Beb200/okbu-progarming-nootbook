@@ -17,6 +17,7 @@ table, th, td {
     <h1>list</h1>
     <input id="get-list-button" type="button" value="Show List">
     <div id="table-div"></div>
+    <!--
     <table id="table-id">
         <caption>Esports List</caption>
 
@@ -48,6 +49,7 @@ table, th, td {
             <td id="td-3.4"></td>
         </tr>
     </table>
+    -->
     <div id="list-div"></div>
     <a href="home_page.html"><button type="button">Home</button></a>
 </body>
@@ -68,13 +70,32 @@ table, th, td {
         let status = the_data.status;
         let the_games = the_data.the_games.games;
     
-        console.log(the_data); //prints the raw data
-        console.log("the status: "+ status); //shows the status 
-        console.log(the_games); //prints list to console
+        //console.log(the_data); //prints the raw data
+        //console.log("the status: "+ status); //shows the status 
+        //console.log(the_games); //prints list to console
 
         let table_div = document.getElementById("table-div");
         let table = document.createElement("table");
 
+        let thead = document.createElement("thead");
+        let headR = document.createElement("tr");
+        let th_name = document.createElement("th");
+        th_name.textContent = "Name";
+        let th_esport = document.createElement("th");
+        th_esport.textContent = "Esports";
+        let th_console = document.createElement("th");
+        th_console.textContent = "Console";
+        let th_genre = document.createElement("th");
+        th_genre.textContent = "Genre";
+        headR.appendChild(th_name);
+        headR.appendChild(th_esport);
+        headR.appendChild(th_console);
+        headR.appendChild(th_genre);
+
+        table.appendChild(headR);
+
+        let tbody = document.createElement("tbody");
+ 
         for (let i= 0; i< the_games.length; i++){
             console.log(the_games[i]);
             console.log(the_games[i].name);
@@ -82,7 +103,29 @@ table, th, td {
             console.log(the_games[i].console);
             console.log(the_games[i].genre);
 
+            let table_row = document.createElement("tr");
+            for (let j = 0; j < 4; j++){
+                let table_cell = document.createElement("td");
+                if (j == 0){
+                    text = the_games[i].name;
+                }
+                else if(j == 1){
+                    text = the_games[i].esport; 
+                }
+                else if(j == 2){
+                    text = the_games[i].console; 
+                }
+                else if(j == 3){
+                    text = the_games[i].genre; 
+                }
+                table_cell.textContent = text;
+
+                table_row.appendChild(table_cell);
+            }
+            tbody.appendChild(table_row);
         }
+        table.appendChild(tbody);
+        table_div.appendChild(table);
 
         //let the_list = document.getElementById("list-div");
         //let get_list = document.createElement("table");
