@@ -9,20 +9,20 @@
 
 <body>
     <h1>Update</h1>
-    <p>finded game: <select id="game-search-id"></p>
-        <option value="choice a game" id="choice-update-id" selected>choice a game</option>
-        <option value="game1" id="game1-id">game1</option>
-        <option value="game2" id="game2-id">game2</option>
-    </select>
-    <p>Update Game:</p>
-    <p>Name&nbsp;<input type="text" id="game-name-input-id" value="enter the game name"></text></p>
-    <p>Is it a esports game (y/n) <input type="text" id="esports-input-id"></p>
-    <p>Console <input type="text" id="console-input-id"></p>
-    <p>Genre <input type="text" id="genre-input-id"></p>
+    <p>Find Game:</p> <input type="text" id="find-game-id"><br>
+    <input type="button" id="find-game-b" value="sumit"><br>
+    <div id="shown-game"></div><br>
+    <p>What Value: </p>
+    <input type="radio" name="Name">
+
     <a href="home_page.html"><button type="button">Home</button></a>
 </body>
 
 <script>
+    let findGameButton = document.getElementById("find-game-b");
+    findGameButton.addEventListener("click", async function(event){
+        let findGame = document.getElementById("fing-gmae-id");
+    });
 
 </script>
 

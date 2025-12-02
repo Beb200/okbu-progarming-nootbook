@@ -9,17 +9,59 @@
 
 <body>
     <h1>Delete</h1>
+    <!--
     <p>finded game: <select id="game-search-id"></p>
-        <option value="choice a game" id="choice -delete-id" selected>choice a game</option>
+        <option value="choice a game" id="choice-delete-id" selected>choice a game</option>
         <option value="game1" id="game1-id">game1</option>
         <option value="game2" id="game2-id">game2</option>
     </select>
-    <button type="submit">Delete</button>
+-->
+    <button type="button" id="delete-id">Delete</button>
     <br>
+
+    <p>Name: <input type="text" id="game-name-input-id" value="fortnight"></text></p>
+    <!--<p>Is it a esports game (y/n) <input type="text" id="esports-input-id" value="y"></p>
+    <p>Console <input type="text" id="console-input-id" value="pc"></p>
+    <p>Genre <input type="text" id="genre-input-id" value="fps"></p>
+    
+
+    <div></div>
+-->
     <a href="home_page.html"><button type="button">Home</button></a>
 </body>
 
 <script>
+    let Delete = document.getElementById("delete-id");
+    Delete.addEventListener("click", async function(event){
+        console.log("delete button clicked");
+        let delete_name = document.getElementById("game-name-input-id");
+        /*let delete_esports = document.getElementById("esports-input-id");
+        let delete_console = document.getElementById("console-input-id");
+        let delete_genre = document.getElementById("genre-input-id");
+
+        let delete_name_val = delete_name.value;
+        let delete_esports_val = delete_esports.value;
+        let delete_console_val = delete_console.value;
+        let delete_genre_val = delete_genre.value;
+
+        console.log(delete_name_val);
+        console.log(delete_esports_val);
+        console.log(delete_console_val);
+        console.log(delete_genre_val);
+        */
+        let response = await fetch("http://localhost:3000/delete-game", {
+        method: "POST",
+        headers: {
+            'Accept' : 'application/json',
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({
+            name: delete_name.value,
+        })
+    });
+    let the_data = await response.json();
+    console.log(the_data);
+    });
 
 </script>
 
