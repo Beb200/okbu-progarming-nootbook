@@ -78,7 +78,51 @@ app.post("/delete-game", function(req, res) {
         status: "OK"
     }
     res.json(the_return_data);
+});
+
+app.post("/get-update-game", function(req, res) {
+    console.log("/getting-update-game");
+    //console.log(req.body);
+
+    let updateGame;
+    let updateGame_num;
+
+    for (i = 0; i < list.games.length; i++){
+        if (list.games[i].name == req.body.name){
+            console.log("getting: "+ list.games[i].name);
+            updateGame = list.games[i]
+            updateGame_num = i;
+            console.log(updateGame);
+        }
+    }
+
+    let the_return_data = {
+        status: "OK",
+        game : updateGame,
+        num : updateGame_num
+    }
+    res.json(the_return_data);
 })
+
+app.post("/update-game", function(req, res) {
+    console.log("/updating game");
+    //console.log(req.body);
+    num = req.body.num
+    console.log(req.body.name);
+    console.log(list.games[num].name);
+    list.games[num].name = req.body.name;
+    list.games[num].esport = req.body.esport;
+    list.games[num].console = req.body.console;
+    list.games[num].genre = req.body.genre
+    console.log(list.games[num]);
+
+
+    let the_return_data = {
+        status: "OK"
+    }
+    res.json(the_return_data);
+})
+
 
 app.listen(3000, function() {
     console.log("Listening on port 3000");
