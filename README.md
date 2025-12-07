@@ -31,6 +31,15 @@ git add
 git commit -m ""
 git push
 
+to move down a up a level in termial:
+```
+cd ..
+```
+TO move to a diferent drive (C:to D:)
+```
+D:
+```
+
 
 Server template
 ```

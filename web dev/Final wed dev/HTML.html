@@ -9,14 +9,37 @@
 
 <body>
     <h1>Compuny Data:</h1>
-    <p>Name Of Job</p><input id="jobName" type="text"><br>,ko
-    <input type="button" id="button">
+    <p>Name Of Job</p><input id="jobName" type="text" value="AI Engineer"><br>
+    <input type="button" id="button" value="check">
+    <div id="answer"></div>
 
 <script>
     let but = document.getElementById("button");
+
+    let getanswer = document.getElementById("answer");
+    let elemntanswer = document.createElement('p');
+
     but.addEventListener("click", async function (event) {
         console.log("button clicked");
+        let jobName = document.getElementById("jobName");
+
+        let response = await fetch("http://localhost:3000/getNumJobPeople", {
+            method: "POST",
+            headers: {
+                'Accept' : 'application/json',
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify({
+                Name : jobName.value
+            })
+        });
+        let the_data = await response.json();
+        console.log(the_data);
+        
+        elemntanswer.textContent = "The number of people that have this job are " + the_data.num;
+        getanswer.appendChild(elemntanswer);
     })
+    
 
 </script>
 
