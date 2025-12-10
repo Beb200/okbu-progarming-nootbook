@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 
-const Data = require('./data.json');
+const Data = require('./data v2.json');
 
 app.post("/getNumJobPeople", function(req, res) {
     console.log("/post-example");
