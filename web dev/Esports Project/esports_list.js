@@ -35,22 +35,20 @@ app.get("/get-list", function(req,res){ //showing the list
 
 app.post("/add-game", function(req,res){ //add a game to the list
     console.log("Adding a game")
-    console.log(req.body.name); // test the name
-    console.log(req.body.esport); //test esport
-    console.log(req.body.console); //test console
-    console.log(req.body.genre); // test genre
+    //console.log(req.body.name); // test the name
+    //console.log(req.body.esport); //test esport
+    //console.log(req.body.console); //test console
+    //console.log(req.body.genre); // test genre
 
     let name_val = req.body.name;
     let esport_val = req.body.esport;
     let console_val = req.body.console;
     let genre_val = req.body.genre;
 
-    let new_game = {//formates the vals into a map
-        games : [
+    let new_game = //formates the vals into a map
             {name : name_val,  esport : esport_val, console : console_val, genre : genre_val}
-        ]
-    }
-    console.log(new_game);//test new_game
+    
+    //console.log(new_game);//test new_game
     console.log("received a request to add game");
 
     list.games.push(new_game);
@@ -61,6 +59,70 @@ app.post("/add-game", function(req,res){ //add a game to the list
     }
     res.json(r_d);
 })
+
+app.post("/delete-game", function(req, res) {
+    console.log("getting request to delete game");
+    console.log(req.body.name);
+    //let dname = list.games[1].name;
+    //console.log(dname);
+
+    for (i = 0; i < list.games.length; i++){
+        //console.log(list.games[i].name);
+        if (list.games[i].name == req.body.name){
+            console.log("deleting: "+ list.games[i].name);
+            list.games.splice(i,1);
+        }
+    }
+
+    let the_return_data = {
+        status: "OK"
+    }
+    res.json(the_return_data);
+});
+
+app.post("/get-update-game", function(req, res) {
+    console.log("/getting-update-game");
+    //console.log(req.body);
+
+    let updateGame;
+    let updateGame_num;
+
+    for (i = 0; i < list.games.length; i++){
+        if (list.games[i].name == req.body.name){
+            console.log("getting: "+ list.games[i].name);
+            updateGame = list.games[i]
+            updateGame_num = i;
+            console.log(updateGame);
+        }
+    }
+
+    let the_return_data = {
+        status: "OK",
+        game : updateGame,
+        num : updateGame_num
+    }
+    res.json(the_return_data);
+})
+
+app.post("/update-game", function(req, res) {
+    console.log("/updating game");
+    //console.log(req.body);
+    num = req.body.num
+    console.log(req.body.name);
+    console.log(list.games[num].name);
+    list.games[num].name = req.body.name;
+    list.games[num].esport = req.body.esport;
+    list.games[num].console = req.body.console;
+    list.games[num].genre = req.body.genre
+    console.log(list.games[num]);
+
+
+    let the_return_data = {
+        status: "OK"
+    }
+    res.json(the_return_data);
+})
+
 
 app.listen(3000, function() {
     console.log("Listening on port 3000");

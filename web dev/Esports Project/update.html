@@ -7,23 +7,118 @@
     <title>update</title>
 </head>
 
+<style>
+    body {
+        background-image: url(Logo.png), url("Background_image.png");
+        background-repeat: no-repeat, no-repeat;
+        background-size: auto, cover;
+        background-position: top right;
+        text-align: center;
+    }
+    h1{
+        color: white;
+    }
+    p{
+        color: white;
+    }
+</style>
+
 <body>
     <h1>Update</h1>
-    <p>finded game: <select id="game-search-id"></p>
-        <option value="choice a game" id="choice-update-id" selected>choice a game</option>
-        <option value="game1" id="game1-id">game1</option>
-        <option value="game2" id="game2-id">game2</option>
-    </select>
-    <p>Update Game:</p>
-    <p>Name&nbsp;<input type="text" id="game-name-input-id" value="enter the game name"></text></p>
-    <p>Is it a esports game (y/n) <input type="text" id="esports-input-id"></p>
-    <p>Console <input type="text" id="console-input-id"></p>
-    <p>Genre <input type="text" id="genre-input-id"></p>
+    <p>Find Game:</p> <input type="text" id="find-game-id" value="overwatch"><br>
+    <input type="button" id="find-game-b" value="sumit"><br>
+    <div id="name-text-box"></div><br>
+    <div id="esport-text-box"></div><br>
+    <div id="console-text-box"></div><br>
+    <div id="genre-text-box"></div><br>
+    <div id="button-div"></div>
+<!--
+    <p>What Value: </p>
+    <input type="radio" name="updateGame" value="name" id="name">
+    <input type="radio" name="updateGame" value="esoprt" id="esport">
+    <input type="radio" name="updateGame" value="console" id="console">
+    <input type="radio" name="updateGame" value="genre" id="genre">
+-->
+
+
     <a href="home_page.html"><button type="button">Home</button></a>
 </body>
 
 <script>
+    let updateGame;
+    let num;
+    let findGameButton = document.getElementById("find-game-b");
+    findGameButton.addEventListener("click", async function(event){
+        let findGame = document.getElementById("find-game-id");
 
+        let response = await fetch("http://localhost:3000/get-update-game", {
+            method: "POST",
+            headers: {
+                'Accept' : 'application/json',
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify({
+                name : findGame.value
+            })
+        });
+        let the_data = await response.json();
+        console.log(the_data);
+        updateGame = the_data.game;
+        console.log(updateGame);
+        num = the_data.num;
+        console.log(num);
+        
+
+        let div_name_text_box = document.getElementById("name-text-box");
+        let name_text_box = document.createElement("textarea");
+        name_text_box.textContent = updateGame.name;
+        div_name_text_box.appendChild(name_text_box);
+
+        let div_esport_text_box = document.getElementById("esport-text-box");
+        let esport_text_box = document.createElement("textarea");
+        esport_text_box.textContent = updateGame.esport;
+        div_esport_text_box.appendChild(esport_text_box);
+
+        let div_console_text_box = document.getElementById("console-text-box");
+        let console_text_box = document.createElement("textarea");
+        console_text_box.textContent = updateGame.console;
+        div_console_text_box.appendChild(console_text_box);
+
+        let div_genre_text_box = document.getElementById("genre-text-box");
+        let genre_text_box = document.createElement("textarea");
+        genre_text_box.textContent = updateGame.genre;
+        div_genre_text_box.appendChild(genre_text_box);
+
+        let update_button = document.getElementById("button-div");
+        let the_button = document.createElement("button")
+        the_button.textContent = "update";
+        the_button.id = "update-button"
+        update_button.appendChild(the_button);
+        console.log(update_button);
+
+        let updateGameButton = document.getElementById("update-button");
+        updateGameButton.addEventListener("click", async function (event){
+            console.log("update button clicked")
+
+            let response = await fetch("http://localhost:3000/update-game", {
+                method: "POST",
+                headers: {
+                    'Accept' : 'application/json',
+                    'Content-Type' : 'application/json'
+                },
+                body: JSON.stringify({
+                    num : num,
+                    name : name_text_box.value,
+                    esport : esport_text_box.value,
+                    console : console_text_box.value,
+                    genre : genre_text_box.value
+                })
+            });
+            let the_data = await response.json();
+            console.log(the_data);
+        })
+    });
+    
 </script>
 
 </html>

@@ -7,6 +7,25 @@
     <title>Add</title>
 </head>
 
+<style> 
+    body {
+        background-image: url(Logo.png), url("Background_image.png");
+        background-repeat: no-repeat, no-repeat;
+        background-size: auto, cover;
+        background-position: top right;
+        text-align: center;
+    }
+    h1{
+        color: white;
+    }
+    table, th, td { 
+        border: 2px solid gray; 
+    }
+    p{
+        color: white;
+    } 
+</style>
+
 <body>
     <h1>Add</h1>
     <p>Name&nbsp;<input type="text" id="game-name-input-id" value="ow"></text></p>
@@ -15,7 +34,7 @@
     <p>Genre <input type="text" id="genre-input-id" value="fps"></p>
     <input type="button" id="button-add-id" value="Add Game"><br><br>
     <div id="added-game-id"></div>
-    <div id="added-game-name-id"></div>
+    <div id="added-game-table-id"></div>
     <a href="home_page.html"><button type="button">Home</button></a>
 
 </body>
@@ -60,13 +79,50 @@
     //console.log(name);
     let added_game = document.getElementById("added-game-id");
     let show_game = document.createElement("p");
-    show_game.innerHTML = "The added game is: " + game;
+    show_game.textContent = "The added game is: ";
     added_game.appendChild(show_game);
 
-    let added_game_name =document.getElementById("added-game-name-id");
-    show_name = document.createElement("p");
-    show_name.textContent = game.name;
-    added_game_name.appendChild(show_name);
+    let added_game_table =document.getElementById("added-game-table-id");
+    //show_name = document.createElement("p");
+    //show_name.textContent = game.name;
+    //added_game_name.appendChild(show_name);
+    let table = document.createElement("table");
+
+        let thead = document.createElement("thead");
+        let headR = document.createElement("tr");
+        let th_name = document.createElement("th");
+        th_name.textContent = "Name";
+        let th_esport = document.createElement("th");
+        th_esport.textContent = "Esports";
+        let th_console = document.createElement("th");
+        th_console.textContent = "Console";
+        let th_genre = document.createElement("th");
+        th_genre.textContent = "Genre"
+        headR.appendChild(th_name);
+        headR.appendChild(th_esport);
+        headR.appendChild(th_console);
+        headR.appendChild(th_genre);
+
+        table.appendChild(headR);
+
+        let tbody = document.createElement("tbody");
+        let bodyR = document.createElement("tr");
+        let td_name = document.createElement("td");
+        td_name.textContent = game.name;
+        let td_esport = document.createElement("td");
+        td_esport.textContent = game.esport;
+        let td_console = document.createElement("td");
+        td_console.textContent = game.console;
+        let td_genre = document.createElement("td");
+        td_genre.textContent = game.genre;
+        bodyR.appendChild(td_name);
+        bodyR.appendChild(td_esport);
+        bodyR.appendChild(td_console);
+        bodyR.appendChild(td_genre);
+
+        table.appendChild(bodyR)
+
+        added_game_table.appendChild(table);
     })
         
         
