@@ -66,6 +66,10 @@ app.listen(3000, function(){
     <title>Title</title>
 </head>
 
+<style>
+
+</style>
+
 <body>
     <h1></h1>
 </body>
