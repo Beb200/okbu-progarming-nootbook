@@ -8,7 +8,7 @@ import time
 import statistics
 
 #Input config
-with open('config.json', 'r') as file:
+with open('work_config.json', 'r') as file:
         config = json.load(file)
 
 # Configure logging
