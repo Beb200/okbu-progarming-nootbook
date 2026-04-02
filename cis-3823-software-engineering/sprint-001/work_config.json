@@ -1,12 +1,18 @@
 {
     "queue_url" : "https://sqs.us-east-1.amazonaws.com/216990846240/CPqueue",
     "region" : "us-east-1",
+
     "max_consecutive_errors" : 3,
     "max_no_message_error": 5,
+
     "table_name": "CIS3823Spring26Project001",
     "region_name": "us-east-1",
     "attribute": "game_id",
     "attribute_val": "cp-game-000001",
     "get_attribute1": "s3_bucket",
-    "get_attribute2": "s3_key"
+    "get_attribute2": "s3_key",
+    
+    "finished_message_config":{
+
+    }
 }
