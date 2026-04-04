@@ -6,11 +6,18 @@
     "finished_message_max_retries": 2,
 
     "rmQUEUE_URL": "https://sqs.us-east-1.amazonaws.com/216990846240/caleb-queue",
+    "max_consecutive_errors" : 3,
 
     "message_data":{
         "message_one":{
         "message_one":"message_one",
-        "message_type": "DATA"
+        "message_type": "DATA",
+        "puzzle_id": "puzzle_id",
+        "puzzle_id_val": "cp-data-001",
+        "game_id": "game_id",
+        "game_id_val": "cp-game-000001",
+        "bucket_name": "s3_bucket",
+        "object_key": "s3_key"
         },
         "message_two":{
         "message_two": "message_two",

@@ -74,7 +74,6 @@ def find_test_message():
                         with open(file_path, 'w') as json_file:
                             json.dump(data, json_file, indent=4)
                         data_worker()
-                        finished_message()
                     elif type_val == 'CIPHER':
                         logger.info("recived cipher type")
                         sqs.delete_message(
@@ -90,7 +89,6 @@ def find_test_message():
                         with open(file_path, 'w') as json_file:
                             json.dump(data, json_file, indent=4)
                         cipher_worker()
-                        finished_message()
             else:
                 print("no messages")
                 # No messages available
@@ -191,6 +189,7 @@ def data_worker():
 
 
     print("Done")
+    finished_message()
 
 def cipher_worker():
     logger.info("Starting cipher worker")
@@ -200,8 +199,9 @@ def cipher_worker():
         message = json.load(file)
     logger.info("finished getting messages")
 
-    print(message['message_id'])
+    print(message['message_type'])
     logger.info("Finished with cipher worker.")
+    finished_message()
 
 def finished_message():
     logger.info("Starting the Finished Message.")
