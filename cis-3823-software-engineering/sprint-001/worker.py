@@ -60,6 +60,7 @@ def find_test_message():
                     print("The message type:", type_val)
 
                     if type_val == 'DATA':
+                        logger.info("rescived data type")
                         sqs.delete_message(
                             QueueUrl=QUEUE_URL,
                             ReceiptHandle=message['ReceiptHandle']
@@ -73,9 +74,23 @@ def find_test_message():
                         with open(file_path, 'w') as json_file:
                             json.dump(data, json_file, indent=4)
                         data_worker()
+                        finished_message()
+                    elif type_val == 'CIPHER':
+                        logger.info("recived cipher type")
+                        sqs.delete_message(
+                            QueueUrl=QUEUE_URL,
+                            ReceiptHandle=message['ReceiptHandle']
+                        )
+                        logger.info(f"✓ Message deleted from queue")
+                        logger.info("-" * 70)
 
+                        file_path = 'queue_messages.json'
+                        data = message_body
 
-                    
+                        with open(file_path, 'w') as json_file:
+                            json.dump(data, json_file, indent=4)
+                        cipher_worker()
+                        finished_message()
             else:
                 print("no messages")
                 # No messages available
@@ -103,7 +118,7 @@ def find_test_message():
     #print(message_body)
 
 def data_worker():
-    print("starting worker")
+    print("starting data worker")
 
     print("stating getting the messages")
     with open('queue_messages.json', 'r') as file:
@@ -177,44 +192,37 @@ def data_worker():
 
     print("Done")
 
-def cipher():
-    logger.info("Starting worker")
+def cipher_worker():
+    logger.info("Starting cipher worker")
 
     logger.info("Stating getting the messages")
     with open('queue_messages.json', 'r') as file:
         message = json.load(file)
     logger.info("finished getting messages")
 
-    print(message[0]['message_id'])
+    print(message['message_id'])
     logger.info("Finished with cipher worker.")
 
 def finished_message():
     logger.info("Starting the Finished Message.")
 
     logger.info("Starting comfig.")
+    fmQUEUE_URL = config["fmQUEUE_URL"]
 
+    retries = 0
+    max_retries = config['finished_message_max_retries']
+
+    message_data = config['finished_message_data']
+    message_id = f"msg_{uuid.uuid4().hex[:8]}"
+    message_data["message_id"] = message_id
     logger.info("Ending config.")
 
     logger.info("Starting creating message.")
-    message_id = f"msg_{uuid.uuid4().hex[:8]}"
-    message_data = {
-            'message_id': f"{message_id}",
-            'message_type' : f"DATA",
-            'puzzle_id': f"puzzle_id",
-            'puzzle_id_val': f'cp-data-001',
-            'game_id': f'game_id',
-            'game_id_val': f'cp-game-000001',
-            'bucket_name': f's3_bucket',
-            'object_key': f's3_key'
-    }
-
-    retries = 0
-    max_retries = 2
     
     while retries <= max_retries:
         try:
             response = sqs.send_message(
-                QueueUrl=QUEUE_URL,
+                QueueUrl=fmQUEUE_URL,
                 MessageBody=json.dumps(message_data),
                 MessageAttributes={
                     'MessageType': {
@@ -248,6 +256,7 @@ def finished_message():
     
     #return None #was in base code but don't know what it does
     logger.info("Finished with the finished message.")
+
 
 def main():
     """Main entry point with interactive menu."""

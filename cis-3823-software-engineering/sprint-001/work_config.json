@@ -3,7 +3,7 @@
     "region" : "us-east-1",
 
     "max_consecutive_errors" : 3,
-    "max_no_message_error": 5,
+    "max_no_message_error": 3,
 
     "table_name": "CIS3823Spring26Project001",
     "region_name": "us-east-1",
@@ -11,8 +11,10 @@
     "attribute_val": "cp-game-000001",
     "get_attribute1": "s3_bucket",
     "get_attribute2": "s3_key",
-    
-    "finished_message_config":{
 
+    "fmQUEUE_URL": "https://sqs.us-east-1.amazonaws.com/216990846240/caleb-queue",
+    "finished_message_max_retries": 2,
+    "finished_message_data":{ 
+        "things": "things"
     }
 }

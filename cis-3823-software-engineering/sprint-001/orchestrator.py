@@ -16,32 +16,100 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # AWS Configuration
-QUEUE_URL = config("url")
-REGION = config("region")
+QUEUE_URL = config["url"]
+REGION = config["region"]
+message_data = {}
+
 
 # Initialize AWS clients
 sqs = boto3.client('sqs', region_name=REGION)
 
-def create_test_message():
-    message_id = f"msg_{uuid.uuid4().hex[:8]}"
-    message_data = {
-            'message_id': f"{message_id}",
-            'message_type' : f"DATA",
-            'puzzle_id': f"puzzle_id",
-            'puzzle_id_val': f'cp-data-001',
-            'game_id': f'game_id',
-            'game_id_val': f'cp-game-000001',
-            'bucket_name': f's3_bucket',
-            'object_key': f's3_key'
-    }
+def create_task_plan():
+    logger.info("starting the task plan")
+
+    task_plan = config["message_data"]
+    for key, value in task_plan.items():
+        rm = False
+        print(key)
+        print(value)
+        global message_data
+        message_data = value
+        create_message()
+        while rm == False:
+            try:
+                rmQUEUE_URL = config["rmQUEUE_URL"]
+                # Long polling for messages (reduces empty responses and costs)
+                print("geting message")
+                response = sqs.receive_message(
+                    QueueUrl=rmQUEUE_URL,
+                    MaxNumberOfMessages=1,  # Process one message at a time
+                    WaitTimeSeconds=20,      # Long polling (up to 20 seconds)
+                    VisibilityTimeout=60     # Hide message for 60 seconds while processing
+                )
+                
+                if 'Messages' in response:
+                    print("got message")
+                    consecutive_errors = 0  # Reset error counter on successful receive
+                    #no_message_error = 0 #Reset the counter on successful receive
+
+                    for message in response['Messages']:
+                        logger.info("-" * 70)
+                        message_body = json.loads(message['Body'])
+                        logger.info(message_body)
+                        
+                        type_val = message_body.get("message_type")
+                        print("The message type:", type_val)
+
+                        logger.info("rescived data type")
+                        sqs.delete_message(
+                            QueueUrl=QUEUE_URL,
+                            ReceiptHandle=message['ReceiptHandle']
+                        )
+                        logger.info(f"✓ Message deleted from queue")
+                        logger.info("-" * 70)
+                        rm = True
+                else:
+                    #print("no messages")
+                    # No messages available
+                    logger.info("No messages in queue, continuing to poll...")
+                    
+            except KeyboardInterrupt:
+                logger.info("Received shutdown signal, stopping worker...")
+                break
+                
+            except Exception as e:
+                consecutive_errors += 1
+                logger.error(f"✗ Error in main loop: {e}")
+                '''
+                if consecutive_errors >= max_consecutive_errors:
+                    logger.critical(f"Too many consecutive errors ({consecutive_errors}), shutting down")
+                    break
+                '''
+                
+                # Exponential backoff on errors
+                sleep_time = min(2 ** consecutive_errors, 60)
+                logger.info(f"Sleeping {sleep_time} seconds before retry...")
+                time.sleep(sleep_time)
+    logger.info("ending task plan")
+
+def create_message():
+    logger.info("Start first message")
+
+    logger.info("Starting comfig.")
+    firstQUEUE_URL = config["fmQUEUE_URL"]
 
     retries = 0
-    max_retries = 2
+    max_retries = config['finished_message_max_retries']
+
+    #message_data = config['message_data']
+    #message_id = f"msg_{uuid.uuid4().hex[:8]}"
+    #message_data["message_id"] = message_id
+    logger.info("Ending config.")
     
     while retries <= max_retries:
         try:
             response = sqs.send_message(
-                QueueUrl=QUEUE_URL,
+                QueueUrl=firstQUEUE_URL,
                 MessageBody=json.dumps(message_data),
                 MessageAttributes={
                     'MessageType': {
@@ -81,7 +149,9 @@ def main():
     logger.info(f"Queue URL: {QUEUE_URL}")
     logger.info(f"Region: {REGION}")
 
-    create_test_message()
+    
+    create_task_plan()
+    #create_message()
 
 
 if __name__ == "__main__":

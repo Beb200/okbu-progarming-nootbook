@@ -1,0 +1,22 @@
+{
+    "url": "https://sqs.us-east-1.amazonaws.com/216990846240/CPqueue",
+    "region": "us-east-1",
+
+    "fmQUEUE_URL": "https://sqs.us-east-1.amazonaws.com/216990846240/CPqueue",
+    "finished_message_max_retries": 2,
+
+    "rmQUEUE_URL": "https://sqs.us-east-1.amazonaws.com/216990846240/caleb-queue",
+
+    "message_data":{
+        "message_one":{
+        "message_one":"message_one",
+        "message_type": "DATA"
+        },
+        "message_two":{
+        "message_two": "message_two",
+        "message_type": "CIPHER"
+        }
+       
+
+    }
+}
