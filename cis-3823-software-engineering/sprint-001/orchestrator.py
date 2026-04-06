@@ -119,7 +119,7 @@ def receive_message():
 
                     logger.info("starting the deleting prosses")
                     sqs.delete_message(
-                        QueueUrl=QUEUE_URL,
+                        QueueUrl=rmQUEUE_URL,
                         ReceiptHandle=message['ReceiptHandle']
                     )
                     logger.info(f"✓ Message deleted from queue")
