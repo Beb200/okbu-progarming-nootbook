@@ -33,6 +33,8 @@ def create_task_plan():
         print(value)
         global message_data
         message_data = value
+        if value["task_order"] == "parallel":
+            continue
         create_message()
         receive_message()
         

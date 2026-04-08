@@ -29,6 +29,10 @@ sqs = boto3.client('sqs', region_name=REGION)
 message_body = ""
 test_message = "no message"
 
+
+def lambda_handler(event, context):
+    main()
+
 def find_test_message():
     print("stating to find message")
     max_consecutive_errors = config["max_consecutive_errors"] #3
