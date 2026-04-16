@@ -6,6 +6,11 @@ import uuid
 import logging
 import time
 import statistics
+import numpy as np
+from PIL import Image
+from stegano import exifHeader
+from io import BytesIO
+
 
 #Input config
 with open('work_config.json', 'r') as file:
@@ -29,10 +34,10 @@ sqs = boto3.client('sqs', region_name=REGION)
 message_body = ""
 test_message = "no message"
 
-
+'''
 def lambda_handler(event, context):
     main()
-
+'''
 def find_test_message():
     print("stating to find message")
     max_consecutive_errors = config["max_consecutive_errors"] #3
@@ -93,11 +98,26 @@ def find_test_message():
                         with open(file_path, 'w') as json_file:
                             json.dump(data, json_file, indent=4)
                         cipher_worker()
+                    elif type_val == 'IMAGE':
+                        logger.info("recived cipher type")
+                        sqs.delete_message(
+                            QueueUrl=QUEUE_URL,
+                            ReceiptHandle=message['ReceiptHandle']
+                        )
+                        logger.info(f"✓ Message deleted from queue")
+                        logger.info("-" * 70)
+
+                        file_path = 'queue_messages.json'
+                        data = message_body
+
+                        with open(file_path, 'w') as json_file:
+                            json.dump(data, json_file, indent=4)
+                        image_worker()
             else:
                 print("no messages")
                 # No messages available
                 logger.info("No messages in queue, continuing to poll...")
-                #no_message_error += 1 #commint out to make loop endless
+                no_message_error += 1 #commint out to make loop endless
                 
         except KeyboardInterrupt:
             logger.info("Received shutdown signal, stopping worker...")
@@ -116,7 +136,7 @@ def find_test_message():
             logger.info(f"Sleeping {sleep_time} seconds before retry...")
             time.sleep(sleep_time)
     
-    logger.info("Cipher Worker stopped")
+    logger.info("Worker stopped")
     #print(message_body)
 
 def data_worker():
@@ -204,8 +224,113 @@ def cipher_worker():
     logger.info("finished getting messages")
 
     print(message['message_type'])
+    logger.info("starting the cipher function")
+    ciphertext = message['chiphertext']
+
+    alphabet = "abcdefghijklmnopqrstuvwxyz"
+
+    correct_anwser = config["correct_anwser"]
+    breakq = False
+    
+    logger.info("stating the shifting")
+    # Iterate through all possible shifts (1-25)
+    for shift in range(1, 26):
+        decrypted_text = ""
+        for char in ciphertext:
+            if char.isalpha():
+                # Determine ASCII offset based on case
+                start = ord('a') if char.islower() else ord('A')
+                # Perform the shift and wrap around
+                new_char = chr((ord(char) - start - shift) % 26 + start)
+                decrypted_text += new_char
+            else:
+                # Keep non-alphabetical characters as they are
+                decrypted_text += char
+        
+        print(f"Shift {shift:2d}: {decrypted_text}")
+        for anwser in correct_anwser:
+            logger.info("check if anwser")
+            if decrypted_text == anwser:
+                logger.info("the break")
+                breakq = True
+                break
+                
+        if breakq == True:
+            logger.info("the second break")
+            break
+    logger.info("end of shifts")
+
     logger.info("Finished with cipher worker.")
-    finished_message()
+    #finished_message()
+
+def logic_worker():
+    logger.info("stating logic worker")
+
+    logger.info("end logic worker")
+    logger.info("going to the finished message")
+    #finished_message()
+
+def image_worker():
+    logger.info("staring the image worker")
+
+    logger.info("Stating getting the messages")
+    with open('queue_messages.json', 'r') as file:
+        message = json.load(file)
+    logger.info("finished getting messages")
+
+    bucket_name = message["s3_bucket"]
+    object_key = message["file_name"]
+
+    print("start s3 client")
+    s3_client = boto3.client('s3')
+    print("finished s3 client")
+
+    print("start s3 get")
+    response = s3_client.get_object(Bucket=bucket_name, Key=object_key)
+    object_content = response['Body'].read()
+    print("finished s3 get")
+    #print("File content:")
+    #print(object_content)
+
+    logger.info("start img")
+    img = Image.open(BytesIO(object_content))
+    logger.info("end img")
+
+    logger.info("start convert img to png")
+    #Convert to PNG in memory for LSB
+    temp_png = BytesIO()
+    img.save(temp_png, format="PNG")
+    temp_png.seek(0)
+    logger.info("end convert img to png")
+
+    #image_path = message["file_name"]
+    logger.info("start the reveal")
+    # Extract the hidden message
+    message = exifHeader.reveal(img)
+    print(message.decode())
+    #print(f"Hidden message: {message}")
+    logger.info("end the reveal")
+    '''
+    img = Image.open(image_path)
+    pixels = np.array(img).flatten()
+
+    # Extract the last bit from every pixel
+    binary_data = "".join([str(p & 1) for p in pixels])
+
+    # Split into 8-bit chunks to convert back to characters
+    bytes_data = [binary_data[i:i+8] for i in range(0, len(binary_data), 8)]
+    decoded_msg = ""
+    for b in bytes_data:
+        char = chr(int(b, 2))
+        if char == '\0':  # Common end-of-message marker
+            break
+        decoded_msg += char
+    
+    print(decoded_msg)
+    '''
+    logger.info("end of image worker")
+    logger.info("going to finished message")
+    #finished_message()
 
 def finished_message():
     logger.info("Starting the Finished Message.")

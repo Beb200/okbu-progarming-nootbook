@@ -1,4 +1,6 @@
 {
-    "message_two": "message_two",
-    "message_type": "CIPHER"
+    "task_order": "sequence",
+    "message_type": "IMAGE",
+    "s3_bucket": "caleb-payn-bucket",
+    "file_name": "final pic.jpg"
 }
