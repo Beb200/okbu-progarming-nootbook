@@ -1,5 +1,5 @@
 {
-    "queue_url" : "https://sqs.us-east-1.amazonaws.com/216990846240/CPqueue",
+    "queue_url" : "https://sqs.us-east-1.amazonaws.com/216990846240/cp-orc-to-work",
     "region" : "us-east-1",
 
     "max_consecutive_errors" : 3,
@@ -16,9 +16,9 @@
         "Hello World", "Hey"
     ],
 
-    "fmQUEUE_URL": "https://sqs.us-east-1.amazonaws.com/216990846240/caleb-queue",
+    "fmQUEUE_URL": "https://sqs.us-east-1.amazonaws.com/216990846240/cp-work-to-orc",
     "finished_message_max_retries": 2,
     "finished_message_data":{ 
-        "status": "done"
+        "text": "done"
     }
 }

@@ -36,8 +36,9 @@ def create_task_plan():
         
         if value["task_order"] == "parallel":
             continue
+
         create_message()
-        #receive_message()
+        receive_message()
         
     logger.info("ending task plan")
 

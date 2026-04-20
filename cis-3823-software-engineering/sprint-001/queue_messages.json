@@ -1,6 +1,4 @@
 {
     "task_order": "sequence",
-    "message_type": "IMAGE",
-    "s3_bucket": "caleb-payn-bucket",
-    "file_name": "final pic.jpg"
+    "message_type": "LOGIC"
 }

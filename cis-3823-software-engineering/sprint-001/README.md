@@ -32,3 +32,10 @@
             "message_type": "CIPHER",
             "chiphertext": "Khoor Zruog"
         },
+
+        "message_three":{
+            "task_order" :"sequence",
+            "message_type": "IMAGE",
+            "s3_bucket": "caleb-payn-bucket",
+            "file_name": "final pic.jpg"
+        }

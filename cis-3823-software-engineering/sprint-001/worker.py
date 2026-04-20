@@ -113,6 +113,21 @@ def find_test_message():
                         with open(file_path, 'w') as json_file:
                             json.dump(data, json_file, indent=4)
                         image_worker()
+                    elif type_val == 'LOGIC':
+                        logger.info("recived cipher type")
+                        sqs.delete_message(
+                            QueueUrl=QUEUE_URL,
+                            ReceiptHandle=message['ReceiptHandle']
+                        )
+                        logger.info(f"✓ Message deleted from queue")
+                        logger.info("-" * 70)
+
+                        file_path = 'queue_messages.json'
+                        data = message_body
+
+                        with open(file_path, 'w') as json_file:
+                            json.dump(data, json_file, indent=4)
+                        logic_worker()
             else:
                 print("no messages")
                 # No messages available
@@ -268,7 +283,7 @@ def logic_worker():
 
     logger.info("end logic worker")
     logger.info("going to the finished message")
-    #finished_message()
+    finished_message("logic worker done")
 
 def image_worker():
     logger.info("staring the image worker")
@@ -332,7 +347,7 @@ def image_worker():
     logger.info("going to finished message")
     #finished_message()
 
-def finished_message():
+def finished_message(status):
     logger.info("Starting the Finished Message.")
 
     logger.info("Starting comfig.")
@@ -344,6 +359,7 @@ def finished_message():
     message_data = config['finished_message_data']
     message_id = f"msg_{uuid.uuid4().hex[:8]}"
     message_data["message_id"] = message_id
+    message_data["status"] = status
     logger.info("Ending config.")
 
     logger.info("Starting creating message.")

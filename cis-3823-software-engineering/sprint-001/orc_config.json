@@ -1,20 +1,18 @@
 {
-    "url": "https://sqs.us-east-1.amazonaws.com/216990846240/CPqueue",
+    "url": "https://sqs.us-east-1.amazonaws.com/216990846240/cp-orc-to-work",
     "region": "us-east-1",
 
-    "fmQUEUE_URL": "https://sqs.us-east-1.amazonaws.com/216990846240/CPqueue",
+    "fmQUEUE_URL": "https://sqs.us-east-1.amazonaws.com/216990846240/cp-orc-to-work",
     "finished_message_max_retries": 2,
 
-    "rmQUEUE_URL": "https://sqs.us-east-1.amazonaws.com/216990846240/caleb-queue",
+    "rmQUEUE_URL": "https://sqs.us-east-1.amazonaws.com/216990846240/cp-work-to-orc",
     "max_consecutive_errors" : 3,
 
     "message_data":{
 
-        "message_three":{
+        "message_four":{
             "task_order" :"sequence",
-            "message_type": "IMAGE",
-            "s3_bucket": "caleb-payn-bucket",
-            "file_name": "final pic.jpg"
+            "message_type": "LOGIC"
         }
        
 
