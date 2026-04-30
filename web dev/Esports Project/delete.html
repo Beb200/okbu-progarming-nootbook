@@ -34,16 +34,16 @@
 -->
     
 
-    <p>Name: <input type="text" id="game-name-input-id" value="fortnight"></text></p>
+    <p>Name: <input type="text" id="game-name-input-id" value=""></text></p>
     <!--<p>Is it a esports game (y/n) <input type="text" id="esports-input-id" value="y"></p>
     <p>Console <input type="text" id="console-input-id" value="pc"></p>
     <p>Genre <input type="text" id="genre-input-id" value="fps"></p>
     
-
-    <div></div>
 -->
+    <div id="delete"></div>
+
     <button type="button" id="delete-id">Delete</button>
-    <br>
+    <br><br>
     <a href="home_page.html"><button type="button">Home</button></a>
 </body>
 
@@ -75,10 +75,17 @@
         body: JSON.stringify({
             name: delete_name.value,
         })
+        
     });
     let the_data = await response.json();
     console.log(the_data);
+
+    let conDelete = document.getElementById("delete");
+    let textDelete = document.createElement("p");
+    textDelete.textContent = "Deleted Game"
+    conDelete.appendChild(textDelete);
     });
+    
 
 </script>
 
