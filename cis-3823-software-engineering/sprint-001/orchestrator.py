@@ -24,6 +24,51 @@ message_data = {}
 # Initialize AWS clients
 sqs = boto3.client('sqs', region_name=REGION)
 
+def status_int():
+    try:
+        logger.info("stated status_int")
+        REGION_NAME = config["region"]
+        TABLE_NAME = config["status_table"]
+        dynamodb = boto3.resource('dynamodb', region_name=REGION_NAME)
+        table = dynamodb.Table(TABLE_NAME)
+        keys = ["data","cipher","image","logic"]
+        for key in keys:
+            table.update_item(
+                Key = {
+                    'worker_name':key
+                },
+                UpdateExpression="SET w_status = :val1",
+                ExpressionAttributeValues={
+                    ":val1": "Not started"
+                }
+            )
+        logger.info("end status_int")
+    except Exception as e:
+        print(f"An unexpected error occurred in status_int: {e}")
+
+def detail_int():
+    try:
+        logger.info("stated detail_int")
+
+        REGION_NAME = config["region"]
+        TABLE_NAME = config["detail_table"]
+        dynamodb = boto3.resource('dynamodb', region_name=REGION_NAME)
+        table = dynamodb.Table(TABLE_NAME)
+        keys = ["data","cipher","image","logic"]
+        for key in keys:
+            table.update_item(
+                Key = {
+                    'worker_name':key
+                },
+                UpdateExpression="SET w_detail = :val1",
+                ExpressionAttributeValues={
+                    ":val1": "Not used"
+                }
+            )
+        logger.info("end detail_int")
+    except Exception as e:
+        print(f"An unexpected error occurred in detail_int: {e}")
+
 def create_task_plan():
     logger.info("starting the task plan")
 
@@ -128,6 +173,8 @@ def receive_message():
                     )
                     logger.info(f"✓ Message deleted from queue")
                     logger.info("-" * 70)
+                    
+                    update_status(message_body["worker"],message_body["status"])
                         
             else:
                 #print("no messages")
@@ -153,13 +200,37 @@ def receive_message():
             time.sleep(sleep_time)
     logger.info("End receive message function")
 
+def update_status(worker, status):
+    try:
+        logger.info("stated update_status")
+        REGION_NAME = config["region"]
+        TABLE_NAME = config["status_table"]
+        dynamodb = boto3.resource('dynamodb', region_name=REGION_NAME)
+        table = dynamodb.Table(TABLE_NAME)
+
+        table.update_item(
+                Key = {
+                    'worker_name': worker
+                },
+                UpdateExpression="SET w_status = :val1",
+                ExpressionAttributeValues={
+                    ":val1": status
+                }
+            )
+        logger.info("end update_status")
+    except Exception as e:
+        print(f"An unexpected error occurred in update_status: {e}")
+
+    
+
 def main():
     """Main entry point with interactive menu."""
     logger.info("Message Producer starting...")
     logger.info(f"Queue URL: {QUEUE_URL}")
     logger.info(f"Region: {REGION}")
 
-    
+    status_int()
+    detail_int()
     create_task_plan()
     #create_message()
 

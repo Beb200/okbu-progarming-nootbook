@@ -5,6 +5,10 @@
     "max_consecutive_errors" : 3,
     "max_no_message_error": 3,
 
+    "status_table_name": "cp-status-table",
+
+    "detail_table_name": "cp-details-table",
+
     "table_name": "CIS3823Spring26Project001",
     "region_name": "us-east-1",
     "attribute": "game_id",

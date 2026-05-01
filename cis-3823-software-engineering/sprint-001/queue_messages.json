@@ -1,4 +1,19 @@
 {
     "task_order": "sequence",
-    "message_type": "LOGIC"
+    "message_type": "LOGIC",
+    "puzzle": [
+        [
+            "A",
+            "B",
+            "!C"
+        ],
+        [
+            "!A",
+            "C"
+        ],
+        [
+            "B",
+            "!D"
+        ]
+    ]
 }

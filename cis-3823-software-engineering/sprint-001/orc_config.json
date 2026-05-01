@@ -2,6 +2,10 @@
     "url": "https://sqs.us-east-1.amazonaws.com/216990846240/cp-orc-to-work",
     "region": "us-east-1",
 
+    "status_table": "cp-status-table",
+
+    "detail_table": "cp-details-table",
+
     "fmQUEUE_URL": "https://sqs.us-east-1.amazonaws.com/216990846240/cp-orc-to-work",
     "finished_message_max_retries": 2,
 
@@ -10,11 +14,14 @@
 
     "message_data":{
 
-        "message_four":{
-            "task_order" :"sequence",
-            "message_type": "LOGIC"
+        "message_two":{
+            "task_order": "sequence",
+            "message_two": "message_two",
+            "message_type": "CIPHER",
+            "chiphertext": "Khoor Zruog"
         }
-       
+        
+        
 
     }
 }
