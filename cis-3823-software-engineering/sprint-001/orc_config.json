@@ -2,6 +2,8 @@
     "url": "https://sqs.us-east-1.amazonaws.com/216990846240/cp-orc-to-work",
     "region": "us-east-1",
 
+    "game_table": "cp-game-table",
+
     "status_table": "cp-status-table",
 
     "detail_table": "cp-details-table",
@@ -12,16 +14,27 @@
     "rmQUEUE_URL": "https://sqs.us-east-1.amazonaws.com/216990846240/cp-work-to-orc",
     "max_consecutive_errors" : 3,
 
+    "game_id": "game_002",
+
     "message_data":{
+
+        "message_one":{
+            "task_order": "sequence",
+            "message_one":"message_one",
+            "message_type": "DATA",
+            "puzzle_id": "puzzle_id",
+            "puzzle_id_val": "cp-001",
+            "table_name": "cp-data-table",
+            "bucket_name": "s3_bucket",
+            "object_key": "s3_key"
+        },
 
         "message_two":{
             "task_order": "sequence",
             "message_two": "message_two",
             "message_type": "CIPHER",
             "chiphertext": "Khoor Zruog"
-        }
-        
-        
+        }   
 
     }
 }

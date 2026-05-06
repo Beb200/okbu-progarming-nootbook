@@ -24,6 +24,23 @@ message_data = {}
 # Initialize AWS clients
 sqs = boto3.client('sqs', region_name=REGION)
 
+def start_game():
+    try:
+        logger.info("stated start_game")
+        REGION_NAME = config["region"]
+        TABLE_NAME = config["game_table"]
+        dynamodb = boto3.resource('dynamodb', region_name=REGION_NAME)
+        table = dynamodb.Table(TABLE_NAME)
+        game_id = config["game_id"]
+        table.put_item(
+             Item = {
+                 "game-id": game_id
+             }
+        )
+        logger.info("end start_game")
+    except Exception as e:
+        print(f"An unexpected error occurred in start_game: {e}")
+
 def status_int():
     try:
         logger.info("stated status_int")
@@ -78,10 +95,11 @@ def create_task_plan():
         print(value)
         global message_data
         message_data = value
+        worker = message_data["message_type"]
         
         if value["task_order"] == "parallel":
             continue
-
+        dump_detail(message_data, worker)
         create_message()
         receive_message()
         
@@ -99,6 +117,7 @@ def create_message():
     #message_data = config['message_data']
     #message_id = f"msg_{uuid.uuid4().hex[:8]}"
     #message_data["message_id"] = message_id
+    message_data["game_id"] = config["game_id"]
     logger.info("Ending config.")
     
     while retries <= max_retries:
@@ -221,6 +240,32 @@ def update_status(worker, status):
     except Exception as e:
         print(f"An unexpected error occurred in update_status: {e}")
 
+
+def dump_detail(message, worker):
+    try:
+        logger.info("stated dump_detail")
+        REGION_NAME = config["region"]
+        TABLE_NAME = config["game_table"]
+        dynamodb = boto3.resource('dynamodb', region_name=REGION_NAME)
+        table = dynamodb.Table(TABLE_NAME)
+        game_id = config["game_id"]
+
+        
+        message_name = f"{worker}_message"
+        
+        table.update_item(
+            
+            Key = {
+                'game-id': game_id
+            },
+            UpdateExpression = f'SET {message_name} = :val1',
+            ExpressionAttributeValues = {
+                ':val1': message
+            }
+        )
+        logger.info("end dump_detail")
+    except Exception as e:
+        print(f"An unexpected error occurred in dump_detail: {e}")
     
 
 def main():
@@ -231,6 +276,7 @@ def main():
 
     status_int()
     detail_int()
+    start_game()
     create_task_plan()
     #create_message()
 

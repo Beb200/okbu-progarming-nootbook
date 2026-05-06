@@ -2,7 +2,11 @@ import os
 import requests
 import json
 
-base_url="http://localhost:8000"
+#base_url="http://localhost:8000" #example help
+with open('config_UI.json', 'r') as file:
+        config = json.load(file)
+base_url = config["url_DK"] #change this to change the URL
+
 
 # Utility functions
 def clear():
@@ -10,7 +14,7 @@ def clear():
 
 def test():
     try:
-        url = "http://localhost:5000/test"
+        url = f"{base_url}/test"
         response = requests.get(url,timeout=5)
         response.raise_for_status()
         message = response.json()['status']
@@ -69,8 +73,10 @@ def menu():
             case '2':
                 game_details()
             case '3':
-                #test()
+                
                 help()
+            case '4':
+                    test()
             case '0':
                 return
             case _:
@@ -155,7 +161,7 @@ def games_status():
 #status
 def data_status():
     try:
-        url = "http://localhost:5000/status_data"
+        url = f"{base_url}/status_data"
         response = requests.get(url,timeout=5)
         response.raise_for_status()
         message = response.json()['status']
@@ -168,7 +174,7 @@ def data_status():
 
 def cipher_status():
     try:
-        url = "http://localhost:5000/status_cipher"
+        url = f"{base_url}/status_cipher"
         response = requests.get(url,timeout=5)
         response.raise_for_status()
         message = response.json()['status']
@@ -181,7 +187,7 @@ def cipher_status():
 
 def logic_status():
     try:
-        url = "http://localhost:5000/status_logic"
+        url = f"{base_url}/status_logic"
         response = requests.get(url,timeout=5)
         response.raise_for_status()
         message = response.json()['status']
@@ -194,7 +200,7 @@ def logic_status():
 
 def image_status():
     try:
-        url = "http://localhost:5000/status_image"
+        url = f"{base_url}/status_image"
         response = requests.get(url,timeout=5)
         response.raise_for_status()
         message = response.json()['status']
@@ -209,7 +215,7 @@ def image_status():
 #details
 def data_details():
     try:
-        url = "http://localhost:5000/details_data"
+        url = f"{base_url}/details_data"
         response = requests.get(url,timeout=5)
         response.raise_for_status()
         message = response.json()['status']
@@ -222,7 +228,7 @@ def data_details():
 
 def cipher_details():
     try:
-        url = "http://localhost:5000/details_cipher"
+        url = f"{base_url}/details_cipher"
         response = requests.get(url,timeout=5)
         response.raise_for_status()
         message = response.json()['status']
@@ -235,7 +241,7 @@ def cipher_details():
 
 def logic_details():
     try:
-        url = "http://localhost:5000/details_logic"
+        url = f"{base_url}/details_logic"
         response = requests.get(url,timeout=5)
         response.raise_for_status()
         message = response.json()['status']
@@ -248,7 +254,7 @@ def logic_details():
 
 def image_details():
     try:
-        url = "http://localhost:5000/details_image"
+        url = f"{base_url}/details_image"
         response = requests.get(url,timeout=5)
         response.raise_for_status()
         message = response.json()['status']
@@ -261,7 +267,7 @@ def image_details():
 
 def help():
     try:
-        url = "http://localhost:5000/"
+        url = f"{base_url}/"
         response = requests.get(url,timeout=5)
         response.raise_for_status()
         message = response.json()

@@ -24,6 +24,13 @@
             "object_key": "s3_key"
         },
 
+        "message_two":{
+            "task_order": "sequence",
+            "message_two": "message_two",
+            "message_type": "CIPHER",
+            "chiphertext": "Khoor Zruog"
+        },
+
 
 "message_three":{
             "task_order" :"sequence",
@@ -60,3 +67,19 @@ def name():
         logger.info("end name")
     except Exception as e:
         print(f"An unexpected error occurred in name: {e}")
+
+updae temp:
+REGION_NAME = config["region"]
+TABLE_NAME = config["game_table"]
+dynamodb = boto3.resource('dynamodb', region_name=REGION_NAME)
+table = dynamodb.Table(TABLE_NAME)
+game_id = config["game_id"]
+table.update_item(
+    Key = {
+        'game_id': 'game_id'
+    },
+    UpdateExpression = 'SET age = :val1',
+    ExpressionAttributeValues = {
+        ':val1': 26
+    }
+)
