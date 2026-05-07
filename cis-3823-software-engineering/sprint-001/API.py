@@ -2,6 +2,8 @@ from flask import Flask, jsonify
 import logging
 import boto3
 from boto3.dynamodb.conditions import Attr
+import json
+from decimal import Decimal
 
 app = Flask(__name__)
 
@@ -12,32 +14,44 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, Decimal):
+            return float(obj)
+        return json.JSONEncoder.default(self, obj)
+
 
 
 @app.route("/")
 def hello_world():
-   return jsonify(
-       "This is the Help. " \
-       "" \
-       "The messages are sent to \"cp-orc-to-work\" queue. " \
-       "After the messages are prossed a message is sent to \"cp-work-to-orc\" to show that the worker is done or that there is an error. " \
-       "All message are formeted like this \"message_one\":{\"the message content\". " \
-       "this is the data worker example message code: "
-       "\"task_order\": \"sequence\","
-       "\"message_one\":\"message_one\","
-       " \"message_type\": \"DATA\","
-       "\"puzzle_id\": \"puzzle_id\","
-       "\"puzzle_id_val\": \"cp-001\","
-       "\"table_name\": \"cp-data-table\","
-       "\"bucket_name\": \"s3_bucket\","
-       "\"object_key\": \"s3_key\""
-       "This is the cipher worker example message code: "
-       "\"task_order\": \"sequence\","
-       "\"message_two\": \"message_two\","
-       "\"message_type\": \"CIPHER\","
-       "\"chiphertext\": \"Khoor Zruog\""
-       "To get the status of the workers use /status." \
-       "To get the details of the games use /detail"
+   return (
+       "<html>"
+       "<h1>This is the Help.</h1> " \
+       "<p></p>" \
+       "<p>The messages are sent to \"cp-orc-to-work\" queue. </p>" \
+       "<p>After the messages are prossed a message is sent to \"cp-work-to-orc\" to show that the worker is done or that there is an error. </p>" \
+       "<p>All message are formeted like this \"message_one\":{\"the message content\"}.</p> " \
+       "<p>this is the data worker example message code:</p> "
+       "<p>\"task_order\": \"sequence\",</p>"
+       "<p>\"message_one\":\"message_one\",</p>"
+       "<p> \"message_type\": \"DATA\",</p>"
+       "<p>\"puzzle_id\": \"puzzle_id\",</p>"
+       "<p>\"puzzle_id_val\": \"cp-001\",</p>"
+       "<p>\"table_name\": \"cp-data-table\",</p>"
+       "<p>\"bucket_name\": \"s3_bucket\",</p>"
+       "<p>\"object_key\": \"s3_key\"</p>"
+       "<p>This is the cipher worker example message code:</p> "
+       "<p>\"task_order\": \"sequence\",</p>"
+       "<p>\"message_two\": \"message_two\",</p>"
+       "<p>\"message_type\": \"CIPHER\",</p>"
+       "<p>\"chiphertext\": \"Khoor Zruog\"</p>"
+       "<p>To get the status of the workers use /status.</p>" \
+       "<p>To get the details of the games use /detail</p>"
+       "<p>To get HTML of status of workers use /get_games_in_html</p>"
+       "<p>To get HTML of details of the games use /get_game_details_in_html</p>"
+       "<p>To get text of status of workers use /get_games_in_text</p>"
+       "<p>To get text of details of workers use /get_game_details_in_text</p>"
+       "</html>"
 
    )
 
@@ -66,8 +80,76 @@ def get_status():
         items = response['Items']
 
         logger.info("end get_status")
+        return jsonify({
+            'status': items
+        })
+    except Exception as e:
+        print(f"An unexpected error occurred in get_status: {e}")
         return jsonify(
-            items
+            "fail"
+        )
+    
+@app.route("/get_games_in_text")
+def get_status_in_text():
+    try:
+        logger.info("start get_status")
+
+        REGION_NAME = "us-east-1"
+        TABLE_NAME = "cp-status-table"
+
+        logger.info("creating table")
+        dynamodb = boto3.resource('dynamodb', region_name=REGION_NAME)
+        table = dynamodb.Table(TABLE_NAME)
+        logger.info("finished table")
+
+        response = table.scan()
+        items = response['Items']
+
+        string_items = json.dumps(items)
+        output = []
+        #output.append(f"{items.get('game_id')} | {items.get('status')} | {items.get('players')}")
+        '''
+        output = []
+
+        for item in items:
+            row = []
+            for key, value in item.items():
+                row.append(f"{key}: {value}")
+            output.append(" | ".join(row))
+
+        result = "\n".join(output)
+        '''
+
+        logger.info("end get_status")
+        return (
+            #f"<pre>{result}</pre>"
+            output
+        )
+    except Exception as e:
+        print(f"An unexpected error occurred in get_status: {e}")
+        return jsonify(
+            "fail"
+        )
+    
+@app.route('/get_games_in_html')
+def get_status_in_html():
+    try:
+        logger.info("start get_status")
+
+        REGION_NAME = "us-east-1"
+        TABLE_NAME = "cp-status-table"
+
+        logger.info("creating table")
+        dynamodb = boto3.resource('dynamodb', region_name=REGION_NAME)
+        table = dynamodb.Table(TABLE_NAME)
+        logger.info("finished table")
+
+        response = table.scan()
+        items = response['Items']
+
+        logger.info("end get_status")
+        return (
+            f"<html><h1>This is status of games in HTML</h1><p>{items}<p></html>"
         )
     except Exception as e:
         print(f"An unexpected error occurred in get_status: {e}")
@@ -100,6 +182,63 @@ def get_game_detail():
         return jsonify(
             "fail"
         )
+    
+@app.route('/get_game_details_in_text')
+def get_game_detail_in_text():
+    try:
+        logger.info("start get_game_detail")
+
+        REGION_NAME = "us-east-1"
+        TABLE_NAME = "cp-game-table"
+
+        logger.info("creating table")
+        dynamodb = boto3.resource('dynamodb', region_name=REGION_NAME)
+        table = dynamodb.Table(TABLE_NAME)
+        logger.info("finished table")
+
+        response = table.scan()
+        items = response['Items']
+
+        game1 = items["game_001"]
+
+        string_items = json.dumps(items, cls=DecimalEncoder)
+
+        logger.info("end get_game_detail")
+        return (
+            game1
+        )
+    except Exception as e:
+        print(f"An unexpected error occurred in get_game_detail: {e}")
+        return jsonify(
+            "fail"
+        )
+    
+@app.route('/get_game_details_in_html')
+def get_game_detail_in_html():
+    try:
+        logger.info("start get_game_detail")
+
+        REGION_NAME = "us-east-1"
+        TABLE_NAME = "cp-game-table"
+
+        logger.info("creating table")
+        dynamodb = boto3.resource('dynamodb', region_name=REGION_NAME)
+        table = dynamodb.Table(TABLE_NAME)
+        logger.info("finished table")
+
+        response = table.scan()
+        items = response['Items']
+
+        logger.info("end get_game_detail")
+        return (
+            f"<html><h1>This is details of games in HTML</h1><p>{items}<p></html>"
+        )
+    except Exception as e:
+        print(f"An unexpected error occurred in get_game_detail: {e}")
+        return jsonify(
+            "fail"
+        )
+
 
 @app.route('/status_data')
 def get_status_data():

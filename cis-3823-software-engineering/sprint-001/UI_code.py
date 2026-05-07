@@ -5,7 +5,7 @@ import json
 #base_url="http://localhost:8000" #example help
 with open('config_UI.json', 'r') as file:
         config = json.load(file)
-base_url = config["url_DK"] #change this to change the URL
+base_url = config["url_LH"] #change this to change the URL
 
 
 # Utility functions
@@ -61,6 +61,7 @@ def menu():
         print("[1] Get status of all games")
         print("[2] Get game details")
         print("[3] Help")
+        print("[5] exam routes")
         print("[0] Quit")
         print("--------------------------------------------")
 
@@ -68,7 +69,8 @@ def menu():
        
         match choice:
             case '1':
-                games_status()
+                #games_status()
+                status()
                 #print("hello world")
             case '2':
                 game_details()
@@ -77,6 +79,8 @@ def menu():
                 help()
             case '4':
                     test()
+            case '5':
+                exam()
             case '0':
                 return
             case _:
@@ -157,6 +161,86 @@ def games_status():
                 print("Invalid option.")
 
         input("\nPress Enter to continue...")
+
+def exam():
+    try:
+        clear()
+        #print("")#\n
+        print("--------------------------------------------")
+        print("exam routes")
+        print("--------------------------------------------")
+        print("[1] get-games-in-html")
+        print("[2] get-games-in-text")
+        print("[3] get-game-details-in-html")
+        print("[4] get-game-details-in-text")
+        print("[0] Return")
+        print("--------------------------------------------")
+
+        choice = input("Choose an option: ").strip().lower()
+
+        match choice:
+            case '1':
+                print("no")
+                #data_status()
+            case '2':
+                print("\n")
+                status_in_text()
+            case '3':
+                print("no")
+            case '4':
+                print("\n")
+                detail_in_text()
+            case '0':
+                return
+            case _: 
+                print("Invalid option.")
+
+        input("\nPress Enter to continue...")
+
+
+    except Exception as e:
+        print(f"An unexpected error occurred in name: {e}")
+
+def status_in_text():
+    try:
+        url = f"{base_url}/get_games_in_text"
+        response = requests.get(url,timeout=5)
+        response.raise_for_status()
+        message = response.text
+
+        #new_message = json.dump(message)
+
+        print(f"The status: ", {message})
+        return 
+
+    except Exception as e:
+        print(f"An unexpected error occurred in name: {e}")
+
+def detail_in_text():
+    try:
+        url = f"{base_url}/get_games_in_text"
+        response = requests.get(url,timeout=5)
+        response.raise_for_status()
+        message = response.text
+
+        print(f"The games: ", {message})
+        return 
+
+    except Exception as e:
+        print(f"An unexpected error occurred in name: {e}")
+
+def status():
+    try:
+        url = f"{base_url}/status"
+        response = requests.get(url,timeout=5)
+        response.raise_for_status()
+        message = response.json()['status']
+
+        print(f"The status: ", {message})
+        return 
+
+    except Exception as e:
+        print(f"An unexpected error occurred in name: {e}")
 
 #status
 def data_status():
