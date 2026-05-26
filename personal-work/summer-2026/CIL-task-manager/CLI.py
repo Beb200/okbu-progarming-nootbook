@@ -49,7 +49,16 @@ def list():
         print()
         with open('info.json', 'r') as file:
             list = json.load(file)
-        print(list)
+        # print(list)
+        the_text = ""
+        the_text = the_text + "| Name | Status |\n"
+        the_text = the_text + "-----------------\n"
+        for key, value in list.items():
+            row_str = "| " + key + " | " + value + " |\n"
+            the_text = the_text + row_str
+            the_text = the_text + "-----------------\n"
+        print(the_text)
+
     except Exception as e:
         print(f"An unexpected error occurred in list: {e}")
 
@@ -61,12 +70,13 @@ def add():
         # data = {}
         while True:
             print()
-            task = input("What is the name of the task? ")
+            # task = {}
+            a_task = input("What is the name of the task? ")
             print()
             details = input("what are the details of the task? ")
             print()
 
-            data[task] = details
+            data[a_task] = details
 
             if input("Do you need to add another task? Y/N ") == ("n" or "N"):
                 with open('info.json', 'w') as file:
