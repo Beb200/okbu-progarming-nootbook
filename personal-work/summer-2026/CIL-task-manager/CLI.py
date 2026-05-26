@@ -12,7 +12,7 @@ def menu():
             print("Escape Game UI")
             print("--------------------------------------------")
             print("[1] List")
-            print("[2] ")
+            print("[2] Add")
             print("[3] ")
             print("[4] ")
             print("[0] Quit")
@@ -26,6 +26,7 @@ def menu():
                     list()
                 case '2':
                     print("2")
+                    add()
                 case '3':
                     print("3")
                 case '4':
@@ -48,6 +49,31 @@ def list():
         with open('info.json', 'r') as file:
             list = json.load(file)
         print(list)
+    except Exception as e:
+        print(f"An unexpected error occurred in list: {e}")
+
+def add():
+    try:
+        clear()
+        with open('info.json', 'r') as file:
+            data = json.load(file)
+        # data = {}
+        while True:
+            print()
+            task = input("What is the name of the task? ")
+            print()
+            details = input("what are the details of the task? ")
+            print()
+
+            data[task] = details
+
+            if input("Do you need to add another task? Y/N ") == ("n" or "N"):
+                with open('info.json', 'w') as file:
+                   json.dump(data, file, indent=4)
+                print(data)
+                return
+            else:
+                continue
     except Exception as e:
         print(f"An unexpected error occurred in list: {e}")
 
