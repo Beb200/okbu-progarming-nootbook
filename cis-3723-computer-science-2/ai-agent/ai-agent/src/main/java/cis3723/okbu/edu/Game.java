@@ -1,6 +1,7 @@
 package cis3723.okbu.edu;
 
 public class Game<S, M> implements Interface {
+    int turn;
      
     public S get_legal_moves(S state){
         return state;
@@ -19,6 +20,12 @@ public class Game<S, M> implements Interface {
     }
 
     public S get_current_player(S state){
+        if turn == 1 {
+            return "player1";
+        }
+        if turn == 2{
+            return "palyer2";
+        }
 
     }
     public String display(S state){
