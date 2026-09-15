@@ -1,8 +1,12 @@
 package cis3723.okbu.edu;
 
 public class GameState<B> {
-    
-    public B board(){
-        TheBoard = [] 
-    }
+    int[][] board = {
+        {0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0}
+    };
 }
