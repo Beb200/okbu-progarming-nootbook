@@ -6,6 +6,6 @@ public interface Interface<S, M> {
     boolean is_terminal(S state);
     int get_result(S state);
     String get_current_player(int turn);
-    String display(S state);
+    void display(S[][] state);
     
 } 

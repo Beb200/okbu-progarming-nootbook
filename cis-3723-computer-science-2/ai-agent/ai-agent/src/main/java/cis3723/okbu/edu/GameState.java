@@ -1,12 +1,16 @@
 package cis3723.okbu.edu;
 
 public class GameState<B> {
-    int[][] board = {
+    
+    public int[][] board(){
+        int[][] board = {
         {0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0}
-    };
+        };
+        return board;
+    }
 }
