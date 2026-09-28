@@ -2,7 +2,8 @@ package cis3723.okbu.edu;
 
 import java.util.Arrays;
 
-public class Game<S, M> implements Interface<S, M> {
+public class Game{//<S, M> implements Interface<S, M> {
+    /* 
     public int turn;
     //GameState gameState = new state();
 
@@ -49,4 +50,5 @@ public class Game<S, M> implements Interface<S, M> {
         }
        //System.out.print(Arrays.deepToString(state));
         }
+       */
     }
