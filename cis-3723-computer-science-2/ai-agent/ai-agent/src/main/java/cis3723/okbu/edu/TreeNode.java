@@ -41,6 +41,46 @@ public class TreeNode<S, M> {
         this.parent = parent;
     }
 
+    public int count_nodes(S state, int depth) {
+        if (state == null || depth <= 0 || gamestate.is_terminal(state)) {
+            return 0;
+        }
+
+        int count = 0;
+        for (M move : gamestate.get_legal_moves(state)) {
+            S childState = gamestate.move(state, move);
+            if (childState != null) {
+                count++;
+                count += count_nodes(childState, depth - 1);
+            }
+        }
+        return count;
+    }
+
+    public void BFS(S state) {
+        if (state == null || gamestate == null) {
+            return;
+        }
+
+        ArrayList<TreeNode<S, M>> currentLevel = new ArrayList<>();
+        currentLevel.add(new TreeNode<>(new ArrayList<>(), state, gamestate, null));
+
+        for (int depth = 0; depth < 2; depth++) {
+            ArrayList<TreeNode<S, M>> nextLevel = new ArrayList<>();
+            for (TreeNode<S, M> node : currentLevel) {
+                nextLevel.addAll(node.generate_children(node.state));
+            }
+            currentLevel = nextLevel;
+        }
+
+        Set<S> printedStates = new HashSet<>();
+        for (TreeNode<S, M> node : currentLevel) {
+            if (printedStates.add(node.state)) {
+                gamestate.display(node.state);
+            }
+        }
+    }
+
     public boolean DFS(Interface<S,M> gamestate){
         if (state == null) {
             return false;
