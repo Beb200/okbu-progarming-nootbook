@@ -1,7 +1,9 @@
 package cis3723.okbu.edu;
 
+import java.util.ArrayList;
+
 public interface Interface<S, M> {
-    S get_legal_moves(S state);
+    ArrayList<M> get_legal_moves(S state);
     S move(S state, M move);
     boolean is_terminal(S state);
     int get_result(S state);

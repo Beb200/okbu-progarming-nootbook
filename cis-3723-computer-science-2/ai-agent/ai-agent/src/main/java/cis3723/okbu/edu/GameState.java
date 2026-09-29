@@ -13,7 +13,7 @@ public class GameState implements Interface<GameState, Move>{
         {0,0,0,0,0,0,0}
         };
 
-        ArrayList<Integer> legal_moves;
+        ArrayList<Move> legal_moves;
         int curent_winner= 0;
         int curent_player = 1;
 
@@ -57,14 +57,17 @@ public class GameState implements Interface<GameState, Move>{
         }
 
         @Override
-        public GameState get_legal_moves(GameState state) {
-            this.legal_moves = new ArrayList<Integer>();
-            for(int i = 0; i < board[0].length; i++){
-                if (board[0][i] == 0){
-                    legal_moves.add(i);
+        public ArrayList<Move> get_legal_moves(GameState state) {
+            legal_moves = new ArrayList<Move>();
+            for(int i = 0; i < state.board[0].length; i++){
+                if (state.board[0][i] == 0){
+                    Move move = new Move();
+                    move.colomn = i;
+                    move.player = state.curent_player;
+                    legal_moves.add(move);
                 }
             }
-            return this;
+            return legal_moves;
         }
 
         @Override

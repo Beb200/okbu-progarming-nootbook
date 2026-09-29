@@ -41,7 +41,21 @@ public class TreeNode<S, M> {
         this.parent = parent;
     }
 
-    public void DFS(Interface<S,M> gamestate){
+    public boolean DFS(Interface<S,M> gamestate){
+        if (state == null) {
+            return false;
+        }
+        if (gamestate.is_terminal(state)) {
+            gamestate.display(state);
+            return true;
+        }
+
+        for (TreeNode<S, M> child : generate_children(state)) {
+            if (child.DFS(gamestate)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public ArrayList<TreeNode<S, M>> generate_children(S state) {
@@ -51,15 +65,13 @@ public class TreeNode<S, M> {
             return generated;
         }
 
-        S legalMoves = gamestate.get_legal_moves(state);
+        ArrayList<M> legalMoves = gamestate.get_legal_moves(state);
         Set<S> seenStates = new HashSet<S>();
         for (M move : legalMoves) {
             S childState = gamestate.move(state, move);
             if (childState != null && seenStates.add(childState)) {
-            TreeNode<S, M> child = new TreeNode<S, M>(
-                new ArrayList<TreeNode<S, M>>(), gamestate, this);
-            child.setState(childState);
-            generated.add(child);
+                generated.add(new TreeNode<>(
+                    new ArrayList<>(), childState, gamestate, this));
             }
         }
         children = generated;
