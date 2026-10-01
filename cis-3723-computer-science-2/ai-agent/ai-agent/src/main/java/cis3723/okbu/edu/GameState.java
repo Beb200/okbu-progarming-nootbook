@@ -54,6 +54,8 @@ public class GameState implements Interface<GameState, Move>{
             move1.player = 2;
             game.move(game, move1);
             game.display(game);
+
+            game.is_terminal(game);
         }
 
         @Override
@@ -77,30 +79,42 @@ public class GameState implements Interface<GameState, Move>{
             int move_to_check;
             //this is the diagonal down-right
             for (int i =board.length -1 ; i >= 0; i--){
-                for (int j= 0; j< board[i].length; j++){
+                for (int j= 0; j <= board[i].length-1; j++){
+                    System.out.print("I:");
+                    System.out.println(i);
+                    System.out.println("");
+                    System.out.print("j:");
+                    System.out.println(j);
+                    System.out.println("");
                     if ((board[i][j] == 1) || (board[i][j]== 2)){
                         move_to_check = board[i][j];
                     }
                     else{
                         break;
                     }
+                
                     
-                    if((i-1 >= 0) && (j+1 < board[i].length) && (board[i-1][j+1] != move_to_check)){
+                    if((i-1 >= 0) && (j+1 <= board[i].length) && (board[i-1][j+1] == move_to_check) &&
+                        (i-2 >= 0) && (j+2 <= board[i].length) && (board[i-2][j+2] == move_to_check) &&
+                        (i-3 >= 0) && (j+3 <= board[i].length) && (board[i-3][j+3] == move_to_check)){
+                        curent_winner = move_to_check;
+                        return true;
+                    }/* 
+                    if((i-2 >= 0) && (j+2 <= board[i].length) && (board[i-2][j+2] != move_to_check)){
                         break;
                     }
-                    if((i-2 >= 0) && (j+2 < board[i].length) && (board[i-2][j+2] != move_to_check)){
+                    if((i-3 >= 0) && (j+3 <= board[i].length) && (board[i-3][j+3] != move_to_check)){
                         break;
                     }
-                    if((i-3 >= 0) && (j+3 < board[i].length) && (board[i-3][j+3] != move_to_check)){
-                        break;
-                    }
-                    curent_winner = move_to_check;
-                    return true;
+                        */
+                    
+                    
                 }
+                
             }
             //this is the diagonal up-right
             for (int i =board.length -1 ; i >= 0; i--){
-                for (int j= 0; j< board[i].length; j++){
+                for (int j= 0; j <= board[i].length-1; j++){
                     if ((board[i][j] == 1) || (board[i][j]== 2)){
                         move_to_check = board[i][j];
                     }
@@ -108,9 +122,13 @@ public class GameState implements Interface<GameState, Move>{
                         break;
                     }
                     
-                    if((i+1 >= 0) && (j+1 < board[i].length) && (board[i+1][j+1] != move_to_check)){
-                        break;
+                    if((i+1 >= 0) && (j+1 < board[i].length) && (board[i+1][j+1] == move_to_check) &&
+                        (i+2 >= 0) && (j+2 < board[i].length) && (board[i+2][j+2] == move_to_check) &&
+                        (i+3 >= 0) && (j+3 < board[i].length) && (board[i+3][j+3] == move_to_check)){
+                        curent_winner = move_to_check;
+                        return true;
                     }
+                    /* 
                     if((i+2 >= 0) && (j+2 < board[i].length) && (board[i+2][j+2] != move_to_check)){
                         break;
                     }
@@ -119,11 +137,12 @@ public class GameState implements Interface<GameState, Move>{
                     }
                     curent_winner = move_to_check;
                     return true;
+                    */
                 }
             }
             //this is the horizantal right
             for (int i =board.length -1 ; i >= 0; i--){
-                for (int j= 0; j< board[i].length; j++){
+                for (int j= 0; j <= board[i].length-1; j++){
                     if ((board[i][j] == 1) || (board[i][j]== 2)){
                         move_to_check = board[i][j];
                     }
@@ -131,9 +150,13 @@ public class GameState implements Interface<GameState, Move>{
                         break;
                     }
                     
-                    if((i >= 0) && (j+1 < board[i].length) && (board[i][j+1] != move_to_check)){
-                        break;
+                    if((i >= 0) && (j+1 < board[i].length) && (board[i][j+1] == move_to_check) &&
+                        (i >= 0) && (j+2 < board[i].length) && (board[i][j+2] == move_to_check) &&
+                        (i >= 0) && (j+3 < board[i].length) && (board[i][j+3] == move_to_check)){
+                        curent_winner = move_to_check;
+                        return true;
                     }
+                    /* 
                     if((i >= 0) && (j+2 < board[i].length) && (board[i][j+2] != move_to_check)){
                         break;
                     }
@@ -142,11 +165,12 @@ public class GameState implements Interface<GameState, Move>{
                     }
                     curent_winner = move_to_check;
                     return true;
+                    */
                 }
             }
             //this is the vertical up
             for (int i =board.length -1 ; i >= 0; i--){
-                for (int j= 0; j< board[i].length; j++){
+                for (int j= 0; j <= board[i].length-1; j++){
                     if ((board[i][j] == 1) || (board[i][j]== 2)){
                         move_to_check = board[i][j];
                     }
@@ -154,9 +178,13 @@ public class GameState implements Interface<GameState, Move>{
                         break;
                     }
                     
-                    if((i+1 >= 0) && (j < board[i].length) && (board[i+1][j] != move_to_check)){
-                        break;
+                    if((i+1 >= 0) && (j < board[i].length) && (board[i+1][j] == move_to_check) &&
+                        (i+2 >= 0) && (j < board[i].length) && (board[i+2][j] == move_to_check) &&
+                        (i+3 >= 0) && (j < board[i].length) && (board[i+3][j] == move_to_check)){
+                        curent_winner = move_to_check;
+                        return true;
                     }
+                    /* 
                     if((i+2 >= 0) && (j < board[i].length) && (board[i+2][j] != move_to_check)){
                         break;
                     }
@@ -165,6 +193,7 @@ public class GameState implements Interface<GameState, Move>{
                     }
                     curent_winner = move_to_check;
                     return true;
+                    */
                 }
             }
             if (get_legal_moves(state) == null){
