@@ -167,8 +167,23 @@ public class GameState implements Interface<GameState, Move>{
                     return true;
                 }
             }
+            if (get_legal_moves(state) == null){
+                return true;
+            }
 
             return terminal;
+        }
+
+        public String check_winner(GameState state){
+            if (curent_winner == 1){
+                return "Player 1 Wins";
+            }
+            else if (curent_winner == 2){
+                return "Player 2 Wins";
+            }
+            else {
+                return "No Winner";
+            }
         }
 
         @Override
