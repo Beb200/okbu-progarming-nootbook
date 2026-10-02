@@ -1,22 +1,16 @@
 -------------------------------------------------------------------------------
 Test set: cis3723.okbu.edu.Test_Game
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.002 s <<< FAILURE! - in cis3723.okbu.edu.Test_Game
-test_get_current_player(cis3723.okbu.edu.Test_Game)  Time elapsed: 0.001 s  <<< ERROR!
-java.lang.Error: 
-Unresolved compilation problems: 
-	The type GameState is not generic; it cannot be parameterized with arguments <>
-	The method get_current_player(int) is undefined for the type Game
-	The method get_current_player(int) is undefined for the type Game
+Tests run: 10, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.001 s <<< FAILURE! - in cis3723.okbu.edu.Test_Game
+test_verticalWinReachingTopBoundary(cis3723.okbu.edu.Test_Game)  Time elapsed: 0.001 s  <<< FAILURE!
+java.lang.AssertionError
+	at cis3723.okbu.edu.Test_Game.test_verticalWinReachingTopBoundary(Test_Game.java:49)
 
-	at cis3723.okbu.edu.Test_Game.<init>(Test_Game.java:10)
+testFullBoardWithoutWinnerIsDraw(cis3723.okbu.edu.Test_Game)  Time elapsed: 0 s  <<< FAILURE!
+java.lang.AssertionError
+	at cis3723.okbu.edu.Test_Game.testFullBoardWithoutWinnerIsDraw(Test_Game.java:101)
 
-test_disply(cis3723.okbu.edu.Test_Game)  Time elapsed: 0 s  <<< ERROR!
-java.lang.Error: 
-Unresolved compilation problems: 
-	The type GameState is not generic; it cannot be parameterized with arguments <>
-	The method get_current_player(int) is undefined for the type Game
-	The method get_current_player(int) is undefined for the type Game
-
-	at cis3723.okbu.edu.Test_Game.<init>(Test_Game.java:10)
+test_horizontalWinAtRightBoundaryForPlayerTwo(cis3723.okbu.edu.Test_Game)  Time elapsed: 0 s  <<< FAILURE!
+java.lang.AssertionError
+	at cis3723.okbu.edu.Test_Game.test_horizontalWinAtRightBoundaryForPlayerTwo(Test_Game.java:39)
 
