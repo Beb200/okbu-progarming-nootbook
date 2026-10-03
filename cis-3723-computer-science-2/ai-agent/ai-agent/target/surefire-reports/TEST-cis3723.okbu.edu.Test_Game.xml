@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="cis3723.okbu.edu.Test_Game" time="0.001" tests="10" errors="0" skipped="0" failures="3">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="cis3723.okbu.edu.Test_Game" time="0.132" tests="16" errors="0" skipped="0" failures="3">
   <properties>
     <property name="java.specification.version" value="26"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-26.0.2.1\bin"/>
-    <property name="sun.java.command" value="C:\Users\caleb\AppData\Local\Temp\surefire10349980840136497657\surefirebooter5318534888123117660.jar C:\Users\caleb\AppData\Local\Temp\surefire10349980840136497657 2026-10-02T12-43-10_676-jvmRun1 surefire14841428345804369042tmp surefire_01570315712254408795tmp"/>
+    <property name="sun.java.command" value="C:\Users\caleb\AppData\Local\Temp\surefire8794171076248136369\surefirebooter12553556653802688476.jar C:\Users\caleb\AppData\Local\Temp\surefire8794171076248136369 2026-10-02T13-56-48_140-jvmRun1 surefire7958137723929152668tmp surefire_013866727554143127704tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\caleb\School\Comp Sci\okbu-progarming-nootbook\cis-3723-computer-science-2\ai-agent\ai-agent\target\test-classes;C:\Users\caleb\School\Comp Sci\okbu-progarming-nootbook\cis-3723-computer-science-2\ai-agent\ai-agent\target\classes;C:\Users\caleb\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\caleb\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\caleb\AppData\Local\Temp\surefire10349980840136497657\surefirebooter5318534888123117660.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\caleb\AppData\Local\Temp\surefire8794171076248136369\surefirebooter12553556653802688476.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="26.0.2.1+1-7"/>
@@ -59,26 +59,164 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="70.0"/>
   </properties>
-  <testcase name="test_verticalWinReachingTopBoundary" classname="cis3723.okbu.edu.Test_Game" time="0.001">
+  <testcase name="test_is_terminal_three_in_a_row_is_false" classname="cis3723.okbu.edu.Test_Game" time="0.012"/>
+  <testcase name="test_is_terminal_down_right_diagonal_win_at_boundary" classname="cis3723.okbu.edu.Test_Game" time="0.012">
     <failure type="java.lang.AssertionError">java.lang.AssertionError
-	at cis3723.okbu.edu.Test_Game.test_verticalWinReachingTopBoundary(Test_Game.java:49)
+	at cis3723.okbu.edu.Test_Game.test_is_terminal_down_right_diagonal_win_at_boundary(Test_Game.java:139)
 </failure>
+    <system-out><![CDATA[6
+6
+7
+I:5
+
+j:0
+
+not vaid
+6
+7
+I:4
+
+j:0
+
+not vaid
+6
+7
+I:3
+
+j:0
+
+not vaid
+6
+7
+I:2
+
+j:0
+
+not vaid
+6
+7
+I:1
+
+j:0
+
+not vaid
+6
+7
+I:0
+
+j:0
+
+not vaid
+]]></system-out>
   </testcase>
-  <testcase name="test_get_current_player" classname="cis3723.okbu.edu.Test_Game" time="0"/>
-  <testcase name="test_disply" classname="cis3723.okbu.edu.Test_Game" time="0"/>
-  <testcase name="testUpRightDiagonalWinAtBoundary" classname="cis3723.okbu.edu.Test_Game" time="0"/>
-  <testcase name="testPiecesAcrossHorizontalBoundaryAreNotAWin" classname="cis3723.okbu.edu.Test_Game" time="0"/>
-  <testcase name="test_horizontalWinAtTopBoundary" classname="cis3723.okbu.edu.Test_Game" time="0"/>
-  <testcase name="testThreeInARowIsNotTerminal" classname="cis3723.okbu.edu.Test_Game" time="0"/>
-  <testcase name="testFullBoardWithoutWinnerIsDraw" classname="cis3723.okbu.edu.Test_Game" time="0">
+  <testcase name="test_is_terminal_horizontal_win_top_row" classname="cis3723.okbu.edu.Test_Game" time="0.011"/>
+  <testcase name="test_get_legal_moves_returns_all_open_top_slots" classname="cis3723.okbu.edu.Test_Game" time="0"/>
+  <testcase name="test_is_terminal_full_board_without_winner_is_true" classname="cis3723.okbu.edu.Test_Game" time="0.01"/>
+  <testcase name="test_is_terminal_empty_board_is_false" classname="cis3723.okbu.edu.Test_Game" time="0.008"/>
+  <testcase name="test_get_current_player_initial_and_after_moves" classname="cis3723.okbu.edu.Test_Game" time="0"/>
+  <testcase name="test_get_legal_moves_skips_full_columns" classname="cis3723.okbu.edu.Test_Game" time="0"/>
+  <testcase name="test_is_terminal_horizontal_win_right_boundary_for_player_two" classname="cis3723.okbu.edu.Test_Game" time="0.007">
     <failure type="java.lang.AssertionError">java.lang.AssertionError
-	at cis3723.okbu.edu.Test_Game.testFullBoardWithoutWinnerIsDraw(Test_Game.java:101)
+	at cis3723.okbu.edu.Test_Game.test_is_terminal_horizontal_win_right_boundary_for_player_two(Test_Game.java:119)
 </failure>
+    <system-out><![CDATA[6
+6
+7
+I:5
+
+j:0
+
+not vaid
+6
+7
+I:4
+
+j:0
+
+not vaid
+6
+7
+I:3
+
+j:0
+
+not vaid
+6
+7
+I:2
+
+j:0
+
+not vaid
+6
+7
+I:1
+
+j:0
+
+not vaid
+6
+7
+I:0
+
+j:0
+
+not vaid
+]]></system-out>
   </testcase>
-  <testcase name="test_horizontalWinAtRightBoundaryForPlayerTwo" classname="cis3723.okbu.edu.Test_Game" time="0">
+  <testcase name="test_display_runs_on_empty_and_occupied_board" classname="cis3723.okbu.edu.Test_Game" time="0.008"/>
+  <testcase name="test_check_winner_reports_player_one_two_or_no_winner" classname="cis3723.okbu.edu.Test_Game" time="0"/>
+  <testcase name="test_main_runs_without_crashing" classname="cis3723.okbu.edu.Test_Game" time="0.041"/>
+  <testcase name="test_is_terminal_up_right_diagonal_win" classname="cis3723.okbu.edu.Test_Game" time="0.01"/>
+  <testcase name="test_get_result_returns_0_for_no_winner_and_expected_values_for_winner" classname="cis3723.okbu.edu.Test_Game" time="0"/>
+  <testcase name="test_is_terminal_vertical_win_reaching_top_boundary" classname="cis3723.okbu.edu.Test_Game" time="0.011">
     <failure type="java.lang.AssertionError">java.lang.AssertionError
-	at cis3723.okbu.edu.Test_Game.test_horizontalWinAtRightBoundaryForPlayerTwo(Test_Game.java:39)
+	at cis3723.okbu.edu.Test_Game.test_is_terminal_vertical_win_reaching_top_boundary(Test_Game.java:129)
 </failure>
+    <system-out><![CDATA[6
+6
+7
+I:5
+
+j:0
+
+not vaid
+6
+7
+I:4
+
+j:0
+
+not vaid
+6
+7
+I:3
+
+j:0
+
+not vaid
+6
+7
+I:2
+
+j:0
+
+not vaid
+6
+7
+I:1
+
+j:0
+
+not vaid
+6
+7
+I:0
+
+j:0
+
+not vaid
+]]></system-out>
   </testcase>
-  <testcase name="testDownRightDiagonalWinAtBoundary" classname="cis3723.okbu.edu.Test_Game" time="0"/>
+  <testcase name="test_move_full_column_does_not_change_board" classname="cis3723.okbu.edu.Test_Game" time="0"/>
 </testsuite>
