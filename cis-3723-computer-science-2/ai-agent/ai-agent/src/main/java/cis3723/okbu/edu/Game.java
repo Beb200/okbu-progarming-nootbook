@@ -1,7 +1,11 @@
 package cis3723.okbu.edu;
 
-public class Game<S, M> implements Interface<S, M> {
+import java.util.Arrays;
+
+public class Game{//<S, M> implements Interface<S, M> {
+    /* 
     public int turn;
+    //GameState gameState = new state();
 
     @Override
     public S get_legal_moves(S state){
@@ -37,7 +41,14 @@ public class Game<S, M> implements Interface<S, M> {
     }
 
     @Override
-    public String display(S state){
-        return String.valueOf(state);
+    public void display(S[][] state){
+        for (i= 0; i < state.length; i++){
+            for (j = 0; j < state[i].length; j++){
+                System.out.print(state[i][j]+ " ");
+            }
+
+        }
+       //System.out.print(Arrays.deepToString(state));
+        }
+       */
     }
-}
