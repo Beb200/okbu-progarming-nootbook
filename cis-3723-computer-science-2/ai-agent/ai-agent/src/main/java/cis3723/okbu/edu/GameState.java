@@ -55,6 +55,7 @@ public class GameState implements Interface<GameState, Move>{
             game.move(game, move1);
             game.display(game);
 
+            game.board[5][0] =1;
             game.is_terminal(game);
         }
 
