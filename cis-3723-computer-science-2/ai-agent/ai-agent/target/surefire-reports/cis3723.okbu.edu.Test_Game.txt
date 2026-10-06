@@ -1,4 +1,16 @@
 -------------------------------------------------------------------------------
 Test set: cis3723.okbu.edu.Test_Game
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s - in cis3723.okbu.edu.Test_Game
+Tests run: 16, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.132 s <<< FAILURE! - in cis3723.okbu.edu.Test_Game
+test_is_terminal_down_right_diagonal_win_at_boundary(cis3723.okbu.edu.Test_Game)  Time elapsed: 0.012 s  <<< FAILURE!
+java.lang.AssertionError
+	at cis3723.okbu.edu.Test_Game.test_is_terminal_down_right_diagonal_win_at_boundary(Test_Game.java:139)
+
+test_is_terminal_horizontal_win_right_boundary_for_player_two(cis3723.okbu.edu.Test_Game)  Time elapsed: 0.007 s  <<< FAILURE!
+java.lang.AssertionError
+	at cis3723.okbu.edu.Test_Game.test_is_terminal_horizontal_win_right_boundary_for_player_two(Test_Game.java:119)
+
+test_is_terminal_vertical_win_reaching_top_boundary(cis3723.okbu.edu.Test_Game)  Time elapsed: 0.011 s  <<< FAILURE!
+java.lang.AssertionError
+	at cis3723.okbu.edu.Test_Game.test_is_terminal_vertical_win_reaching_top_boundary(Test_Game.java:129)
+
