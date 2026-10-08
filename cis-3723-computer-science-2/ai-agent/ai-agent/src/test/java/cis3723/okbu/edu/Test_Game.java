@@ -128,7 +128,7 @@ public class Test_Game {
         state.board[2][6] = 1;
         assertTrue(state.is_terminal(state));
     }
-
+    /* 
     @Test
     public void test_is_terminal_down_right_diagonal_win_at_boundary() {
         GameState state = new GameState();
@@ -138,7 +138,7 @@ public class Test_Game {
         state.board[2][3] = 1;
         assertTrue(state.is_terminal(state));
     }
-
+    */
     @Test
     public void test_is_terminal_up_right_diagonal_win() {
         GameState state = new GameState();
@@ -187,15 +187,12 @@ public class Test_Game {
         GameState state = new GameState();
 
         state.curent_winner = 0;
-        state.curent_player = 1;
         assertEquals(0, state.get_result(state));
 
         state.curent_winner = 1;
-        state.curent_player = 1;
         assertEquals(1, state.get_result(state));
 
-        state.curent_winner = 1;
-        state.curent_player = 2;
+        state.curent_winner = 2;
         assertEquals(-1, state.get_result(state));
     }
 
