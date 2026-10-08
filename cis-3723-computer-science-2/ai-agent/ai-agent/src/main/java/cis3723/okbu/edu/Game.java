@@ -8,7 +8,7 @@ public class Game{
     public void human_turn(GameState state, Move move1, Game game){
         Scanner scanner = new Scanner(System.in);
         
-        int the_move;
+        
         //System.out.println("hi test");
         while (state.is_terminal(state) == false){
             boolean reset = false;
@@ -22,7 +22,13 @@ public class Game{
                 System.out.print("Player 2 what is your move:");
             }
             //System.out.println("test 2");
-            the_move = scanner.nextInt();
+            int the_move = 0;
+           try{
+                the_move = scanner.nextInt();
+            } catch(Exception e){
+                System.out.println("not a int try agin");
+                //reset = false;
+            }
             //System.out.println("test 3");
             move1.colomn = the_move-1;
             if (the_move < 1 || the_move > 7 ){
