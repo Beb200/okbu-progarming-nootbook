@@ -74,6 +74,7 @@ public class Game{
 
         move.colomn = random_move;
         state = state.move(state, move);
+
         
         state.display(state);
         //System.out.println(move.player);
@@ -89,10 +90,9 @@ public class Game{
         while (state.is_terminal(state) == false){
             game.ai_turn(state, move1, game);
             game.human_turn(state,move1,game);
-            String winner = state.check_winner(state);
-            System.out.println(state.curent_winner);
-            System.out.println(winner);
         }
+        String winner = state.check_winner(state);
+        System.out.println(winner);
     }
     
     

@@ -14,7 +14,7 @@ public class GameState implements Interface<GameState, Move>{
         };
 
         ArrayList<Move> legal_moves;
-        int curent_winner= 0;
+        static int curent_winner= 0;
         int curent_player = 1;
 
         public GameState move(GameState S, Move M){
@@ -45,6 +45,7 @@ public class GameState implements Interface<GameState, Move>{
             for (int i =board.length -1 ; i >= 0; i--){
                 for (int j= 0; j< board[i].length; j++){
                     System.out.print(board[i][j]);
+                    System.out.print(" ");
                 }
                 System.out.println("");
             }
@@ -85,7 +86,7 @@ public class GameState implements Interface<GameState, Move>{
             try{
                 int[][] board = state.board;
                 boolean terminal = false;
-            curent_winner = 0;
+            //curent_winner = 0;
             int move_to_check;
             //System.out.print(board.length);
             //System.out.println("");
@@ -212,6 +213,8 @@ public class GameState implements Interface<GameState, Move>{
                             (i+2 < board.length) && (j < board[i].length) && (board[i+2][j] == move_to_check) &&
                             (i+3 < board.length) && (j < board[i].length) && (board[i+3][j] == move_to_check)){
                                 curent_winner = move_to_check;
+                                //System.out.println("this works");
+                                //System.out.print("the current_winner: " + curent_winner);
                                 return true;
                         }
                     }
@@ -241,10 +244,11 @@ public class GameState implements Interface<GameState, Move>{
         }
 
         public String check_winner(GameState state){
-            if (curent_winner == 1){
+
+            if (state.curent_winner == 1){
                 return "Player 1 Wins";
             }
-            else if (curent_winner == 2){
+            else if (state.curent_winner == 2){
                 return "Player 2 Wins";
             }
             else {
