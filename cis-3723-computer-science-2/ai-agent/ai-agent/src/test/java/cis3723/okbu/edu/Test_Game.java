@@ -38,10 +38,10 @@ public class Test_Game {
         GameState state = new GameState();
         assertEquals(1, state.get_current_player(state));
 
-        state.move(state, makeMove(0, 1));
+        state = state.move(state, makeMove(0, 1));
         assertEquals(2, state.get_current_player(state));
 
-        state.move(state, makeMove(1, 2));
+        state = state.move(state, makeMove(1, 2));
         assertEquals(1, state.get_current_player(state));
     }
 

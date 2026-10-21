@@ -18,6 +18,12 @@ public class GameState implements Interface<GameState, Move>{
         int curent_player = 1;
 
         public GameState move(GameState S, Move M){
+
+            GameState next = new GameState();
+            for (int r = 0; r < S.board.length; r++){
+                next.board[r] = S.board[r].clone();
+            }
+
             for(int i= 0; i < board.length; i++){
                 if (board[i][M.colomn] == 0){
                     board[i][M.colomn]= M.player;
@@ -35,6 +41,7 @@ public class GameState implements Interface<GameState, Move>{
         }
 
         public void display(GameState S){
+            int[][] board = S.board;
             for (int i =board.length -1 ; i >= 0; i--){
                 for (int j= 0; j< board[i].length; j++){
                     System.out.print(board[i][j]);
@@ -76,6 +83,7 @@ public class GameState implements Interface<GameState, Move>{
         @Override
         public boolean is_terminal(GameState state) {
             try{
+                int[][] board = state.board;
                 boolean terminal = false;
             curent_winner = 0;
             int move_to_check;

@@ -1,7 +1,9 @@
 package cis3723.okbu.edu;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.Random;
 
 public class Game{
 
@@ -10,9 +12,10 @@ public class Game{
         
         
         //System.out.println("hi test");
-        while (state.is_terminal(state) == false){
-            boolean reset = false;
-        while (reset == false) {
+        move1.player = 1;
+        
+        boolean reset = false;
+        //while (reset == false) {
             //System.out.println("hi test2");
             //System.out.println(move1.player);
             if (move1.player == 1){
@@ -23,26 +26,32 @@ public class Game{
             }
             //System.out.println("test 2");
             int the_move = 0;
+            
            try{
                 the_move = scanner.nextInt();
+                System.out.println(the_move);
+                //scanner.close();
             } catch(Exception e){
                 System.out.println("not a int try agin");
                 //reset = false;
             }
             //System.out.println("test 3");
             move1.colomn = the_move-1;
-            if (the_move < 1 || the_move > 7 ){
+            /* 
+            if (the_move < 1 && the_move > 7 ){
                 System.out.print("not the right move(1,2,3,4,5,6,7) try agin");
                 reset = false;
             }
             else{
                 reset = true;
             }
-            //System.out.print(rest);
-        }
-        state.move(state, move1);
+            System.out.print(reset);
+            */
+        //}
+        state = state.move(state, move1);
         
         state.display(state);
+        /* to switch if two player
         if (move1.player == 1){
             move1.player = 2;
 
@@ -50,11 +59,25 @@ public class Game{
         else if (move1.player == 2){
             move1.player = 1;
         }
+        */
         System.out.println(move1.player);
-    }
-    scanner.close();
+    
+    
     }
 
+    public void ai_turn(GameState state,Move move,Game game){
+        move.player = 2;
+        Random random = new Random();
+        ArrayList<Move> moves = state.get_legal_moves(state);
+        int random_index = random.nextInt(moves.size());
+        int random_move = moves.get(random_index).colomn;
+
+        move.colomn = random_move;
+        state = state.move(state, move);
+        
+        state.display(state);
+        //System.out.println(move.player);
+    }
 
     public static void main(String[] args){
         GameState state = new GameState();
@@ -63,10 +86,13 @@ public class Game{
         move1.player = 2;
         state.display(state);
 
-        
-        game.human_turn(state,move1,game);
-        String winner = state.check_winner(state);
-        System.out.println(winner);
+        while (state.is_terminal(state) == false){
+            game.ai_turn(state, move1, game);
+            game.human_turn(state,move1,game);
+            String winner = state.check_winner(state);
+            System.out.println(state.curent_winner);
+            System.out.println(winner);
+        }
     }
     
     
