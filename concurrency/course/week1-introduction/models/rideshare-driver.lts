@@ -1,0 +1,13 @@
+/* Week 1 lecture model (slides 18-19 and the tutorial)
+ *
+ * A ride-share driver's status, as the dispatch system sees it.
+ * FSP is introduced properly in Week 2. This file lets you open the model in
+ * LTSA and compare its drawing with your hand-drawn state machine.
+ */
+DRIVER    = OFFLINE,
+OFFLINE   = (go_online     -> AVAILABLE),
+AVAILABLE = (go_offline    -> OFFLINE
+            |accept_ride   -> EN_ROUTE),
+EN_ROUTE  = (pick_up       -> ON_TRIP
+            |rider_cancels -> AVAILABLE),
+ON_TRIP   = (drop_off      -> AVAILABLE).
