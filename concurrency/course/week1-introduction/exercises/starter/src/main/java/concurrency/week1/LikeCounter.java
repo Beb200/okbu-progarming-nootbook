@@ -14,7 +14,7 @@ package concurrency.week1;
  *     mvn -q compile exec:exec -Dmain=LikeCounter -Dargs="4 500000"
  *         // 4 users, 500,000 likes each
  *
- * You do NOT need to change this file for parts (a)-(d) of the exercise.
+ * You do NOT need to change this file for Exercise 2.
  * Just run it, record what you see, and explain it. See exercises/README.md.
  */
 public class LikeCounter {

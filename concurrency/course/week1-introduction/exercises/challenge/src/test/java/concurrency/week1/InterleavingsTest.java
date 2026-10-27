@@ -12,7 +12,7 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 /*
- * Tests for Exercise 4. They fail until interleave(...) and simulate(...) are done.
+ * Tests for the optional challenge. They fail until interleave(...) and simulate(...) are done.
  *
  *     mvn test
  */

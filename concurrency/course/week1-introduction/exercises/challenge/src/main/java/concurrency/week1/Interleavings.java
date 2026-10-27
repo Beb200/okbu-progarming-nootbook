@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /*
- * Week 1, Exercise 4 (recursion + concurrency): Enumerating interleavings
+ * Week 1, optional challenge (recursion + concurrency): Enumerating interleavings
  *
  * Two processes share a variable x. Each process is a list of ATOMIC steps.
  * The scheduler may run the steps in any order that keeps each process's own
@@ -14,7 +14,8 @@ import java.util.TreeMap;
  * and the final value of x it produces.
  *
  * Your job: implement interleave(...) and simulate(...). Everything else is done.
- * Check part (a) against the table on the lecture slide.
+ * Check part (a) against the table in the tutorial, and part (b) against your
+ * answer to Exercise 1.
  *
  *     mvn -q compile exec:exec -Dmain=Interleavings
  */
