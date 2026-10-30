@@ -8,17 +8,23 @@ import java.time.Instant;
 import com.opencsv.CSVWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 
 public class Game{
     int move_num;
+    static Scanner scanner = new Scanner(System.in);
+    ArrayList<Integer> move_history = new ArrayList<>();
 
     public void human_turn(GameState state, Move move1, Game game){
-        Scanner scanner = new Scanner(System.in);
+        
         
         
         //System.out.println("hi test");
-        move1.player = 1;
+        if (move1.player == 1){
         
         boolean reset = false;
         //while (reset == false) {
@@ -34,7 +40,7 @@ public class Game{
             int the_move = 0;
             
            try{
-                the_move = scanner.nextInt();
+                the_move = get_int_from_user(scanner);//scanner.nextInt();
                 System.out.println(the_move);
                 //scanner.close();
             } catch(Exception e){
@@ -55,7 +61,9 @@ public class Game{
             */
         //}
         state = state.move(state, move1);
+        move_history.add(move1.colomn);
         move_num += 1;
+        move1.player = 2;
         
         state.display(state);
         /* to switch if two player
@@ -68,13 +76,14 @@ public class Game{
         }
         */
         System.out.println(move1.player);
+        }
     
     
     }
 
     public void ai_turn(GameState state,Move move,Game game){
+        if (move.player == 2){
         long start = timer_start("ai_turn");
-        move.player = 2;
         Random random = new Random();
         ArrayList<Move> moves = state.get_legal_moves(state);
         int random_index = random.nextInt(moves.size());
@@ -82,16 +91,20 @@ public class Game{
         random_move = rankmove(random_move);
         move.colomn = random_move;
         state = state.move(state, move);
+        move_history.add(move.colomn);
         move_num += 1;
+        move.player = 1;
 
         
         state.display(state);
         //System.out.println(move.player);
+        
         double duration = timer_end(start, "ai_turn");
         String duration_string = String.valueOf(duration);
         String move_num_s = String.valueOf(move_num);
         String ai_move_s = String.valueOf(random_move);
         write_to_csv(move_num_s, duration_string, ai_move_s);
+        }
     }
 
     public int rankmove(int move){
@@ -146,6 +159,19 @@ public class Game{
         return duration_ms;
     }
 
+    public int get_int_from_user(Scanner scanner){
+        while (!scanner.hasNextInt()) {
+            System.out.println("not a vaid number try again");
+            scanner.next();
+        }
+        int the_int = scanner.nextInt();
+        return the_int;
+    }
+
+    public String get_String_from_user(Scanner scanner){
+        return scanner.next();
+    }
+
     public void write_to_csv(String move_num, String duration, String move){
         String file = "performance_log.csv";
         try(CSVWriter writer = new CSVWriter(new FileWriter(file, true))){
@@ -153,29 +179,131 @@ public class Game{
             writer.writeNext(logRecord);
         } catch (IOException e){
             e.printStackTrace();
+        } 
+    }
+
+    public String serialize_state(GameState state){
+        //String ser_game = state.display(state);
+        int[][] board = state.board;
+        StringBuilder sb = new StringBuilder("");
+        sb.append(state.curent_player);
+        sb.append(",");
+        for (int i =board.length -1 ; i >= 0; i--){
+            for (int j= 0; j< board[i].length; j++){
+                //System.out.print(board[i][j]);
+                //System.out.print(" ");
+                sb.append(board[i][j]);
+            }
+            //System.out.println("");
+            
         }
+        //System.out.println("");
+        return sb.toString();
+    }
+
+    public GameState deserialize_state(String string){
+        String[] parts = string.split(",", 2);
+        if (parts.length != 2){
+            throw new IllegalArgumentException("Invalid game state");
+        }
+
+        GameState state = new GameState();
+        state.curent_player = Integer.parseInt(parts[0]);
+
+        String boardString = parts[1];
+        if (boardString.length() != 42){
+            throw new IllegalArgumentException("Invalid board data");
+        }
+
+        for (int row = 0; row < state.board.length; row++){
+            for (int col = 0; col < state.board[row].length; col++){
+                int index = row * state.board[row].length + col;
+                int value = Character.digit(boardString.charAt(index), 10);
+                if (value < 0 || value > 2){
+                    throw new IllegalArgumentException("Invalid board value");
+                }
+                state.board[state.board.length - 1 - row][col] = value;
+            }
+        }
+
+        return state;
+    }
+    public void game_create(){
         
-        
+    }
+    public void game_play(GameState state, Game game, Move move1){
+            move1.player = 1;
+            state.display(state);
+            while (state.is_terminal(state) == false){
+                game.ai_turn(state, move1, game);
+                game.human_turn(state,move1,game);
+                System.out.println("Do you want to save this state? (y/n)");
+                String y_n_save = get_String_from_user(scanner);
+                if (y_n_save.equalsIgnoreCase("y")){
+                    save_game(state);
+                }
+            }
+    }
+
+    public void save_game(GameState state){
+        String saved_game = serialize_state(state);
+        Path filePath = Paths.get("saved_games.txt");
+        try {
+            Files.writeString(filePath, saved_game, StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public GameState load_game(){
+        System.out.println("Input load game: ");
+        String game = get_String_from_user(scanner);
+        GameState new_game = deserialize_state(game);
+        return new_game;
     }
 
     public static void main(String[] args){
-        GameState state = new GameState();
-        Game game = new Game();
-        Move move1 = new  Move();
-        move1.player = 2;
-        state.display(state);
-
-        while (state.is_terminal(state) == false){
-            game.ai_turn(state, move1, game);
-            game.human_turn(state,move1,game);
+        boolean game_next = true;
+        while(game_next == true){
+            Game game = new Game();
+            Move move1 = new  Move();
+            GameState state = new GameState();
+            System.out.println("Do you want to load a game? (y/n)");
+            if (game.get_String_from_user(scanner).equalsIgnoreCase("y")){
+                GameState state_loaded = game.load_game();
+                game.game_play(state_loaded, game, move1);
+                String winner = state_loaded.check_winner(state_loaded);
+                System.out.println(winner);
+                System.out.println(game.move_history);
+            } else{
+                game.game_play(state,game,move1);
+                String winner = state.check_winner(state);
+                System.out.println(winner);
+                System.out.println(game.move_history);
+            }
+            
+            
+            
+            //Scanner scanner = new Scanner(System.in);
+            System.out.print("Do you want to play another game? (y/n)");
+            //String player_next = scanner.next();
+            //scanner.close();
+            String player_next = game.get_String_from_user(scanner);
+            System.out.println(player_next);
+            if (player_next.equalsIgnoreCase("y")){
+                game_next = true;
+                System.out.println("i work");
+            }
+            else{
+                game_next = false;
+            }
+            
         }
-        String winner = state.check_winner(state);
-        System.out.println(winner);
     }
 }
     
-    
-    
+
     
     
     
