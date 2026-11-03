@@ -42,8 +42,8 @@ You may build your agent for any of the following games. Confirm your choice wit
 | **Tic-Tac-Toe** | ⭐⭐ | Fully solvable; use only if extending to a harder variant (e.g., 4×4, 3D) |
 | **Othello / Reversi** | ⭐⭐⭐ | Mobility and corner heuristics make for interesting design challenges |
 | **Checkers** | ⭐⭐⭐⭐ | Complex move generation; rich heuristic space |
-| **Chess (endgame only)** | ⭐⭐⭐⭐ | Restrict to K+R vs. K or similar; requires transposition tables |
-| **Custom game** | Varies | Must be approved by instructor; must have a branching factor ≥ 4 |
+| **Chess (endgame only)** | ⭐⭐⭐⭐ | Restrict to K+R vs. K or similar; transposition tables recommended (not graded) |
+| **Custom game** | Varies | Must be approved by instructor; must have at least 4 legal moves from the starting position (G4) |
 
 ### 2.4 Game Eligibility Requirements
 
@@ -54,7 +54,7 @@ Whatever game you choose must satisfy:
 | G1 | Two-player, turn-based (no simultaneous moves) |
 | G2 | Perfect information (no hidden state, no randomness) |
 | G3 | Finite state space with terminal win/loss/draw conditions |
-| G4 | Branching factor of at least 4 at most non-terminal states |
+| G4 | At least 4 legal moves from the starting position |
 | G5 | Approved by instructor before project start |
 
 ---
@@ -228,6 +228,13 @@ The **Game Interface** (F1) is the contract between your game logic and your AI 
 ### Week 7 — Minimax AI (Full Tree Search)
 **Learning Focus:** Game trees, Minimax algorithm, recursive search
 
+**Search conventions (apply to `minimax()` and to `minimax_ab()` in Week 8):**
+- **Score perspective:** Scores are from Player 1's point of view, matching `get_result()` (F1.4): a higher score is better for Player 1. `maximizing_player` is True when the player to move is Player 1.
+- **Finished games first:** Check `is_terminal(state)` before checking the depth limit, so a finished game is always scored as a finished game, even at depth 0.
+- **Depth limit:** Until Week 9, score a non-terminal state at the depth limit as 0.
+- **States with no legal moves:** The search assumes every non-terminal state has at least one legal move. If a player in your game can be left with no move while the game goes on (a pass in Othello), `get_legal_moves()` must return a single "pass" move. If having no move ends the game (a loss in checkers, stalemate in chess), `is_terminal()` must return True and `get_result()` must give that outcome.
+- **Ties:** When two or more moves share the best score, the search may return any of them.
+
 | ID | Feature | Status |
 |---|---|---|
 | F7.1 | Implement `minimax(state, depth, maximizing_player, game)` — recursive Minimax using only the Game Interface | [ ] |
@@ -238,12 +245,12 @@ The **Game Interface** (F1) is the contract between your game logic and your AI 
 
 **Connect Four Example:**
 - Minimax at depth 4 explores up to 7⁴ = 2,401 nodes per move (before pruning)
-- Verify correctness first on Tic-Tac-Toe (fully solvable — AI should never lose)
+- Verify correctness first on Tic-Tac-Toe (fully solvable). Search at depth 6 or more (or the full game, depth 9); there the AI should never lose. At depth 4 a correct Minimax *can* lose Tic-Tac-Toe: after a corner opening, the losing replies lose only six moves later, beyond what depth 4 can see (the *horizon effect*). A loss at depth 4 is not by itself a bug.
 
 **Acceptance Criteria:**
 - **F7.1:** Minimax uses only Game Interface methods — no game-specific code inside the search
 - **F7.2:** Base cases are correctly handled for both terminal and depth-limit states
-- **F7.3/F7.4:** Minimax AI makes legal, non-losing moves at depth 4
+- **F7.3/F7.4:** At depth 4, the Minimax AI makes only legal moves, always takes an immediate win, and always blocks the opponent's immediate win when a block exists
 - **F7.5:** Node counts are logged correctly per move
 
 ---
@@ -253,20 +260,28 @@ The **Game Interface** (F1) is the contract between your game logic and your AI 
 
 | ID | Feature | Status |
 |---|---|---|
-| F8.1 | Implement `minimax_ab(state, depth, alpha, beta, maximizing_player, game)` — Minimax with alpha-beta pruning | [ ] |
+| F8.1 | Implement `minimax_ab(state, depth, alpha, beta, maximizing_player, game)` — Minimax with alpha-beta pruning. Stop searching a node's remaining children as soon as `alpha >= beta` | [ ] |
 | F8.2 | Replace `minimax()` with `minimax_ab()` in the game loop | [ ] |
 | F8.3 | Implement move ordering: sort children by `rank_moves()` before recursing to improve pruning efficiency | [ ] |
-| F8.4 | Run benchmarking experiment: search depths 1–8, record nodes explored for plain Minimax vs. alpha-beta | [ ] |
-| F8.5 | Save benchmark results to `performance_log.csv` and print a summary table to console | [ ] |
+| F8.4 | Run benchmarking experiment: search depths 1–8, record nodes explored for plain Minimax, alpha-beta without move ordering, and alpha-beta with move ordering (F8.3) | [ ] |
+| F8.5 | Save benchmark results to `benchmark_results.csv` (not `performance_log.csv`, which keeps the per-move AI log) and print a summary table to console | [ ] |
+
+**File format for F8.5:** Overwrite `benchmark_results.csv` on each benchmark run, starting with this header:
+```
+depth,minimax_nodes,alphabeta_nodes,alphabeta_ordered_nodes,percent_reduction
+```
+`percent_reduction` is (`minimax_nodes` − `alphabeta_ordered_nodes`) ÷ `minimax_nodes` × 100.
+
+**Benchmark setup for F8.4:** Run every search from your game's starting state, with Player 1 to move. Count every state the search visits, including the starting state. The benchmark uses no randomness, so running it twice gives the same file. Above the summary table, print the game name and the evaluation used at the depth limit (0 until Week 9 adds a heuristic).
 
 **Connect Four Example:**
 - At depth 8 without pruning: up to 7⁸ ≈ 5.7 million nodes
 - With alpha-beta and good move ordering: typically reduced by 50–90%
 
 **Acceptance Criteria:**
-- **F8.1/F8.2:** Alpha-beta produces identical move choices as plain Minimax (same result, fewer nodes)
-- **F8.3:** Move ordering measurably reduces node counts vs. unordered alpha-beta
-- **F8.4/F8.5:** Benchmark results are saved, reproducible, and show clear node count reduction at all depths
+- **F8.1/F8.2:** From the same state and depth, `minimax_ab()` returns the same score as `minimax()`, and the move it picks is one of the moves with that best score. It may pick a different tied move than plain Minimax, because move ordering changes which tied move is seen first
+- **F8.3:** The benchmark reports node counts for alpha-beta with and without move ordering at every depth. Ordering does not have to help at every depth; if it does not help at some depth, your A1 analysis says so and suggests why
+- **F8.4/F8.5:** `benchmark_results.csv` has one row for each depth 1–8 and is the same when the benchmark is run twice. At every depth, alpha-beta explores no more nodes than plain Minimax, and at depth 4 and above it explores fewer. (At depth 1 there is nothing to prune, so equal counts are expected there.)
 
 ---
 
@@ -277,9 +292,14 @@ The **Game Interface** (F1) is the contract between your game logic and your AI 
 
 | ID | Feature | Status |
 |---|---|---|
-| F9.1 | Modify `minimax_ab()` to accept an `evaluate(state)` function parameter | [ ] |
+| F9.1 | Modify `minimax_ab()` to accept an `evaluate(state)` function parameter. `evaluate` estimates how good an unfinished state is without searching further, and returns an integer: positive favors Player 1, negative favors Player 2, and 0 means even. It must not change the state | [ ] |
 | F9.2 | When `depth == 0` and state is non-terminal, call `evaluate(state)` instead of recursing | [ ] |
-| F9.3 | Confirm AI plays legally and reasonably at the depth limit with a non-trivial heuristic | [ ] |
+| F9.3 | Confirm the AI plays legally at the depth limit with a non-trivial heuristic, and still takes immediate wins and blocks immediate losses (the F7.3/F7.4 check) | [ ] |
+
+**Scoring rules for 9A–9C:**
+- Heuristics return scores from Player 1's point of view, the same as the search.
+- Heuristics are game-specific, so they belong with your game code, not in the search. The search receives `evaluate` as a parameter and only calls it, which keeps it within NF4 even though `evaluate` is not one of the Game Interface methods.
+- A finished game must outscore every heuristic value. Score a terminal state as `get_result(state)` times a number larger than any score your heuristics can return (for example, 1,000,000).
 
 #### 9B — Heuristic 1: Pattern/Threat Scoring
 
@@ -289,7 +309,7 @@ The **Game Interface** (F1) is the contract between your game logic and your AI 
 | F9.5 | Assign scores to patterns: immediate win threat, two-step win setup, opponent threats to block | [ ] |
 
 **Connect Four Example for F9.4/F9.5:**
-- Scan all windows of size 4; score: 4-in-a-row AI (+100,000), 3+empty AI (+50), 2+empty AI (+10), 3+empty opponent (-80), 4-in-a-row opponent (-100,000)
+- Scan all windows of 4 cells that hold pieces of only one player. Score 3 Player 1 pieces + 1 empty as +50 and 2 Player 1 pieces + 2 empty as +10; score the same windows for Player 2 as −50 and −10. Four in a row is a finished game, so `get_result()` scores it, not the heuristic
 
 #### 9C — Heuristic 2: Positional/Strategic Scoring
 
@@ -305,13 +325,20 @@ The **Game Interface** (F1) is the contract between your game logic and your AI 
 
 | ID | Feature | Status |
 |---|---|---|
-| F9.8 | Implement `tournament(heuristic_a, heuristic_b, num_games, game)` — AI vs. AI for N games, alternating first move | [ ] |
-| F9.9 | Record wins, losses, and draws; save results to `tournament_results.csv` | [ ] |
+| F9.8 | Implement `tournament(heuristic_a, heuristic_b, num_games, game, seed)` — AI vs. AI for N games, alternating first move. Both sides search to the same depth. Because the search has no randomness, the first two moves of each game (one per player) are chosen at random using a random number generator created from `seed`, so the games are not all the same | [ ] |
+| F9.9 | Save one row per game to `tournament_results.csv`, then print each heuristic's wins, losses, and draws, along with the seed and depth used | [ ] |
+
+**File format for F9.9:** Overwrite `tournament_results.csv` on each tournament run, starting with this header:
+```
+game_number,first_player_heuristic,winner_heuristic,num_moves
+```
+`winner_heuristic` is `draw` when the game is a draw.
 
 **Acceptance Criteria:**
-- **F9.4/F9.6:** Both heuristics produce non-zero, meaningful scores for non-terminal states
-- **F9.8/F9.9:** Tournament runs without errors for at least 20 games
-- **F9.9:** Results show a measurable difference between heuristics
+- **F9.3:** With either heuristic at the depth limit, the AI takes immediate wins and blocks immediate losses
+- **F9.4/F9.6:** Unit tests show each heuristic giving a positive score to at least one non-terminal state that favors Player 1 and a negative score to one that favors Player 2
+- **F9.8/F9.9:** Tournament runs without errors for at least 20 games, and running it twice with the same seed and depth produces the same `tournament_results.csv`
+- **F9.9:** Results are recorded and summarized. The heuristics do not have to differ; A2 explains the results whichever way they come out
 - **F9.1–F9.7:** Neither heuristic causes the AI to make illegal moves
 
 ---
@@ -321,10 +348,19 @@ The **Game Interface** (F1) is the contract between your game logic and your AI 
 
 | ID | Feature | Status |
 |---|---|---|
-| F10.1 | Final game loop supports three CLI modes: `--mode human`, `--mode benchmark`, `--mode tournament` | [ ] |
+| F10.1 | Final game loop supports three CLI modes: `--mode human`, `--mode benchmark`, `--mode tournament`. `--mode human` and `--mode benchmark` accept `--heuristic threat` or `--heuristic positional` to choose the evaluation function | [ ] |
 | F10.2 | README.md completed: project description, game choice rationale, how to run, heuristic descriptions, findings summary | [ ] |
 | F10.3 | All unit tests passing | [ ] |
 | F10.4 | Code reviewed for clarity, inline comments, and style consistency | [ ] |
+| F10.5 | **Save and load in human mode.** During a human turn, the player can type `save` (default file) or `save <file>` instead of a move; the game confirms where it saved and the same player moves next. At startup, before a new game, the program asks for a saved-game file to resume (Enter starts a new game). A missing or invalid file prints an error and asks again, without crashing. The save file must use `serialize_state()` (F6.1) for the board and must also store the moves played so far, in order | [ ] |
+| F10.6 | **Move history across games.** The `MoveHistory` trie (F6.3) keeps every game played during one run of the program, not just the current one. At game end, add the finished game to the trie, show its moves as a numbered list (F6.5), and use the trie to report how many recorded games began with the same opening move. The trie stays in memory only; it is not saved to disk | [ ] |
+| F10.7 | **Performance log format.** Each AI move appends one row to `performance_log.csv` with this header (written only when the file is new or empty): `timestamp,move_number,player,move,time_ms,nodes_explored`. `timestamp` is the wall-clock date and time; `time_ms` is how long the AI took to choose the move. The file is appended to across runs, never overwritten | [ ] |
+
+**Connect Four Example for F10.5:**
+```
+state=000000000000000000000000000000000000012000:1
+moves=1:3,2:4
+```
 
 **Written Analysis (2–3 pages, submitted separately):**
 
@@ -332,12 +368,15 @@ The **Game Interface** (F1) is the contract between your game logic and your AI 
 |---|---|---|
 | A1 | Pruning Effectiveness — graph of nodes explored (Minimax vs. alpha-beta, depths 1–8) | [ ] |
 | A2 | Heuristic Comparison — tournament results table, win rates, hypothesis for outcome | [ ] |
-| A3 | Reflection — what worked, what didn't, what you'd improve with more time | [ ] |
+| A3 | Reflection — what worked, what didn't, what you'd improve with more time. Use your `performance_log.csv` or `benchmark_results.csv` data to support at least one claim | [ ] |
 
 **Acceptance Criteria:**
 - **F10.1:** All three modes run without errors from the command line
 - **F10.2:** README is complete; a new reader can run the project without additional instructions
-- **F10.3:** All unit tests pass with no failures
+- **F10.3:** All unit tests pass with no failures. The tests include at least: win detection, draw detection, the serialization round-trip (F6.1/F6.2), the AI taking an immediate win, the AI blocking an immediate loss, and `minimax_ab()` returning the same score as `minimax()`
+- **F10.5:** A game saved mid-play and loaded in a new run continues from the same board with the same player to move. Its numbered move history at game end includes the moves from before the save
+- **F10.6:** After two or more games in one run, the opening count comes from the trie and is correct
+- **F10.7:** Each AI move adds exactly one row with all six columns, and a second run adds rows after the first run's
 - **A1–A3:** Written analysis addresses all three sections with data, graphs, and reasoning
 
 ---
@@ -346,12 +385,12 @@ The **Game Interface** (F1) is the contract between your game logic and your AI 
 
 | ID | Requirement | Specification |
 |---|---|---|
-| NF1 | Performance | AI must select a move in under 5 seconds at depth 6 |
+| NF1 | Performance | On your own computer, at depth 6, every AI move in a full game against the random AI (F5.1) takes under 5 seconds, as recorded in the `time_ms` column of `performance_log.csv`. List your computer's processor and memory in the README |
 | NF2 | Correctness | AI must never make an illegal move |
 | NF3 | Modularity | Game logic, AI search logic, and UI must be in separate modules/files |
 | NF4 | Decoupling | Minimax engine must use only the Game Interface (F1.1–F1.6) — no game-specific code in the search |
-| NF5 | Testability | Minimum 10 unit tests covering game logic and win detection |
-| NF6 | Reproducibility | Benchmark and tournament results must be reproducible with a fixed random seed |
+| NF5 | Testability | Minimum 10 unit tests, including the tests listed in the F10.3 acceptance criterion |
+| NF6 | Reproducibility | Running the benchmark twice produces the same `benchmark_results.csv`; running the tournament twice with the same seed and depth produces the same `tournament_results.csv` |
 | NF7 | Version Control | At least one Git commit per week with a meaningful commit message |
 
 ---
@@ -366,7 +405,7 @@ The **Game Interface** (F1) is the contract between your game logic and your AI 
 | D4 | Week 7 checkpoint: F7.1–F7.5 complete, Minimax AI playable | End of Week 7 |
 | D5 | Week 8 checkpoint: F8.1–F8.5 complete, benchmark results saved | End of Week 8 |
 | D6 | Week 9 checkpoint: F9.1–F9.9 complete, tournament results saved | End of Week 9 |
-| D7 | Final submission: F10.1–F10.4 complete + README + written analysis (A1–A3) | End of Week 10 |
+| D7 | Final submission: F10.1–F10.7 complete + README + written analysis (A1–A3) | End of Week 10 |
 | D8 | *(Optional)* Demo day: live match vs. another student's AI (same or different game) | Week 10 |
 
 ---
@@ -403,7 +442,7 @@ You are expected to write your own code. You may use AI tools to help you unders
 | F7.1–F7.5 | Week 7 | Minimax AI |
 | F8.1–F8.5 | Week 8 | Alpha-beta pruning & benchmarking |
 | F9.1–F9.9 | Week 9 | Heuristic evaluation & tournament |
-| F10.1–F10.4 | Week 10 | Final polish & submission |
+| F10.1–F10.7 | Week 10 | Final polish & submission |
 | A1–A3 | Week 10 | Written analysis sections |
 | NF1–NF7 | All | Non-functional requirements |
 | D1–D8 | All | Deliverable milestones |
@@ -412,4 +451,16 @@ You are expected to write your own code. You may use AI tools to help you unders
 
 ---
 
-*Document version 3.0 | DSA Trees Module | Ten-Week Project | Generic Game-Playing Agent*
+## 10. Revision History
+
+| Version | Date | Changes |
+|---|---|---|
+| 3.0 | 2026-09-08 | Version issued at the start of the term. |
+| 3.1 | 2026-10-26 | Week 7: the Tic-Tac-Toe check now uses depth 6 or more, because a correct depth-4 Minimax can lose Tic-Tac-Toe (horizon effect). The F7.3/F7.4 acceptance criterion now says what depth 4 must do: take immediate wins and block immediate losses. Added guidance to score non-terminal depth-limit states as 0 until Week 9. Added this revision history. |
+| 3.2 | 2026-11-03 | Week 8: benchmark results now go to `benchmark_results.csv`, with a set header, so they no longer mix with the per-move log. Week 10: added F10.5 (when saving and loading happen, and what the save file holds), F10.6 (the move history trie keeps all games in a run and reports opening counts), and F10.7 (`performance_log.csv` columns; settles "time" vs. "timestamp" in F5.4). A3 now asks for at least one claim backed by `performance_log.csv` or `benchmark_results.csv` data. |
+| 3.3 | 2026-11-03 | Changes in response to the adversarial review of 3.2. G4: eligibility is now at least 4 legal moves from the starting position; the chess endgame note no longer requires transposition tables. Week 8: added search conventions (Player 1 score perspective, finished games checked before the depth limit, pass moves and no-move endings, ties). F8.1 says when to cut off; F8.4 benchmarks alpha-beta with and without ordering from the starting state, and `percent_reduction` is defined. Acceptance criteria now compare scores instead of exact moves, do not require ordering to help at every depth, and expect no reduction at depth 1. Week 9: terminal scores must outrank heuristic scores; the Connect Four example uses Player 1 and Player 2 instead of AI and opponent; F9.3 and F9.4/F9.6 have testable checks; the tournament takes a seed, randomizes each game's first two moves, and writes a defined `tournament_results.csv`; a difference between heuristics is no longer required. F10.3 lists required tests. NF1, NF5, and NF6 now say how they are measured. |
+| 3.4 | 2026-11-03 | Search conventions moved from Week 8 to the start of Week 7, because students are just starting `minimax()`. They now require Player 1's point of view, removing the 3.3 option to keep a different one, and state for every game that a non-terminal state at the depth limit scores 0 until Week 9 (replacing the Connect Four example bullet). Week 9: F9.1 defines what `evaluate(state)` returns, and the scoring rules say heuristics belong with the game code and are passed to the search, which keeps it within NF4. F10.1: `--mode human` and `--mode benchmark` accept `--heuristic threat` or `--heuristic positional`. |
+
+---
+
+*Document version 3.4 | DSA Trees Module | Ten-Week Project | Generic Game-Playing Agent*
