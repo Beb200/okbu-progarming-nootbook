@@ -70,7 +70,7 @@ Mark each statement true or false, and give a one-line reason.
 
 ## Problem 2: A two-level tree
 
-![game tree](../media/minimax_figures/hand_001.svg)
+![game tree](minimax_figures/hand_001.svg)
 
 a. Write the value of every MIN node and of the root.
 b. Which move should MAX make, and what score is MAX guaranteed?
@@ -83,7 +83,7 @@ b. Which move should MAX make, and what score is MAX guaranteed?
 
 ## Problem 3: A three-level tree
 
-![game tree](../media/minimax_figures/hand_002.svg)
+![game tree](minimax_figures/hand_002.svg)
 
 a. Write the value of every internal node (MAX nodes at the bottom level first, then MIN, then the root).
 b. Which move should MAX make at the root? What is the root's value?
@@ -112,7 +112,7 @@ c. Which node returns last, and why?
 
 ## Problem 5: Why not chase the biggest leaf?
 
-![game tree](../media/minimax_figures/hand_003.svg)
+![game tree](minimax_figures/hand_003.svg)
 
 a. A greedy player moves toward the biggest leaf (100). What happens if MIN plays well?
 b. What does minimax choose, and what score does it guarantee?
@@ -126,7 +126,7 @@ c. When might the greedy choice actually work? Why doesn't minimax take that cha
 
 X to move. The small numbers mark the empty squares.
 
-![board](../media/minimax_figures/hand_004.svg)
+![board](minimax_figures/hand_004.svg)
 
 a. Draw the game tree: X's three possible moves, O's replies, and so on until each game ends.
 b. Score every finished game (+1, 0 or −1) and pass the values up the tree.
@@ -142,7 +142,7 @@ c. Which move should X play? Explain in one sentence why it works.
 
 X to move.
 
-![board](../media/minimax_figures/hand_005.svg)
+![board](minimax_figures/hand_005.svg)
 
 a. Find the minimax value of each of X's three moves.
 b. Which move should X play, and what is the result with best play?
@@ -154,7 +154,7 @@ c. X can't win here. Does minimax still pick a sensible move? Explain.
 
 ## Problem 8: When MIN moves first
 
-![game tree](../media/minimax_figures/hand_006.svg)
+![game tree](minimax_figures/hand_006.svg)
 
 a. Write the value of every node. (The root is a MIN node this time.)
 b. Which move should MIN make, and what is the root's value?
@@ -164,7 +164,7 @@ c. What changes in the algorithm when MIN moves first, and what stays the same?
 
 ## Problem 9: Alpha-beta pruning
 
-![game tree](../media/minimax_figures/hand_007.svg)
+![game tree](minimax_figures/hand_007.svg)
 
 a. Run alpha-beta (children left to right). Cross out every leaf that is never examined. What is the root's value?
 b. For each leaf you crossed out, explain in one sentence why it can't change the answer.
