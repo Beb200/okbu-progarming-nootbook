@@ -71,7 +71,7 @@ public class Downloads {
                 download("podcast.mp3", 1500),
                 download("notes.pdf", 300));
 
-        timeMillis("Sequential downloads", downloads, false);
+        timeMillis("Concurrent downloads", downloads, true);
 
         // TODO: time the same downloads concurrently.
         //       Hint: copy the line above and change two things.
