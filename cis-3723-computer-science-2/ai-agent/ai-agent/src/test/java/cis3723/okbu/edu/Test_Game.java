@@ -15,6 +15,20 @@ public class Test_Game {
     }
 
     @Test
+    public void test_apply_move_returns_new_state_and_preserves_original() {
+        GameState original = new GameState();
+        Move move = makeMove(3, 1);
+
+        GameState next = original.move(original, move);
+
+        assertNotSame(original, next);
+        assertEquals(0, original.board[0][3]);
+        assertEquals(1, next.board[0][3]);
+        assertEquals(1, original.get_current_player(original));
+        assertEquals(2, next.get_current_player(next));
+    }
+
+    @Test
     public void test_main_runs_without_crashing() {
         GameState.main(new String[0]);
     }

@@ -49,7 +49,7 @@ public class Game{
             }
             //System.out.println("test 3");
             move1.colomn = the_move-1;
-            /* 
+            
             if (the_move < 1 && the_move > 7 ){
                 System.out.print("not the right move(1,2,3,4,5,6,7) try agin");
                 reset = false;
@@ -58,7 +58,7 @@ public class Game{
                 reset = true;
             }
             System.out.print(reset);
-            */
+            
         //}
         state = state.move(state, move1);
         move_history.add(move1.colomn);
@@ -88,7 +88,7 @@ public class Game{
         ArrayList<Move> moves = state.get_legal_moves(state);
         int random_index = random.nextInt(moves.size());
         int random_move = moves.get(random_index).colomn;
-        random_move = rankmove(random_move);
+        //random_move = rankmove(random_move);
         move.colomn = random_move;
         state = state.move(state, move);
         move_history.add(move.colomn);
@@ -106,7 +106,7 @@ public class Game{
         write_to_csv(move_num_s, duration_string, ai_move_s);
         }
     }
-
+    /*  not what I want
     public int rankmove(int move){
         Random random = new Random();
         int new_move =1 ;
@@ -142,6 +142,7 @@ public class Game{
         System.out.println("the new move: " + new_move);
         return new_move;
     }
+    */
 
     public long timer_start(String function){
         long start_time = System.nanoTime();

@@ -14,30 +14,50 @@ public class GameState implements Interface<GameState, Move>{
         };
 
         ArrayList<Move> legal_moves;
-        static int curent_winner= 0;
+        int curent_winner= 0;
         int curent_player = 1;
 
-        public GameState move(GameState S, Move M){
+        public GameState move(GameState state, Move move){
+            if (state == null || move == null) {
+                throw new IllegalArgumentException("State and move must not be null");
+            }
+
+            int rows = state.board.length;
+            int columns = state.board[0].length;
+            int column = move.colomn;
+
+            if (column < 0 || column >= columns) {
+                throw new IllegalArgumentException("Move column is out of range");
+            }
+
+            if (state.curent_player != 1 && state.curent_player != 2) {
+                throw new IllegalStateException("State has an invalid current player");
+            }
+
+            if (move.player != state.curent_player) {
+                throw new IllegalArgumentException("Move player does not match the current player");
+            }
 
             GameState next = new GameState();
-            for (int r = 0; r < S.board.length; r++){
-                next.board[r] = S.board[r].clone();
+
+            for (int row = 0; row < rows; row++) {
+                next.board[row] = state.board[row].clone();
             }
 
-            for(int i= 0; i < board.length; i++){
-                if (board[i][M.colomn] == 0){
-                    board[i][M.colomn]= M.player;
-                    if (M.player == 1){
-                        curent_player = 2;
-                        break;
-                    }
-                    if (M.player == 2){
-                        curent_player = 1;
-                        break;
-                    }
-                }
+            int row = 0;
+            while (row < rows && next.board[row][column] != 0) {
+                row++;
             }
-            return S;
+
+            if (row == rows) {
+                throw new IllegalArgumentException("Cannot move in a full column");
+            }
+
+            next.board[row][column] = state.curent_player;
+            next.curent_player = (state.curent_player == 1) ? 2 : 1;
+            next.curent_winner = 0;
+
+            return next;
         }
 
         public void display(GameState S){
