@@ -12,6 +12,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Comparator;
+import java.util.PriorityQueue; 
 
 
 public class Game{
@@ -263,6 +265,116 @@ public class Game{
         GameState new_game = deserialize_state(game);
         return new_game;
     }
+
+    public ArrayList<Move> rank_moves(GameState state) {
+    if (state == null) {
+        throw new IllegalArgumentException("State must not be null");
+    }
+
+    PriorityQueue<Move> movesByPriority = new PriorityQueue<>(
+        Comparator.comparingInt((Move move) -> Math.abs(move.colomn - 3))
+                  .thenComparingInt(move -> move.colomn)
+    );
+
+    movesByPriority.addAll(state.get_legal_moves(state));
+
+    ArrayList<Move> rankedMoves = new ArrayList<>(movesByPriority.size());
+    while (!movesByPriority.isEmpty()) {
+        rankedMoves.add(movesByPriority.poll());
+    }
+
+    return rankedMoves;
+}
+public <S, M> int minimax(S state, int depth, boolean maximizing_player, Interface<S, M> game) {
+
+    if (state == null || game == null) {
+        throw new IllegalArgumentException("State and game must not be null");
+    }
+    if (depth < 0) {
+        throw new IllegalArgumentException("Depth must not be negative");
+    }
+
+    if (game.is_terminal(state)) {
+        return game.get_result(state);
+    }
+    if (depth == 0) {
+        return 0;
+    }
+
+    TreeNode<S, M> node =
+            new TreeNode<>(new ArrayList<>(), state, game, null);
+    ArrayList<TreeNode<S, M>> children = node.generate_children(state);
+
+    if (children.isEmpty()) {
+        throw new IllegalStateException(
+                "A non-terminal state must have at least one legal move");
+    }
+
+    int bestScore = maximizing_player
+            ? Integer.MIN_VALUE
+            : Integer.MAX_VALUE;
+
+    for (TreeNode<S, M> child : children) {
+        int score = minimax(
+                child.state,
+                depth - 1,
+                !maximizing_player,
+                game);
+
+        bestScore = maximizing_player
+                ? Math.max(bestScore, score)
+                : Math.min(bestScore, score);
+    }
+    return bestScore;
+}
+
+public <S, M> M choose_minimax_move(
+        S state,
+        int depth,
+        Interface<S, M> game) {
+
+    if (state == null || game == null) {
+        throw new IllegalArgumentException("State and game must not be null");
+    }
+    if (depth < 1) {
+        throw new IllegalArgumentException(
+                "Depth must be at least 1 to choose a move");
+    }
+    if (game.is_terminal(state)) {
+        throw new IllegalStateException("Cannot choose a move in a terminal state");
+    }
+
+    ArrayList<M> legalMoves = game.get_legal_moves(state);
+    if (legalMoves.isEmpty()) {
+        throw new IllegalStateException(
+                "A non-terminal state must have at least one legal move");
+    }
+
+    int currentPlayer = game.get_current_player(state);
+    if (currentPlayer != 1 && currentPlayer != 2) {
+        throw new IllegalStateException("Current player must be 1 or 2");
+    }
+
+    boolean maximizing_player = (currentPlayer == 1);
+    M bestMove = null;
+    int bestScore = maximizing_player
+            ? Integer.MIN_VALUE
+            : Integer.MAX_VALUE;
+
+    for (M move : legalMoves) {
+        S child = game.move(state, move);
+        int score = minimax(child, depth - 1, !maximizing_player, game);
+
+        if (bestMove == null
+                || (maximizing_player && score > bestScore)
+                || (!maximizing_player && score < bestScore)) {
+            bestScore = score;
+            bestMove = move;
+        }
+    }
+
+    return bestMove;
+}
 
     public static void main(String[] args){
         boolean game_next = true;
