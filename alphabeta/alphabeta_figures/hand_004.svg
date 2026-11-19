@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" font-family="Helvetica, Arial, sans-serif">
+<rect width="120" height="120" fill="#ffffff"/>
+<rect x="6.0" y="6.0" width="108.0" height="108.0" rx="4" fill="#ffffff" stroke="#334155" stroke-width="1.5"/>
+<line x1="42.0" y1="8.0" x2="42.0" y2="112.0" stroke="#94a3b8" stroke-width="1.2"/>
+<line x1="8.0" y1="42.0" x2="112.0" y2="42.0" stroke="#94a3b8" stroke-width="1.2"/>
+<line x1="78.0" y1="8.0" x2="78.0" y2="112.0" stroke="#94a3b8" stroke-width="1.2"/>
+<line x1="8.0" y1="78.0" x2="112.0" y2="78.0" stroke="#94a3b8" stroke-width="1.2"/>
+<line x1="13.9" y1="13.9" x2="34.1" y2="34.1" stroke="#2563eb" stroke-width="2.4"/>
+<line x1="34.1" y1="13.9" x2="13.9" y2="34.1" stroke="#2563eb" stroke-width="2.4"/>
+<text x="60.0" y="24.0" font-size="10" fill="#94a3b8" text-anchor="middle" dominant-baseline="central">1</text>
+<text x="96.0" y="24.0" font-size="10" fill="#94a3b8" text-anchor="middle" dominant-baseline="central">2</text>
+<circle cx="24.0" cy="60.0" r="10.08" fill="none" stroke="#db2777" stroke-width="2.2"/>
+<text x="60.0" y="60.0" font-size="10" fill="#94a3b8" text-anchor="middle" dominant-baseline="central">4</text>
+<line x1="85.9" y1="49.9" x2="106.1" y2="70.1" stroke="#2563eb" stroke-width="2.4"/>
+<line x1="106.1" y1="49.9" x2="85.9" y2="70.1" stroke="#2563eb" stroke-width="2.4"/>
+<line x1="13.9" y1="85.9" x2="34.1" y2="106.1" stroke="#2563eb" stroke-width="2.4"/>
+<line x1="34.1" y1="85.9" x2="13.9" y2="106.1" stroke="#2563eb" stroke-width="2.4"/>
+<circle cx="60.0" cy="96.0" r="10.08" fill="none" stroke="#db2777" stroke-width="2.2"/>
+<circle cx="96.0" cy="96.0" r="10.08" fill="none" stroke="#db2777" stroke-width="2.2"/>
+</svg>
