@@ -65,7 +65,10 @@ public class FareQuotes {
             // TODO 1: for each request, make a task and submit it to the pool:
             //             FareQuote quote = new FareQuote(request);
             //         Keep every Future<Integer> that submit returns in a list.
-
+            for (RideRequest request : requests){
+                FareQuote quote = new FareQuote(request);
+                requests.add(RideRequest(rider));
+            }
             // TODO 2: AFTER all the tasks are submitted, go through the list, call get()
             //         on each Future and add up the fares. Return the total.
 

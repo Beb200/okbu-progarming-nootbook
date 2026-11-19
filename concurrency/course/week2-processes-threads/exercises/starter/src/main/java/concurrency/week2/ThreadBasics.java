@@ -40,6 +40,12 @@ public class ThreadBasics {
 
     public static void main(String[] args) throws InterruptedException {
         Thread a = new Greeter("greeter");
+        Thread b = new Thread(new Countdown());
+
+        Thread[] threads = {a, b};
+        for (Thread : threads) t.start();
+        for (Thread : threads) t.join();
+
 
         // TODO: Thread b = a new Thread whose target is a Countdown, named "countdown"
 
