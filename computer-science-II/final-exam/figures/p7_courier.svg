@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="150" viewBox="0 0 420 150" font-family="Helvetica, Arial, sans-serif">
+<rect width="420" height="150" fill="#ffffff"/>
+<text x="16.0" y="18.0" font-size="13" font-weight="bold" fill="#1e293b" text-anchor="start" dominant-baseline="central">COURIER</text>
+<line x1="32.0" y1="82.0" x2="72.0" y2="82.0" stroke="#1e293b" stroke-width="1.8"/>
+<polygon points="74.0,82.0 64.0,77.0 64.0,87.0" fill="#1e293b" stroke="#1e293b" stroke-width="1"/>
+<text x="26.0" y="70.0" font-size="10" fill="#475569" text-anchor="start" dominant-baseline="central">start</text>
+<circle cx="110" cy="82" r="34" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+<text x="110.0" y="82.0" font-size="11" font-weight="bold" fill="#1e293b" text-anchor="middle" dominant-baseline="central">AWAY</text>
+<circle cx="310" cy="82" r="34" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+<text x="310.0" y="82.0" font-size="9.5" font-weight="bold" fill="#1e293b" text-anchor="middle" dominant-baseline="central">AT LOCKER</text>
+<path d="M 138 60 Q 210.0 12 282 60" fill="none" stroke="#1e293b" stroke-width="1.8"/>
+<polygon points="282.0,60.0 270.1,58.1 275.6,49.7" fill="#1e293b" stroke="#1e293b" stroke-width="1"/>
+<text x="210.0" y="30.0" font-size="12" font-weight="bold" fill="#1e293b" text-anchor="middle" dominant-baseline="central">arrive</text>
+<path d="M 282 104 Q 210.0 152 138 104" fill="none" stroke="#1e293b" stroke-width="1.8"/>
+<polygon points="138.0,104.0 149.9,105.9 144.4,114.3" fill="#1e293b" stroke="#1e293b" stroke-width="1"/>
+<text x="210.0" y="142.0" font-size="12" font-weight="bold" fill="#1e293b" text-anchor="middle" dominant-baseline="central">drop_off</text>
+</svg>
