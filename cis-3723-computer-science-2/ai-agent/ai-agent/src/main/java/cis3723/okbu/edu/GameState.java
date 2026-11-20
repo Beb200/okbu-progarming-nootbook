@@ -126,7 +126,7 @@ public class GameState implements Interface<GameState, Move>{
                     System.out.println(j);
                     System.out.println("");
                     */
-                    if ((board[i][j] != 1) || (board[i][j] != 2)){
+                    if ((board[i][j] == 1) || (board[i][j] == 2)){
                         //System.out.println("not vaid");
                         //break;
                     }
