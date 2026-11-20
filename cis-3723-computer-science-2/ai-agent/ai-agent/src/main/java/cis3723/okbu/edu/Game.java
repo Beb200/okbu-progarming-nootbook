@@ -20,7 +20,7 @@ public class Game{
     int move_num;
     static Scanner scanner = new Scanner(System.in);
     ArrayList<Integer> move_history = new ArrayList<>();
-    private static final int MINIMAX_DEPTH = 4;
+    private static final int MINIMAX_DEPTH = 5;
     private long minimaxNodes; 
 
     /* 

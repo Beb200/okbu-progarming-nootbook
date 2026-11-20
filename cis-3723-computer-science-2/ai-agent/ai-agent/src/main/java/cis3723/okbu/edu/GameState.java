@@ -129,8 +129,6 @@ public class GameState implements Interface<GameState, Move>{
                     if ((board[i][j] == 1) || (board[i][j] == 2)){
                         //System.out.println("not vaid");
                         //break;
-                    }
-                    else{
                         move_to_check = board[i][j];
                         //System.out.println("move_to_check");
                         if ((i -3 >= 0) && (j+3 <= board[i].length)){
@@ -142,6 +140,9 @@ public class GameState implements Interface<GameState, Move>{
                                     return true;
                             }
                         }
+                    }
+                    else{
+                        
                     }
                 
                     
