@@ -13,14 +13,17 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Comparator;
-import java.util.PriorityQueue; 
-
+import java.util.PriorityQueue;
+import java.util.function.Function;
 
 public class Game{
     int move_num;
     static Scanner scanner = new Scanner(System.in);
     ArrayList<Integer> move_history = new ArrayList<>();
+    private static final int MINIMAX_DEPTH = 4;
+    private long minimaxNodes; 
 
+    /* 
     public void human_turn(GameState state, Move move1, Game game){
         
         
@@ -76,11 +79,35 @@ public class Game{
         else if (move1.player == 2){
             move1.player = 1;
         }
-        */
+        *
         System.out.println(move1.player);
         }
     
     
+    }
+    */
+   private GameState human_turn(
+        GameState state,
+        Interface<GameState, Move> rules) {
+
+    while (true) {
+        int player = rules.get_current_player(state);
+        System.out.printf("Player %d, choose a column (1-7): ", player);
+
+            int column = get_int_from_user(scanner) - 1;
+
+            for (Move legalMove : rules.get_legal_moves(state)) {
+                if (legalMove.colomn == column) {
+                    GameState nextState = rules.move(state, legalMove);
+                    move_history.add(column);
+                    move_num++;
+                    rules.display(nextState);
+                    return nextState;
+                }
+            }
+
+            System.out.println("That column is out of range or full. Try again.");
+        }
     }
 
     public void ai_turn(GameState state,Move move,Game game){
@@ -105,7 +132,7 @@ public class Game{
         String duration_string = String.valueOf(duration);
         String move_num_s = String.valueOf(move_num);
         String ai_move_s = String.valueOf(random_move);
-        write_to_csv(move_num_s, duration_string, ai_move_s);
+        //write_to_csv(move_num_s, duration_string, ai_move_s);
         }
     }
     /*  not what I want
@@ -174,7 +201,7 @@ public class Game{
     public String get_String_from_user(Scanner scanner){
         return scanner.next();
     }
-
+    /* 
     public void write_to_csv(String move_num, String duration, String move){
         String file = "performance_log.csv";
         try(CSVWriter writer = new CSVWriter(new FileWriter(file, true))){
@@ -184,6 +211,20 @@ public class Game{
             e.printStackTrace();
         } 
     }
+    */
+   public void write_to_csv(
+        String moveNum,
+        String duration,
+        String move,
+        String nodes) {
+
+    String file = "performance_log.csv";
+    try (CSVWriter writer = new CSVWriter(new FileWriter(file, true))) {
+        writer.writeNext(new String[] {moveNum, duration, move, nodes});
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 
     public String serialize_state(GameState state){
         //String ser_game = state.display(state);
@@ -234,11 +275,12 @@ public class Game{
     public void game_create(){
         
     }
+    /* 
     public void game_play(GameState state, Game game, Move move1){
             move1.player = 1;
             state.display(state);
             while (state.is_terminal(state) == false){
-                game.ai_turn(state, move1, game);
+                //game.ai_turn(state, move1, game);
                 game.human_turn(state,move1,game);
                 System.out.println("Do you want to save this state? (y/n)");
                 String y_n_save = get_String_from_user(scanner);
@@ -247,6 +289,50 @@ public class Game{
                 }
             }
     }
+    */
+   public GameState game_play(GameState state) {
+    Interface<GameState, Move> rules = state;
+
+    rules.display(state);
+
+    while (!rules.is_terminal(state)) {
+        if (rules.get_current_player(state) == 1) {
+            state = human_turn(state, rules);
+        } else {
+            long startTime = System.nanoTime();
+            minimaxNodes = 1;
+
+            Move aiMove = choose_minimax_move(
+        state, MINIMAX_DEPTH, rules, s -> rank_moves(s));
+
+            double elapsedMs =
+                    (System.nanoTime() - startTime) / 1_000_000.0;
+
+            state = rules.move(state, aiMove);
+            move_history.add(aiMove.colomn);
+            move_num++;
+
+            rules.display(state);
+
+            write_to_csv(
+                    String.valueOf(move_num),
+                    String.valueOf(elapsedMs),
+                    String.valueOf(aiMove.colomn),
+                    String.valueOf(minimaxNodes));
+        }
+    }
+
+    int result = rules.get_result(state);
+    if (result == 1) {
+        System.out.println("Player 1 wins!");
+    } else if (result == -1) {
+        System.out.println("Player 2 wins!");
+    } else {
+        System.out.println("Draw!");
+    }
+
+    return state;
+}
 
     public void save_game(GameState state){
         String saved_game = serialize_state(state);
@@ -293,7 +379,7 @@ public <S, M> int minimax(S state, int depth, boolean maximizing_player, Interfa
     if (depth < 0) {
         throw new IllegalArgumentException("Depth must not be negative");
     }
-
+    minimaxNodes++;
     if (game.is_terminal(state)) {
         return game.get_result(state);
     }
@@ -333,47 +419,139 @@ public <S, M> M choose_minimax_move(
         int depth,
         Interface<S, M> game) {
 
-    if (state == null || game == null) {
-        throw new IllegalArgumentException("State and game must not be null");
+    return choose_minimax_move(
+            state, depth, game, game::get_legal_moves);
+}
+
+private <S, M> M choose_minimax_move(
+        S state,
+        int depth,
+        Interface<S, M> game,
+        Function<S, ArrayList<M>> moveOrder) {
+
+    if (state == null || game == null || moveOrder == null) {
+        throw new IllegalArgumentException(
+                "State, game, and move order must not be null");
     }
     if (depth < 1) {
-        throw new IllegalArgumentException(
-                "Depth must be at least 1 to choose a move");
+        throw new IllegalArgumentException("Depth must be at least 1");
     }
     if (game.is_terminal(state)) {
-        throw new IllegalStateException("Cannot choose a move in a terminal state");
+        throw new IllegalStateException(
+                "Cannot choose a move in a terminal state");
     }
 
-    ArrayList<M> legalMoves = game.get_legal_moves(state);
-    if (legalMoves.isEmpty()) {
+    ArrayList<M> moves = moveOrder.apply(state);
+    if (moves.isEmpty()) {
         throw new IllegalStateException(
                 "A non-terminal state must have at least one legal move");
     }
 
-    int currentPlayer = game.get_current_player(state);
-    if (currentPlayer != 1 && currentPlayer != 2) {
+    int player = game.get_current_player(state);
+    if (player != 1 && player != 2) {
         throw new IllegalStateException("Current player must be 1 or 2");
     }
 
-    boolean maximizing_player = (currentPlayer == 1);
+    boolean maximizing_player = (player == 1);
     M bestMove = null;
     int bestScore = maximizing_player
             ? Integer.MIN_VALUE
             : Integer.MAX_VALUE;
+    int alpha = Integer.MIN_VALUE;
+    int beta = Integer.MAX_VALUE;
 
-    for (M move : legalMoves) {
+    for (M move : moves) {
         S child = game.move(state, move);
-        int score = minimax(child, depth - 1, !maximizing_player, game);
+        int score = minimax_ab(
+                child, depth - 1, alpha, beta,
+                !maximizing_player, game, moveOrder);
 
         if (bestMove == null
                 || (maximizing_player && score > bestScore)
                 || (!maximizing_player && score < bestScore)) {
-            bestScore = score;
             bestMove = move;
+            bestScore = score;
+        }
+
+        if (maximizing_player) {
+            alpha = Math.max(alpha, bestScore);
+        } else {
+            beta = Math.min(beta, bestScore);
         }
     }
 
     return bestMove;
+}
+
+public <S, M> int minimax_ab(
+        S state,
+        int depth,
+        int alpha,
+        int beta,
+        boolean maximizing_player,
+        Interface<S, M> game) {
+
+    return minimax_ab(
+            state, depth, alpha, beta, maximizing_player,
+            game, game::get_legal_moves);
+}
+
+private <S, M> int minimax_ab(
+        S state,
+        int depth,
+        int alpha,
+        int beta,
+        boolean maximizing_player,
+        Interface<S, M> game,
+        Function<S, ArrayList<M>> moveOrder) {
+
+    if (state == null || game == null || moveOrder == null) {
+        throw new IllegalArgumentException(
+                "State, game, and move order must not be null");
+    }
+    if (depth < 0) {
+        throw new IllegalArgumentException("Depth must not be negative");
+    }
+
+    minimaxNodes++;
+
+    if (game.is_terminal(state)) {
+        return game.get_result(state);
+    }
+    if (depth == 0) {
+        return 0;
+    }
+
+    ArrayList<M> moves = moveOrder.apply(state);
+    if (moves.isEmpty()) {
+        throw new IllegalStateException(
+                "A non-terminal state must have at least one legal move");
+    }
+
+    int bestScore = maximizing_player
+            ? Integer.MIN_VALUE
+            : Integer.MAX_VALUE;
+
+    for (M move : moves) {
+        S child = game.move(state, move);
+        int score = minimax_ab(
+                child, depth - 1, alpha, beta,
+                !maximizing_player, game, moveOrder);
+
+        if (maximizing_player) {
+            bestScore = Math.max(bestScore, score);
+            alpha = Math.max(alpha, bestScore);
+        } else {
+            bestScore = Math.min(bestScore, score);
+            beta = Math.min(beta, bestScore);
+        }
+
+        if (alpha >= beta) {
+            break;
+        }
+    }
+
+    return bestScore;
 }
 
     public static void main(String[] args){
@@ -385,12 +563,14 @@ public <S, M> M choose_minimax_move(
             System.out.println("Do you want to load a game? (y/n)");
             if (game.get_String_from_user(scanner).equalsIgnoreCase("y")){
                 GameState state_loaded = game.load_game();
-                game.game_play(state_loaded, game, move1);
+                //game.game_play(state_loaded, game, move1);
+                state_loaded = game.game_play(state_loaded);
                 String winner = state_loaded.check_winner(state_loaded);
                 System.out.println(winner);
                 System.out.println(game.move_history);
             } else{
-                game.game_play(state,game,move1);
+                //game.game_play(state,game,move1);
+                state = game.game_play(state);
                 String winner = state.check_winner(state);
                 System.out.println(winner);
                 System.out.println(game.move_history);
@@ -470,4 +650,4 @@ public <S, M> M choose_minimax_move(
        //System.out.print(Arrays.deepToString(state));
         }
        */
-    
+
